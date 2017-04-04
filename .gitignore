@@ -1,1 +1,5 @@
-Battle City.xcodeproj/
+*.DS_Store
+*.xcbkptlist
+*.xcuserstate
+Battle City.xcodeproj/xcuserdata
+Battle City.xcodeproj/project.xcworkspace/xcuserdata

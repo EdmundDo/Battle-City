@@ -1,0 +1,346 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		388448E61E9305F500CB253D /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 388448E51E9305F500CB253D /* main.cpp */; };
+		388448F01E93091900CB253D /* Game.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 388448EE1E93091900CB253D /* Game.cpp */; };
+		388448F31E93093D00CB253D /* LevelEditor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 388448F11E93093D00CB253D /* LevelEditor.cpp */; };
+		388448F61E93099800CB253D /* Map.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 388448F41E93099800CB253D /* Map.cpp */; };
+		388448FA1E9309D400CB253D /* PlayerController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 388448F81E9309D400CB253D /* PlayerController.cpp */; };
+		388448FD1E9309EA00CB253D /* MapObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 388448FB1E9309EA00CB253D /* MapObject.cpp */; };
+		388449001E9309F700CB253D /* Obstacle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 388448FE1E9309F700CB253D /* Obstacle.cpp */; };
+		388449031E9309FF00CB253D /* Terrain.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 388449011E9309FF00CB253D /* Terrain.cpp */; };
+		388449061E930A0F00CB253D /* DestructibleObstacle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 388449041E930A0F00CB253D /* DestructibleObstacle.cpp */; };
+		388449091E930A1C00CB253D /* Entity.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 388449071E930A1C00CB253D /* Entity.cpp */; };
+		3884490C1E930A2700CB253D /* Tank.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3884490A1E930A2700CB253D /* Tank.cpp */; };
+		3884490F1E930A3400CB253D /* Projectile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3884490D1E930A3400CB253D /* Projectile.cpp */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		388448E01E9305F500CB253D /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		388448E21E9305F500CB253D /* Battle City */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Battle City"; sourceTree = BUILT_PRODUCTS_DIR; };
+		388448E51E9305F500CB253D /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		388448EE1E93091900CB253D /* Game.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Game.cpp; sourceTree = "<group>"; };
+		388448EF1E93091900CB253D /* Game.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Game.hpp; sourceTree = "<group>"; };
+		388448F11E93093D00CB253D /* LevelEditor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LevelEditor.cpp; sourceTree = "<group>"; };
+		388448F21E93093D00CB253D /* LevelEditor.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = LevelEditor.hpp; sourceTree = "<group>"; };
+		388448F41E93099800CB253D /* Map.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Map.cpp; sourceTree = "<group>"; };
+		388448F51E93099800CB253D /* Map.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Map.hpp; sourceTree = "<group>"; };
+		388448F81E9309D400CB253D /* PlayerController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PlayerController.cpp; sourceTree = "<group>"; };
+		388448F91E9309D400CB253D /* PlayerController.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = PlayerController.hpp; sourceTree = "<group>"; };
+		388448FB1E9309EA00CB253D /* MapObject.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MapObject.cpp; sourceTree = "<group>"; };
+		388448FC1E9309EA00CB253D /* MapObject.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = MapObject.hpp; sourceTree = "<group>"; };
+		388448FE1E9309F700CB253D /* Obstacle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Obstacle.cpp; sourceTree = "<group>"; };
+		388448FF1E9309F700CB253D /* Obstacle.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Obstacle.hpp; sourceTree = "<group>"; };
+		388449011E9309FF00CB253D /* Terrain.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Terrain.cpp; sourceTree = "<group>"; };
+		388449021E9309FF00CB253D /* Terrain.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Terrain.hpp; sourceTree = "<group>"; };
+		388449041E930A0F00CB253D /* DestructibleObstacle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DestructibleObstacle.cpp; sourceTree = "<group>"; };
+		388449051E930A0F00CB253D /* DestructibleObstacle.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = DestructibleObstacle.hpp; sourceTree = "<group>"; };
+		388449071E930A1C00CB253D /* Entity.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Entity.cpp; sourceTree = "<group>"; };
+		388449081E930A1C00CB253D /* Entity.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Entity.hpp; sourceTree = "<group>"; };
+		3884490A1E930A2700CB253D /* Tank.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Tank.cpp; sourceTree = "<group>"; };
+		3884490B1E930A2700CB253D /* Tank.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Tank.hpp; sourceTree = "<group>"; };
+		3884490D1E930A3400CB253D /* Projectile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Projectile.cpp; sourceTree = "<group>"; };
+		3884490E1E930A3400CB253D /* Projectile.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Projectile.hpp; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		388448DF1E9305F500CB253D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		388448D91E9305F500CB253D = {
+			isa = PBXGroup;
+			children = (
+				388448E41E9305F500CB253D /* Battle City */,
+				388448E31E9305F500CB253D /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		388448E31E9305F500CB253D /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				388448E21E9305F500CB253D /* Battle City */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		388448E41E9305F500CB253D /* Battle City */ = {
+			isa = PBXGroup;
+			children = (
+				388448F71E9309A400CB253D /* Controller */,
+				388448ED1E9308FF00CB253D /* MapObject */,
+				388448EC1E9308F000CB253D /* Entity */,
+				388448E51E9305F500CB253D /* main.cpp */,
+				388448EE1E93091900CB253D /* Game.cpp */,
+				388448EF1E93091900CB253D /* Game.hpp */,
+				388448F11E93093D00CB253D /* LevelEditor.cpp */,
+				388448F21E93093D00CB253D /* LevelEditor.hpp */,
+				388448F41E93099800CB253D /* Map.cpp */,
+				388448F51E93099800CB253D /* Map.hpp */,
+			);
+			path = "Battle City";
+			sourceTree = "<group>";
+		};
+		388448EC1E9308F000CB253D /* Entity */ = {
+			isa = PBXGroup;
+			children = (
+				388449071E930A1C00CB253D /* Entity.cpp */,
+				388449081E930A1C00CB253D /* Entity.hpp */,
+				3884490A1E930A2700CB253D /* Tank.cpp */,
+				3884490B1E930A2700CB253D /* Tank.hpp */,
+				3884490D1E930A3400CB253D /* Projectile.cpp */,
+				3884490E1E930A3400CB253D /* Projectile.hpp */,
+			);
+			name = Entity;
+			sourceTree = "<group>";
+		};
+		388448ED1E9308FF00CB253D /* MapObject */ = {
+			isa = PBXGroup;
+			children = (
+				388448FB1E9309EA00CB253D /* MapObject.cpp */,
+				388448FC1E9309EA00CB253D /* MapObject.hpp */,
+				388448FE1E9309F700CB253D /* Obstacle.cpp */,
+				388448FF1E9309F700CB253D /* Obstacle.hpp */,
+				388449011E9309FF00CB253D /* Terrain.cpp */,
+				388449021E9309FF00CB253D /* Terrain.hpp */,
+				388449041E930A0F00CB253D /* DestructibleObstacle.cpp */,
+				388449051E930A0F00CB253D /* DestructibleObstacle.hpp */,
+			);
+			name = MapObject;
+			sourceTree = "<group>";
+		};
+		388448F71E9309A400CB253D /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				388448F81E9309D400CB253D /* PlayerController.cpp */,
+				388448F91E9309D400CB253D /* PlayerController.hpp */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		388448E11E9305F500CB253D /* Battle City */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 388448E91E9305F500CB253D /* Build configuration list for PBXNativeTarget "Battle City" */;
+			buildPhases = (
+				388448DE1E9305F500CB253D /* Sources */,
+				388448DF1E9305F500CB253D /* Frameworks */,
+				388448E01E9305F500CB253D /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Battle City";
+			productName = "Battle City";
+			productReference = 388448E21E9305F500CB253D /* Battle City */;
+			productType = "com.apple.product-type.tool";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		388448DA1E9305F500CB253D /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0830;
+				ORGANIZATIONNAME = "Edmund Do";
+				TargetAttributes = {
+					388448E11E9305F500CB253D = {
+						CreatedOnToolsVersion = 8.3;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = 388448DD1E9305F500CB253D /* Build configuration list for PBXProject "Battle City" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 388448D91E9305F500CB253D;
+			productRefGroup = 388448E31E9305F500CB253D /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				388448E11E9305F500CB253D /* Battle City */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		388448DE1E9305F500CB253D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				388448E61E9305F500CB253D /* main.cpp in Sources */,
+				388449031E9309FF00CB253D /* Terrain.cpp in Sources */,
+				388449061E930A0F00CB253D /* DestructibleObstacle.cpp in Sources */,
+				388448FD1E9309EA00CB253D /* MapObject.cpp in Sources */,
+				388448FA1E9309D400CB253D /* PlayerController.cpp in Sources */,
+				3884490C1E930A2700CB253D /* Tank.cpp in Sources */,
+				388448F31E93093D00CB253D /* LevelEditor.cpp in Sources */,
+				388448F61E93099800CB253D /* Map.cpp in Sources */,
+				3884490F1E930A3400CB253D /* Projectile.cpp in Sources */,
+				388448F01E93091900CB253D /* Game.cpp in Sources */,
+				388449091E930A1C00CB253D /* Entity.cpp in Sources */,
+				388449001E9309F700CB253D /* Obstacle.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		388448E71E9305F500CB253D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		388448E81E9305F500CB253D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		388448EA1E9305F500CB253D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		388448EB1E9305F500CB253D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		388448DD1E9305F500CB253D /* Build configuration list for PBXProject "Battle City" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				388448E71E9305F500CB253D /* Debug */,
+				388448E81E9305F500CB253D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		388448E91E9305F500CB253D /* Build configuration list for PBXNativeTarget "Battle City" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				388448EA1E9305F500CB253D /* Debug */,
+				388448EB1E9305F500CB253D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 388448DA1E9305F500CB253D /* Project object */;
+}
