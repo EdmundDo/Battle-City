@@ -19,6 +19,7 @@
 		388449091E930A1C00CB253D /* Entity.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 388449071E930A1C00CB253D /* Entity.cpp */; };
 		3884490C1E930A2700CB253D /* Tank.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3884490A1E930A2700CB253D /* Tank.cpp */; };
 		3884490F1E930A3400CB253D /* Projectile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3884490D1E930A3400CB253D /* Projectile.cpp */; };
+		388449121E93510700CB253D /* Controller.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 388449101E93510700CB253D /* Controller.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -58,6 +59,8 @@
 		3884490B1E930A2700CB253D /* Tank.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Tank.hpp; sourceTree = "<group>"; };
 		3884490D1E930A3400CB253D /* Projectile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Projectile.cpp; sourceTree = "<group>"; };
 		3884490E1E930A3400CB253D /* Projectile.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Projectile.hpp; sourceTree = "<group>"; };
+		388449101E93510700CB253D /* Controller.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Controller.cpp; sourceTree = "<group>"; };
+		388449111E93510700CB253D /* Controller.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Controller.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -137,6 +140,8 @@
 			children = (
 				388448F81E9309D400CB253D /* PlayerController.cpp */,
 				388448F91E9309D400CB253D /* PlayerController.hpp */,
+				388449101E93510700CB253D /* Controller.cpp */,
+				388449111E93510700CB253D /* Controller.hpp */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -209,6 +214,7 @@
 				3884490F1E930A3400CB253D /* Projectile.cpp in Sources */,
 				388448F01E93091900CB253D /* Game.cpp in Sources */,
 				388449091E930A1C00CB253D /* Entity.cpp in Sources */,
+				388449121E93510700CB253D /* Controller.cpp in Sources */,
 				388449001E9309F700CB253D /* Obstacle.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
