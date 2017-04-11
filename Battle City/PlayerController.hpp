@@ -14,17 +14,23 @@
 
 #include <iostream>
 
-struct TankBindings {
+struct TankKeyBindings {
     char rlk, rrk, mfk, mbk, sk;
 };
 
 class PlayerController : public Controller {
 public:
-    PlayerController(Tank tank, TankBindings bindings);
+    PlayerController(Tank tank, TankKeyBindings bindings);
     ~PlayerController();
     
-    virtual void act(char c = '\0') override;
+    /**
+     * see Controller#act(char c)
+     */
+    
+    virtual void act(char c) override;
+    
 private:
+    // Binded keys
     char rotateLeftKey, rotateRightKey, moveForwardKey, moveBackwardKey, shootKey;
 };
 
