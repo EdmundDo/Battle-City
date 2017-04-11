@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		385B8B531E98002E009F64C0 /* PlayerController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 388448F81E9309D400CB253D /* PlayerController.cpp */; };
 		385B8B541E980030009F64C0 /* Controller.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 388449101E93510700CB253D /* Controller.cpp */; };
+		385B8B551E99D2BC009F64C0 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 388448E51E9305F500CB253D /* main.cpp */; };
 		388448F01E93091900CB253D /* Game.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 388448EE1E93091900CB253D /* Game.cpp */; };
 		388448F31E93093D00CB253D /* LevelEditor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 388448F11E93093D00CB253D /* LevelEditor.cpp */; };
 		388448F61E93099800CB253D /* Map.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 388448F41E93099800CB253D /* Map.cpp */; };
@@ -212,6 +213,7 @@
 				385B8B541E980030009F64C0 /* Controller.cpp in Sources */,
 				388448F01E93091900CB253D /* Game.cpp in Sources */,
 				385B8B531E98002E009F64C0 /* PlayerController.cpp in Sources */,
+				385B8B551E99D2BC009F64C0 /* main.cpp in Sources */,
 				388449091E930A1C00CB253D /* Entity.cpp in Sources */,
 				388449001E9309F700CB253D /* Obstacle.cpp in Sources */,
 			);

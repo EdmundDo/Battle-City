@@ -9,6 +9,11 @@
 #ifndef Entity_hpp
 #define Entity_hpp
 
-#include <stdio.h>
+class Entity {
+public:
+    void move(int sign);
+protected:
+private:
+};
 
 #endif /* Entity_hpp */
