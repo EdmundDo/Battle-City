@@ -7,3 +7,63 @@
 //
 
 #include "Game.hpp"
+
+#include <random>
+using namespace std;
+
+Game::Game(Map map) : map(map) {}
+
+Game::~Game() {}
+
+bool Game::checkGameStatus() {
+    for(int i = 0; i < controllers.size(); i++) {
+        if(controllers[i].getTank().getHealth == 0) {
+            controllers.erase(controllers.begin() + i);
+        }
+    }
+    
+    if (controllers.size() == 0) {
+        // draw
+        isPlaying = false;
+    } else if (controllers.size() == 1) {
+        controllers[0].getTank().getColor(); // This tank won
+        isPlaying = false;
+    }
+}
+
+void Game::createPlayerTank(TankKeyBindings bindings) {
+    vector<Point2D> startCoords = map.getPreferredStartCoords();
+    
+    // get random start coordinate
+    random_device rnd;
+    int rand_index = rnd() % startCoords.size();
+    
+    createTankController(bindings, startCoords[rand_index].x, startCoords[rand_index].y);
+}
+
+void Game::createPlayerTank(TankKeyBindings bindings, int x, int y) {
+    Tank tank();        // Init with start coords startCoords[rand_index].x and startCoords[rand_index].y
+                        // etc., etc...
+    
+    controllers.push_back(PlayerController(tank, bindings));
+}
+
+void Game::update() {
+    
+}
+
+void Game::updateMap() {
+    
+}
+
+void Game::updateEntities() {
+    
+}
+
+void Game::handleCollision(Entity e, MapObject mobj) {
+    
+}
+
+void Game::handleCollision(Entity e1, Entity e2) {
+    
+}
