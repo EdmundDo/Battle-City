@@ -11,8 +11,6 @@
 
 #include "Tank.hpp"
 
-#include <iostream>
-
 class Controller {
 public:
     Controller(Tank tank);

@@ -12,8 +12,6 @@
 #include "Tank.hpp"
 #include "Controller.hpp"
 
-#include <iostream>
-
 struct TankKeyBindings {
     char rlk, rrk, mfk, mbk, sk;
 };
