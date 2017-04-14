@@ -8,7 +8,52 @@
 
 #ifndef Projectile_hpp
 #define Projectile_hpp
+#include "Entity.hpp"
+#include "Tank.hpp"
 
-#include <stdio.h>
+
+class Projectile : public Entity{
+  
+public:
+    Projectile(double damage, double x, double y, double direction, Color color, bool canPass);
+    ~Projectile();
+
+
+    void setDamage(double d);
+    double getDamage();
+    
+    virtual void draw() override;
+    
+private:
+    double damage;
+    
+  
+    
+};
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 #endif /* Projectile_hpp */

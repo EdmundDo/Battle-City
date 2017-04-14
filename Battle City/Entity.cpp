@@ -7,18 +7,49 @@
 //
 
 #include "Entity.hpp"
-
 #include <cmath>
 
-void Entity::move(int sign) {
-    double dir = tank.getDirection(), dirRads = dir * M_PI / 180.0;
+Entity::Entity(double x, double y, double direction, Color color, bool canPass) : coordX(x), coordY(y), direction(direction), color(color), canPass(canPass) {}
+
+void Entity::move(Sign sign) {
+    double dirRads = direction * M_PI / 180.0;
+    double dx, dy;
     
-    double lenA, lenB, lenC; // Lengths of sides of triangle
+    dx = cos(dirRads);
+    dy = sin(dirRads);
     
-    lenA = cos(dirRads);
-    lenB = sin(dirRads);
-    lenC = sqrt(pow(lenA, 2) + pow(lenB, 2));
     
-    // Scales the triangle to get one unit of movement in any positive direction
-    tank.move(sign * lenA * (1/lenC), sign * lenB * (1/lenC));
+    coordX = sign * dx;
+    coordY = sign * dy;
+}
+
+double Entity:: getX() const{
+    return coordX;
+    
+}
+
+
+double Entity:: getY() const{
+    return coordY;
+    
+}
+
+
+double Entity::getDirection() const{
+    return direction;
+    
+}
+
+
+void Entity::setDirection(double s){
+    direction = s;
+    
+}
+
+Color Entity::getColor() const{
+    return color;
+}
+
+void Entity::draw(){
+    
 }
