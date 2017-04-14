@@ -30,6 +30,13 @@ public:
     
     virtual void move (Sign sign);
     
+    /**
+     * Requires: nothing
+     * Modifies: directions
+     * Effects: get and set
+     */
+
+    
     virtual double getX() const;
     virtual double getY() const;
     virtual void setDirection(double s);
