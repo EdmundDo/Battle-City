@@ -49,16 +49,43 @@ void Game::createPlayerTank(TankKeyBindings bindings, int x, int y) {
 }
 
 void Game::update() {
-    
+    updateMap();
+    updateEntities();
+}
+
+void Game::checkCollisions() {
+    for(int i = 0; i < entities.size(); i++) {
+        // Check for overlapping coordinates
+        
+        double x = entities[i].getX();
+        double y = entities[i].getY();
+        
+        // Check area around entities[i]
+        // Map.getObjectAt()
+        // And check for overlap
+        int checkX = x + 1, checkY;
+        
+        for(int checkX = x + entities[i].getWidth(); checkX > x - entities[i].getWidth(); i--
+        
+        for(int j = 0; j < entities.size(); j++) {
+            // Check if entities[i] and entities[j] overlap
+        }
+    }
 }
 
 void Game::updateMap() {
-    
+    // Empty for the time being until we implement destriuctible obstacles
 }
 
 void Game::updateEntities() {
+    checkCollisions();
     
+    for(int i = 0; i < entities.size(); i++) {
+        entities.draw();
+    }
 }
+
+
 
 void Game::handleCollision(Entity e, MapObject mobj) {
     

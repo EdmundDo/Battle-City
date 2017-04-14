@@ -35,6 +35,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		382ECB2B1EA1626900C84379 /* Color.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Color.hpp; sourceTree = "<group>"; };
 		388448E21E9305F500CB253D /* Battle City */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Battle City"; sourceTree = BUILT_PRODUCTS_DIR; };
 		388448E51E9305F500CB253D /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		388448EE1E93091900CB253D /* Game.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Game.cpp; sourceTree = "<group>"; };
@@ -98,6 +99,7 @@
 				388448EC1E9308F000CB253D /* Entity */,
 				388448E51E9305F500CB253D /* main.cpp */,
 				388448EE1E93091900CB253D /* Game.cpp */,
+				382ECB2B1EA1626900C84379 /* Color.hpp */,
 				388448EF1E93091900CB253D /* Game.hpp */,
 				388448F11E93093D00CB253D /* LevelEditor.cpp */,
 				388448F21E93093D00CB253D /* LevelEditor.hpp */,
