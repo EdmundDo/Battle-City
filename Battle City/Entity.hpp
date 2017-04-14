@@ -22,6 +22,12 @@ public:
     // desstructor
     ~Entity();
     
+    /**
+     * Requires: nothing
+     * Modifies: coordX, coordY
+     * Effects: moves the entity
+     */
+    
     virtual void move (Sign sign);
     
     virtual double getX() const;
