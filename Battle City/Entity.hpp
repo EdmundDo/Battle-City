@@ -9,11 +9,48 @@
 #ifndef Entity_hpp
 #define Entity_hpp
 
-class Entity {
+#include "Color.hpp"
+
+enum Sign {ENEG = -1, EPOS = 1};
+
+class Entity{
+
 public:
-    void move(int sign);
+    
+    //default constructor
+    Entity(double x, double y, double direction, Color color, bool canPass);
+    // desstructor
+    ~Entity();
+    
+    virtual void move (Sign sign);
+    
+    virtual double getX() const;
+    virtual double getY() const;
+    virtual void setDirection(double s);
+    virtual double getDirection() const;
+    virtual Color getColor() const;
+
+    virtual void draw() = 0;
+
 protected:
-private:
+    
+    bool canPass;
+    Color color;
+    double coordX;
+    double coordY;
+    double direction;
+
+
 };
+
+
+
+
+
+
+
+
+
+
 
 #endif /* Entity_hpp */
