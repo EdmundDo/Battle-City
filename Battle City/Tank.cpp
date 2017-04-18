@@ -8,7 +8,9 @@
 
 #include "Tank.hpp"
 
-Tank::Tank(double health, double x, double y, double direction, Color color, bool canPass) : Entity(x, y, direction, color, canPass), health(health) {}
+#include <cmath>
+
+Tank::Tank(double health, double x, double y, double direction, Color color, bool canPass, int controllerId) : Entity(x, y, direction, color, canPass), health(health), controllerId(controllerId) {}
 
 
 Tank::~Tank() {}
@@ -22,7 +24,15 @@ void Tank::rotate(Sign sign) {
 }
 
 Projectile Tank::shoot() {
+    double dirRads = direction * M_PI / 180.0;
     
+    double dx, dy;
+    
+    dx = cos(dirRads);
+    dy = sin(dirRads);
+    
+    Projectile p(5, dx, dy, direction, getColor(), true);
+    return p;
 }
 
 
@@ -33,7 +43,10 @@ double Tank::getHealth(){
 
 void Tank::setHealth(double h){
     health = h;
-    
+}
+
+int Tank::getControllerId() {
+    return controllerId;
 }
 
 void Tank::draw() {

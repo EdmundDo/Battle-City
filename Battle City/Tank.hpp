@@ -8,6 +8,7 @@
 
 #ifndef Tank_hpp
 #define Tank_hpp
+
 #include "Entity.hpp"
 #include "Projectile.hpp"
 
@@ -15,7 +16,7 @@ class Tank : public Entity{
     
 public:
 
-    Tank(double health, double x, double y, double direction, Color color, bool canPass);
+    Tank(double health, double x, double y, double direction, Color color, bool canPass, int controllerId);
     ~Tank();
     
     Projectile shoot();
@@ -23,10 +24,12 @@ public:
     void setHealth(double h);
     double getHealth();
     
+    int getControllerId();
+    
     virtual void draw() override;
     
 private:
-   
+    int controllerId;
     double health;
     
     
