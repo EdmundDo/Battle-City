@@ -8,30 +8,46 @@
 
 #include "Controller.hpp"
 
-#include <cmath>
-
-Controller::Controller (Tank tank) {
-    this->tank = tank;
-}
+Controller::Controller (Tank tank) : tank(tank) {}
 
 Controller::~Controller() {}
 
-void Controller::shoot() {
+Projectile Controller::shoot() {
     tank.shoot();
 }
 
 void Controller::rotateLeft() {
-    tank.rotate(tank.getDirection() - 1);
+    tank.rotate(ENEG);
 }
 
 void Controller::rotateRight() {
-    tank.rotate(tank.getDirection() + 1);
+    tank.rotate(EPOS);
 }
 
 void Controller::moveForward() {
-    tank.move(1);
+    tank.move(EPOS);
 }
 
 void Controller::moveBackward() {
-    tank.move(-1);
+    tank.move(ENEG);
+}
+
+void Controller::setCanMoveForward(bool tf) {
+    canMoveForward = tf;
+}
+
+bool Controller::getCanMoveForward() const {
+    return canMoveForward;
+}
+
+void Controller::setCanMoveBack(bool tf) {
+    canMoveBack = tf;
+}
+
+bool Controller::getCanMoveBack() const {
+    return canMoveBack;
+}
+
+Tank Controller::getTank() const {
+    return tank;
 }

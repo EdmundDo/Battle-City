@@ -98,8 +98,8 @@
 				388448ED1E9308FF00CB253D /* MapObject */,
 				388448EC1E9308F000CB253D /* Entity */,
 				388448E51E9305F500CB253D /* main.cpp */,
-				388448EE1E93091900CB253D /* Game.cpp */,
 				382ECB2B1EA1626900C84379 /* Color.hpp */,
+				388448EE1E93091900CB253D /* Game.cpp */,
 				388448EF1E93091900CB253D /* Game.hpp */,
 				388448F11E93093D00CB253D /* LevelEditor.cpp */,
 				388448F21E93093D00CB253D /* LevelEditor.hpp */,
@@ -316,6 +316,7 @@
 		388448EA1E9305F500CB253D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -323,6 +324,7 @@
 		388448EB1E9305F500CB253D /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;

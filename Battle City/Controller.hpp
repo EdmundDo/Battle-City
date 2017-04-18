@@ -10,6 +10,7 @@
 #define Controller_hpp
 
 #include "Tank.hpp"
+#include "Map.hpp"
 
 class Controller {
 public:
@@ -30,7 +31,7 @@ public:
      * Effect: calls tank.shoot()
      */
     
-    virtual void shoot();
+    virtual Projectile shoot();
     
     /**
      * Requires: nothing
@@ -49,10 +50,22 @@ public:
      * Effects: gets the tank belonging to the instance
      */
     
-    virtual void getTank();
+    virtual Tank getTank() const;
+    
+    /**
+     * Requires: nothing
+     * Modifies: flags
+     * Effects: getters and setters
+     */
+    
+    virtual void setCanMoveForward(bool tf);
+    virtual bool getCanMoveForward() const;
+    virtual void setCanMoveBack(bool tf);
+    virtual bool getCanMoveBack() const;
     
 protected:
     Tank tank;                  // Tank associated with this object
+    bool canMoveForward, canMoveBack;
 };
 
 #endif /* Controller_hpp */
