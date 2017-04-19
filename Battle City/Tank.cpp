@@ -9,8 +9,10 @@
 #include "Tank.hpp"
 
 #include <cmath>
+#include <vector>
+using namespace std;
 
-Tank::Tank(double health, double x, double y, double direction, Color color, bool canPass, int controllerId) : Entity(x, y, direction, color, canPass), health(health), controllerId(controllerId) {}
+Tank::Tank(double health, double x, double y, double direction, Color color, bool canPass, int controllerId, vector<Entity> *entities) : Entity(x, y, direction, color, canPass), health(health), controllerId(controllerId), entities(entities) {}
 
 
 Tank::~Tank() {}

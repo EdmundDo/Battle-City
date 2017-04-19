@@ -12,11 +12,12 @@
 #include "Entity.hpp"
 #include "Projectile.hpp"
 
-class Tank : public Entity{
-    
-public:
+#include <vector>
+using namespace std;
 
-    Tank(double health, double x, double y, double direction, Color color, bool canPass, int controllerId);
+class Tank : public Entity{
+public:
+    Tank(double health, double x, double y, double direction, Color color, bool canPass, int controllerId, vector<Entity> *entities);
     ~Tank();
     
     Projectile shoot();
@@ -30,6 +31,7 @@ public:
     
 private:
     int controllerId;
+    vector<Entity> *entities;
     double health;
     
     
