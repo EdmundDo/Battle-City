@@ -17,6 +17,7 @@ using namespace std;
 
 class Map {
 public:
+    Map(string filepath);
     Map(int width, int height);
     ~Map();
     
@@ -74,6 +75,8 @@ private:
     vector<Point2D> preferredStartCoords;
     vector<MapObject> mapObjs;
     int width, height;
+    
+    void loadMapFromFile(string filepath);
     
 };
 
