@@ -28,7 +28,7 @@ public:
      */
     
     void setFilePath(string filepath);
-    void getFilePath() const;
+    string getFilePath() const;
     
     /**
      * Requires: nothing
