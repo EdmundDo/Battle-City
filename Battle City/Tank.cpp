@@ -12,7 +12,10 @@
 #include <vector>
 using namespace std;
 
-Tank::Tank(double health, double x, double y, double direction, Color color, bool canPass, int controllerId, vector<Entity> *entities) : Entity(x, y, direction, color, canPass), health(health), controllerId(controllerId), entities(entities) {}
+Tank::Tank(double health, double x, double y, double direction, Color color, bool canPass, int controllerId, vector<Entity> *entities) : Entity(x, y, direction, color, canPass), health(health), controllerId(controllerId), entities(entities) {
+    width = 20;
+    height = 40;
+}
 
 
 Tank::~Tank() {}
@@ -25,7 +28,7 @@ void Tank::rotate(Sign sign) {
     }
 }
 
-Projectile Tank::shoot() {
+void Tank::shoot() {
     double dirRads = direction * M_PI / 180.0;
     
     double dx, dy;
@@ -34,7 +37,7 @@ Projectile Tank::shoot() {
     dy = sin(dirRads);
     
     Projectile p(5, dx, dy, direction, getColor(), true);
-    return p;
+    entities->push_back(p);
 }
 
 
@@ -44,7 +47,9 @@ double Tank::getHealth(){
 
 
 void Tank::setHealth(double h){
-    health = h;
+    if(h > 0) {
+        health = h;
+    }
 }
 
 int Tank::getControllerId() {

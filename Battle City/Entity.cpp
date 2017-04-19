@@ -25,22 +25,36 @@ void Entity::move(Sign sign) {
     topLeft.setY(sign * dy);
 }
 
-double Entity:: getX() const{
+double Entity::getX() const{
     return topLeft.getX();
 }
 
 
-double Entity:: getY() const{
+double Entity::getY() const{
     return topLeft.getY();
     
 }
 
+double Entity::getHeight() const {
+    return height;
+}
+
+void Entity::setHeight(double height) {
+    this->height = height;
+}
+
+double Entity::getWidth() const {
+    return width;
+}
+
+void Entity::setWidth(double width) {
+    this->width = width;
+}
 
 double Entity::getDirection() const{
     return direction;
     
 }
-
 
 void Entity::setDirection(double s){
     direction = s;
@@ -49,6 +63,10 @@ void Entity::setDirection(double s){
 
 Color Entity::getColor() const{
     return color;
+}
+
+void Entity::setColor(Color &color) {
+    this->color = color;
 }
 
 void Entity::draw(){

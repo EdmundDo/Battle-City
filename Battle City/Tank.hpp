@@ -20,11 +20,30 @@ public:
     Tank(double health, double x, double y, double direction, Color color, bool canPass, int controllerId, vector<Entity> *entities);
     ~Tank();
     
-    Projectile shoot();
+    /**
+     * Requires: nothing
+     * Modifies: entities
+     * Effects: creates a projectile
+     */
+    
+    void shoot();
+    
+    /**
+     * Requires: nothing
+     * Modifies: direction
+     * Effects: rotates the tank
+     */
+    
     void rotate(Sign r);
+    
+    /**
+     * Requires: h > 0
+     * Modifies: health
+     * Effects: getters and setters
+     */
+    
     void setHealth(double h);
     double getHealth();
-    
     int getControllerId();
     
     virtual void draw() override;
