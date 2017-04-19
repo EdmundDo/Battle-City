@@ -9,28 +9,66 @@
 #ifndef Map_hpp
 #define Map_hpp
 
-#include <vector>
-using namespace std;
+#include "Point2D.hpp"
 
-struct Point2D {
-    int x;
-    int y;
-};
+#include <vector>
+#include <random>
+using namespace std;
 
 class Map {
 public:
     Map(int width, int height);
     ~Map();
     
-    MapObject* getObstacleAt(int x, int y);
-    Terrain* getTerrainAt(int x, int y);
+    /**
+     * Requires: x < width and y < height
+     * Modifies: preferredStartLocations
+     * Effects: Adds a start coordinate to the map
+     */
     
-    vector<Point2D> getPreferredStartCoords() const;
     void addPreferredStartCoord(int x, int y);
+    
+    /**
+     * Requires: x < width and y < height
+     * Modifies: preferredStartLocations
+     * Effects: Removes a start coordinate from the map
+     */
+    
     void removePreferredStartCoord(int x, int y);
     
+    /**
+     * Requires: mobj.getX() < width and mobj.getY() < height
+     * Modifies: mapObjs
+     * Effects: Adds an object to the map
+     */
+    
     void addMapObj(MapObject &mobj);
+    
+    /**
+     * Requires: x < width and y < height
+     * Modifies: mapObjs
+     * Effects: Removes an object to the map
+     */
+    
     void removeMapObjAt(int x, int y);
+    
+    /**
+     * Requires: nothing
+     * Modifies: nothing
+     * Effects: gets a random start coordinate
+     */
+    
+    Point2D getRandomStartCoords() const;
+    
+    /**
+     * Requires: nothing
+     * Modifies: nothing
+     * Effects: getters for objects in the Map
+     */
+    
+    MapObject* getMapObjectAt(int x, int y) const;
+    Obstacle* getObstacleAt(int x, int y) const;
+    Terrain* getTerrainAt(int x, int y) const;
     
 private:
     vector<Point2D> preferredStartCoords;
