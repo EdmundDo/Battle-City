@@ -10,6 +10,10 @@
 
 #include <random>
 
+Map::Map(string filepath) {
+    loadMapFromFile(filepath);
+}
+
 Map::Map(int width, int height) : width(width), height(height) {}
 
 Map::~Map() {}
