@@ -17,19 +17,43 @@ Projectile Controller::shoot() {
 }
 
 void Controller::rotateLeft() {
-    tank.rotate(ENEG);
+    if(canRotateLeft) {
+        tank.rotate(EPOS);
+    }
+    
+    if(!canRotateRight) {
+        canRotateRight = true;
+    }
 }
 
 void Controller::rotateRight() {
-    tank.rotate(EPOS);
+    if(canRotateRight) {
+        tank.rotate(ENEG);
+    }
+    
+    if(!canRotateLeft) {
+        canRotateLeft = true;
+    }
 }
 
 void Controller::moveForward() {
-    tank.move(EPOS);
+    if(canMoveForward) {
+        tank.move(EPOS);
+    }
+    
+    if(!canMoveBack) {
+        canMoveBack = true;
+    }
 }
 
 void Controller::moveBackward() {
-    tank.move(ENEG);
+    if(canMoveBack) {
+        tank.move(ENEG);
+    }
+    
+    if(!canMoveForward) {
+        canMoveForward = true;
+    }
 }
 
 void Controller::setCanMoveForward(bool tf) {
@@ -46,6 +70,22 @@ void Controller::setCanMoveBack(bool tf) {
 
 bool Controller::getCanMoveBack() const {
     return canMoveBack;
+}
+
+void Controller::setCanRotateRight(bool tf) {
+    canRotateRight = tf;
+}
+
+bool Controller::getCanRotateright() const {
+    return canRotateRight;
+}
+
+void Controller::setCanRotateLeft(bool tf) {
+    canRotateLeft = tf;
+}
+
+bool Controller::getCanMRotateLeft() const {
+    return canRotateLeft;
 }
 
 Tank Controller::getTank() const {

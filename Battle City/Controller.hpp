@@ -54,7 +54,7 @@ public:
     
     /**
      * Requires: nothing
-     * Modifies: flags
+     * Modifies: canMoveForward, canMoveBack
      * Effects: getters and setters
      */
     
@@ -62,10 +62,14 @@ public:
     virtual bool getCanMoveForward() const;
     virtual void setCanMoveBack(bool tf);
     virtual bool getCanMoveBack() const;
+    virtual void setCanRotateRight(bool tf);
+    virtual bool getCanRotateright() const;
+    virtual void setCanRotateLeft(bool tf);
+    virtual bool getCanMRotateLeft() const;
     
 protected:
     Tank tank;                  // Tank associated with this object
-    bool canMoveForward, canMoveBack;
+    bool canMoveForward, canMoveBack, canRotateRight, canRotateLeft;
 };
 
 #endif /* Controller_hpp */
