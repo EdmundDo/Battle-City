@@ -9,6 +9,18 @@
 #include "MapIO.hpp"
 #include "Color.hpp"
 
+MapIO::MapIO() {}
+
+MapIO::~MapIO() {}
+
+void MapIO::setFilePath(string filepath) {
+    this->filepath = filepath;
+}
+
+string MapIO::getFilePath() const {
+    return filepath;
+}
+
 Map MapIO::read() {
     
     // Creates the map
