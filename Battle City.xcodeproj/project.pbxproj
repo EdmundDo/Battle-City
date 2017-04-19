@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		382ECB2F1EA6C4A400C84379 /* Point2D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 382ECB2D1EA6C4A400C84379 /* Point2D.cpp */; };
+		382ECB321EA79E1900C84379 /* MapIO.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 382ECB301EA79E1900C84379 /* MapIO.cpp */; };
 		385B8B531E98002E009F64C0 /* PlayerController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 388448F81E9309D400CB253D /* PlayerController.cpp */; };
 		385B8B541E980030009F64C0 /* Controller.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 388449101E93510700CB253D /* Controller.cpp */; };
 		385B8B551E99D2BC009F64C0 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 388448E51E9305F500CB253D /* main.cpp */; };
@@ -39,6 +40,8 @@
 		382ECB2B1EA1626900C84379 /* Color.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Color.hpp; sourceTree = "<group>"; };
 		382ECB2D1EA6C4A400C84379 /* Point2D.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Point2D.cpp; sourceTree = "<group>"; };
 		382ECB2E1EA6C4A400C84379 /* Point2D.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Point2D.hpp; sourceTree = "<group>"; };
+		382ECB301EA79E1900C84379 /* MapIO.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MapIO.cpp; sourceTree = "<group>"; };
+		382ECB311EA79E1900C84379 /* MapIO.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = MapIO.hpp; sourceTree = "<group>"; };
 		388448E21E9305F500CB253D /* Battle City */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Battle City"; sourceTree = BUILT_PRODUCTS_DIR; };
 		388448E51E9305F500CB253D /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		388448EE1E93091900CB253D /* Game.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Game.cpp; sourceTree = "<group>"; };
@@ -110,6 +113,8 @@
 				388448F51E93099800CB253D /* Map.hpp */,
 				382ECB2D1EA6C4A400C84379 /* Point2D.cpp */,
 				382ECB2E1EA6C4A400C84379 /* Point2D.hpp */,
+				382ECB301EA79E1900C84379 /* MapIO.cpp */,
+				382ECB311EA79E1900C84379 /* MapIO.hpp */,
 			);
 			path = "Battle City";
 			sourceTree = "<group>";
@@ -211,6 +216,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				388449031E9309FF00CB253D /* Terrain.cpp in Sources */,
+				382ECB321EA79E1900C84379 /* MapIO.cpp in Sources */,
 				388449061E930A0F00CB253D /* DestructibleObstacle.cpp in Sources */,
 				388448FD1E9309EA00CB253D /* MapObject.cpp in Sources */,
 				3884490C1E930A2700CB253D /* Tank.cpp in Sources */,
