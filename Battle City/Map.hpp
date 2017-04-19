@@ -71,6 +71,9 @@ public:
     Obstacle* getObstacleAt(int x, int y) const;
     Terrain* getTerrainAt(int x, int y) const;
     
+    int getWidth() const;
+    int getHeight() const;
+    
 private:
     vector<Point2D> preferredStartCoords;
     vector<MapObject> mapObjs;

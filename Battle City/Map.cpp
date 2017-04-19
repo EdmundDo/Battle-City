@@ -82,3 +82,11 @@ Terrain* Map::getTerrainAt(int x, int y) {
     
     return nullptr;
 }
+
+int Map::getWidth() const {
+    return width;
+}
+
+int Map::getHeight() const {
+    return height;
+}
