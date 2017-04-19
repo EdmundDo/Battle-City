@@ -9,7 +9,10 @@
 #include "Entity.hpp"
 #include <cmath>
 
-Entity::Entity(double x, double y, double direction, Color color, bool canPass) : coordX(x), coordY(y), direction(direction), color(color), canPass(canPass) {}
+Entity::Entity(double x, double y, double direction, Color color, bool canPass) : direction(direction), color(color), canPass(canPass) {
+    topLeft.setX(x);
+    topLeft.setY(y);
+}
 
 void Entity::move(Sign sign) {
     double dirRads = direction * M_PI / 180.0;
@@ -18,19 +21,17 @@ void Entity::move(Sign sign) {
     dx = cos(dirRads);
     dy = sin(dirRads);
     
-    
-    coordX = sign * dx;
-    coordY = sign * dy;
+    topLeft.setX(sign * dx);
+    topLeft.setY(sign * dy);
 }
 
 double Entity:: getX() const{
-    return coordX;
-    
+    return topLeft.getX();
 }
 
 
 double Entity:: getY() const{
-    return coordY;
+    return topLeft.getY();
     
 }
 
