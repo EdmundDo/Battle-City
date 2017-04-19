@@ -20,7 +20,7 @@ using namespace std;
 
 class Game {
 public:
-    Game();
+    Game(Map map);
     ~Game();
     
     /**
@@ -37,7 +37,7 @@ public:
      * Effects: Adds a tank to the map with the specified controller
      */
     
-    void createPlayerTank(TankKeyBindings bindings);
+    void createPlayerTank(TankKeyBindings bindings, Color color);
     
     /**
      * Requires: x < map.getWidth() and y < map.getHeight()
@@ -45,7 +45,7 @@ public:
      * Effects: Adds a tank to the map with the specified controller
      */
     
-    void createPlayerTank(TankKeyBindings bindings, int x, int y);
+    void createPlayerTank(TankKeyBindings bindings, int x, int y, int direction, Color color);
     
     /**
      * Requires: nothing
@@ -85,13 +85,15 @@ private:
     void updateMap();
     void updateEntities();
     
+    void checkCollision(Projectile &p, MapObject &mobj, int i);
+    
     /**
      * Requires: nothing
      * Modifies: nothing
      * Effects: prevents the entity from moving through mobj
      */
     
-    void handleCollision(Entity e, MapObject mobj);
+    void checkCollision(Tank &t, MapObject &mobj);
     
     /**
      * Requires: nothing
@@ -99,7 +101,9 @@ private:
      * Effects: e1 and e2 interacts
      */
     
-    void handleCollision(Entity e1, Entity e2);
+    void checkCollision(Tank &t, Projectile &p);
+    
+    void checkCollision(Tank &t1, Tank &t2);
 };
 
 #endif /* Game_hpp */

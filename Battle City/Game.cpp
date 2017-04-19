@@ -7,6 +7,7 @@
 //
 
 #include "Game.hpp"
+#include "Point2D.hpp"
 
 #include <random>
 using namespace std;
@@ -17,13 +18,12 @@ Game::~Game() {}
 
 bool Game::checkGameStatus() {
     for(int i = 0; i < controllers.size(); i++) {
-        if(controllers[i].getTank().getHealth == 0) {
+        if(controllers[i].getTank().getHealth() == 0) {
             controllers.erase(controllers.begin() + i);
         }
     }
     
     if (controllers.size() == 0) {
-        // draw
         isPlaying = false;
     } else if (controllers.size() == 1) {
         controllers[0].getTank().getColor(); // This tank won
@@ -31,20 +31,13 @@ bool Game::checkGameStatus() {
     }
 }
 
-void Game::createPlayerTank(TankKeyBindings bindings) {
-    vector<Point2D> startCoords = map.getPreferredStartCoords();
-    
-    // get random start coordinate
-    random_device rnd;
-    int rand_index = rnd() % startCoords.size();
-    
-    createTankController(bindings, startCoords[rand_index].x, startCoords[rand_index].y);
+void Game::createPlayerTank(TankKeyBindings bindings, Color color) {
+    Point2D startCoords = map.getRandomStartCoords();
+    createPlayerTank(bindings, startCoords.getX(), startCoords.getY(), 90, color);
 }
 
-void Game::createPlayerTank(TankKeyBindings bindings, int x, int y) {
-    Tank tank();        // Init with start coords startCoords[rand_index].x and startCoords[rand_index].y
-                        // etc., etc...
-    
+void Game::createPlayerTank(TankKeyBindings bindings, int x, int y, int direction, Color color) {
+    Tank tank(10, x, y, direction, color, false, controllers.size(), &entities);
     controllers.push_back(PlayerController(tank, bindings));
 }
 
@@ -57,40 +50,98 @@ void Game::checkCollisions() {
     for(int i = 0; i < entities.size(); i++) {
         // Check for overlapping coordinates
         
-        double x = entities[i].getX();
-        double y = entities[i].getY();
+        double ex = entities[i].getX();
+        double ey = entities[i].getY();
+        double ewidth = entities[i].getWidth();
+        double eheight = entities[i].getHeight();
         
-        // Check area around entities[i]
-        // Map.getObjectAt()
-        // And check for overlap
-        int checkX = x + 1, checkY;
+        // Check for overlapping obstacles around entities[i]
         
-        for(int checkX = x + entities[i].getWidth(); checkX > x - entities[i].getWidth(); i--
+        for(int x = ex + entities[i].getWidth(); x > ex - ewidth; x--) {
+            for (int y = ey + entities[i].getHeight(); y > ey - eheight; y--) {
+                MapObject* obj;
+                if((obj = map.getMapObjectAt(x, y)) != nullptr) {
+                    if(Tank *t = dynamic_cast<Tank*>(&entities[i])) {
+                        checkCollision(*t, obj);
+                    } else if(Projectile *p = dynamic_cast<Projectile*>(&entities[i])) {
+                        checkCollision(*p, obj, i);
+                    }
+                }
+            }
+        }
         
         for(int j = 0; j < entities.size(); j++) {
             // Check if entities[i] and entities[j] overlap
+            if(Tank *t1 = dynamic_cast<Tank*>(&entities[i])) {
+                if(Tank *t2 = dynamic_cast<Tank*>(&entities[i])) {
+                    checkCollision(*t1, *t2);
+                } else if(Projectile *p = dynamic_cast<Projectile*>(&entities[i])) {
+                    checkCollision(*t1, *p);
+                }
+            }
         }
     }
 }
 
 void Game::updateMap() {
-    // Empty for the time being until we implement destriuctible obstacles
+    // Empty for the time being until we have time to implement destructible obstacles
 }
 
 void Game::updateEntities() {
     checkCollisions();
     
     for(int i = 0; i < entities.size(); i++) {
-        entities.draw();
+        entities[i].draw();
     }
 }
 
-
-
-void Game::handleCollision(Entity e, MapObject mobj) {
-    
+void Game::checkCollision(Projectile &p, MapObject &mobj, int i) {
+    if(true) {      // If an obstacle and overlaps in front
+        entities.erase(entities.begin() + i);
+    }
 }
 
-void Game::handleCollision(Entity e1, Entity e2) {
+void Game::checkCollision(Tank &t, MapObject &mobj) {
+    int controllerId = t.getControllerId();
     
+    if(true) {              // Check if obstacle overlaps in front
+        // disable moving forward
+        controllers[controllerId].setCanMoveForward(false);
+    } else if(true) {       // Check if obstacle overlaps in back
+        // disable moving backward
+        controllers[controllerId].setCanMoveBack(false);
+    } else if(true) {       // Check if obstacle overlaps the right side
+        // disable rotating right
+        controllers[controllerId].setCanRotateRight(false);
+    } else if(true) {       // Check if obstacle overlaps the left side
+        controllers[controllerId].setCanRotateLeft(false);
+    }
+}
+
+void Game::checkCollision(Tank &t1, Tank &t2) {
+    int controllerIdOne = t1.getControllerId();
+    int controllerIdTwo = t2.getControllerId();
+    
+    if(true) {              // Check if overlapping on t1 front and t2 right side
+        // disable moving forward
+        controllers[controllerIdOne].setCanMoveForward(false);
+        controllers[controllerIdTwo].setCanRotateRight(false);
+    } else if(true) {       // Check if overlapping on t1 front and t2 left side
+        // disable moving backward
+        controllers[controllerIdOne].setCanMoveForward(false);
+        controllers[controllerIdTwo].setCanRotateLeft(false);
+    } else if(true) {       // Check if overlapping on t1 back and t2 right side
+        // disable rotating right
+        controllers[controllerIdOne].setCanMoveBack(false);
+        controllers[controllerIdTwo].setCanRotateRight(false);
+    } else if(true) {       // Check if obstacle overlaps t1 back and t2 left side
+        controllers[controllerIdOne].setCanMoveBack(false);
+        controllers[controllerIdTwo].setCanRotateLeft(false);
+    }
+}
+
+void Game::checkCollision(Tank &t, Projectile &p) {
+    if(true) {              // Check if projectile and tank are overlapping
+        t.setHealth(t.getHealth() - p.getDamage());
+    }
 }
