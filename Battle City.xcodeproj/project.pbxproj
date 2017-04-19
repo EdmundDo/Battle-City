@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		382ECB2F1EA6C4A400C84379 /* Point2D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 382ECB2D1EA6C4A400C84379 /* Point2D.cpp */; };
 		385B8B531E98002E009F64C0 /* PlayerController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 388448F81E9309D400CB253D /* PlayerController.cpp */; };
 		385B8B541E980030009F64C0 /* Controller.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 388449101E93510700CB253D /* Controller.cpp */; };
 		385B8B551E99D2BC009F64C0 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 388448E51E9305F500CB253D /* main.cpp */; };
@@ -36,6 +37,8 @@
 
 /* Begin PBXFileReference section */
 		382ECB2B1EA1626900C84379 /* Color.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Color.hpp; sourceTree = "<group>"; };
+		382ECB2D1EA6C4A400C84379 /* Point2D.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Point2D.cpp; sourceTree = "<group>"; };
+		382ECB2E1EA6C4A400C84379 /* Point2D.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Point2D.hpp; sourceTree = "<group>"; };
 		388448E21E9305F500CB253D /* Battle City */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Battle City"; sourceTree = BUILT_PRODUCTS_DIR; };
 		388448E51E9305F500CB253D /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		388448EE1E93091900CB253D /* Game.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Game.cpp; sourceTree = "<group>"; };
@@ -105,6 +108,8 @@
 				388448F21E93093D00CB253D /* LevelEditor.hpp */,
 				388448F41E93099800CB253D /* Map.cpp */,
 				388448F51E93099800CB253D /* Map.hpp */,
+				382ECB2D1EA6C4A400C84379 /* Point2D.cpp */,
+				382ECB2E1EA6C4A400C84379 /* Point2D.hpp */,
 			);
 			path = "Battle City";
 			sourceTree = "<group>";
@@ -211,6 +216,7 @@
 				3884490C1E930A2700CB253D /* Tank.cpp in Sources */,
 				388448F31E93093D00CB253D /* LevelEditor.cpp in Sources */,
 				388448F61E93099800CB253D /* Map.cpp in Sources */,
+				382ECB2F1EA6C4A400C84379 /* Point2D.cpp in Sources */,
 				3884490F1E930A3400CB253D /* Projectile.cpp in Sources */,
 				385B8B541E980030009F64C0 /* Controller.cpp in Sources */,
 				388448F01E93091900CB253D /* Game.cpp in Sources */,
