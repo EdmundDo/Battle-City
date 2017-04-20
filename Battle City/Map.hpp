@@ -11,6 +11,8 @@
 
 #include "Point2D.hpp"
 #include "MapObject.hpp"
+#include "Obstacle.hpp"
+#include "Terrain.hpp"
 
 #include <vector>
 #include <random>
@@ -65,16 +67,19 @@ public:
     /**
      * Requires: nothing
      * Modifies: nothing
-     * Effects: getters for objects in the Map
+     * Effects: getters
      */
     
     MapObject* getMapObjectAt(int x, int y) const;
     Obstacle* getObstacleAt(int x, int y) const;
     Terrain* getTerrainAt(int x, int y) const;
     
+    int getWidth() const;
+    int getHeight() const;
+    
 private:
     vector<Point2D> preferredStartCoords;
-    vector<MapObject> mapObjs;
+    vector<MapObject*> mapObjs;
     int width, height;
     
     void loadMapFromFile(string filepath);
