@@ -1,9 +1,24 @@
 //
 //  Terrain.cpp
-//  Battle City
+//  CS120
 //
-//  Created by Edmund Do on 4/3/17.
-//  Copyright © 2017 Edmund Do. All rights reserved.
+//  Created by Shaw on 4/14/17.
+//  Copyright © 2017 Shaw. All rights reserved.
 //
 
 #include "Terrain.hpp"
+
+Terrain::Terrain(){
+    
+}
+
+bool Terrain::getIsPassable(){
+    
+    return isPassable;
+}
+
+void Terrain::setIsPassable(bool a ){
+    
+    isPassable = a;
+    
+}
