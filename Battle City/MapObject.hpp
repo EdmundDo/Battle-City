@@ -8,38 +8,36 @@
 
 #ifndef MapObject_hpp
 #define MapObject_hpp
-#include <iostream>
+
+#include "Color.hpp"
+#include "Point2D.hpp"
+
+#include <string>
 using namespace std;
-#include <stdio.h>
-#include"Color.hpp"
 
 class MapObject{
     
 public:
-    MapObject();
+    MapObject(int x, int y);
     
-    string getName();
+    /**
+     * Requires: nothing
+     * Modifies: nothing
+     * Effects: getters
+     */
     
-    int getCoordX();
+    virtual string getName() const;
+    virtual int getCoordX() const;
+    virtual int getCoordY() const;
     
-    int getCoordY();
-    
-    void draw();
-    
-    
+    virtual void draw() = 0;
     
 protected:
     
-    
     string name;
-    int coordX;
-    int coordY;
-    
+    Point2D topLeft;
     Color color;
     
 };
-
-
-
 
 #endif /* MapObject_hpp */

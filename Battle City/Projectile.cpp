@@ -14,19 +14,13 @@ Projectile::Projectile(double damage, double x, double y, double direction, Colo
     height = 10;
 }
 
-
 Projectile::~Projectile() {}
 
-
-
 void Projectile::setDamage(double d){
-    
-    damage=d;
+    damage = d;
 }
 
-
-double Projectile::getDamage(){
-    
+double Projectile::getDamage() const{
     return damage;    
 }
 

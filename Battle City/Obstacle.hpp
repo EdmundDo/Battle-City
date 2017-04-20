@@ -8,50 +8,51 @@
 
 #ifndef Obstacle_hpp
 #define Obstacle_hpp
-#include <iostream>
+
 #include "MapObject.hpp"
+#include "Terrain.hpp"
 
-#include"Terrain.cpp"
+class Obstacle : public MapObject{
 
-using namespace std;
-
-class Obstacle:public MapObject{
-    
 public:
      //constructor
-    Obstacle(Terrain a);
+    Obstacle(int x, int y, Terrain a);
+    
+    /**
+     * Requires: nothing
+     * Modifies: nothing
+     * Effects: getters and setters
+     */
     
     Terrain getunderlyingTerrain();
-    
-   
     void setUnderlyingTerrain(Terrain a);
+    
+    virtual void draw() override;
     
 private:
     Terrain underlyingTerrain;
-    
 };
 
 
 
-
-class DestructibleObstacle:public Obstacle{
+class DestructibleObstacle : public Obstacle{
     
 public:
     
     //constructor
-    DestructibleObstacle(Terrain a, double health);
+    DestructibleObstacle(int x, int y, Terrain a, double health);
     
-    double getRemainingHealth();
+    /**
+     * Requires: nothing
+     * Modifies: nothing
+     * Effects: getters and setters
+     */
+    
+    void setRemainingHealth(double health);
+    double getRemainingHealth() const;
     
 private:
-    
-   
-    
     double health;
 };
-
-
-
-#include <stdio.h>
 
 #endif /* Obstacle_hpp */

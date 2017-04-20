@@ -9,30 +9,24 @@
 #include "Obstacle.hpp"
 
 
-Obstacle::Obstacle(Terrain a):underlyingTerrain(a){
-    
+Obstacle::Obstacle(int x, int y, Terrain a) : MapObject(x, y), underlyingTerrain(a) {}
+
+Terrain Obstacle::getunderlyingTerrain(){
+    return underlyingTerrain;
 }
-
-
- Terrain Obstacle::getunderlyingTerrain(){
-     
-     return underlyingTerrain;
-     
-}
-
-
 
 void Obstacle::setUnderlyingTerrain(Terrain a){
-    
     underlyingTerrain = a;
-    
-}
-
-DestructibleObstacle::DestructibleObstacle(Terrain a, double h):Obstacle(a),health(h){
-    
 }
 
 
-double DestructibleObstacle::getRemainingHealth(){
+
+DestructibleObstacle::DestructibleObstacle(int x, int y, Terrain a, double h) : Obstacle(x, y, a), health(h) {}
+
+void DestructibleObstacle::setRemainingHealth(double health) {
+    this->health = health;
+}
+
+double DestructibleObstacle::getRemainingHealth() const{
     return health;
 }

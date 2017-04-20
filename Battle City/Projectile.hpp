@@ -17,10 +17,15 @@ class Projectile : public Entity{
 public:
     Projectile(double damage, double x, double y, double direction, Color color, bool canPass);
     ~Projectile();
-
+    
+    /**
+     * Requires: nothing
+     * Modifies: damage
+     * Effects: getters and setters
+     */
 
     void setDamage(double d);
-    double getDamage();
+    double getDamage() const;
     
     virtual void draw() override;
     

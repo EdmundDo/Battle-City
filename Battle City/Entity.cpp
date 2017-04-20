@@ -68,7 +68,3 @@ Color Entity::getColor() const{
 void Entity::setColor(Color &color) {
     this->color = color;
 }
-
-void Entity::draw(){
-    
-}

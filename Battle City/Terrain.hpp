@@ -8,26 +8,28 @@
 
 #ifndef Terrain_hpp
 #define Terrain_hpp
-#include "Obstacle.hpp"
 
-class Terrain:public Obstacle{
+#include "MapObject.hpp"
+
+class Terrain : public MapObject{
     
 public:
     
-    Terrain();
+    Terrain(int x, int y, bool isPassable);
     
-    bool getIsPassable();
+    /**
+     * Requires: nothing
+     * Modifies: nothing
+     * Effects: getters and setters
+     */
     
+    bool getIsPassable() const;
     void setIsPassable(bool a);
     
+    virtual void draw() override;
+    
 private:
-    
     bool isPassable;
-    
-    
 };
-
-
-#include <stdio.h>
 
 #endif /* Terrain_hpp */

@@ -7,25 +7,21 @@
 //
 
 #include "MapObject.hpp"
-using namespace std;
 
-MapObject::MapObject(){
-    
+MapObject::MapObject(int x, int y) {
+    this->topLeft.setX(x);
+    this->topLeft.setY(y);
 }
 
-void MapObject::draw(){
-    
-}
-
-string MapObject::getName(){
+string MapObject::getName() const{
     return name;
 }
 
-int MapObject::getCoordX(){
-    return coordX;
+int MapObject::getCoordX() const{
+    return topLeft.getX();
 }
 
-int MapObject::getCoordY(){
-    return coordY;
+int MapObject::getCoordY() const{
+    return topLeft.getY();
 }
 
