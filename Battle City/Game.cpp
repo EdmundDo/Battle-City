@@ -66,9 +66,9 @@ void Game::checkCollisions() {
                 MapObject* obj;
                 if((obj = map.getMapObjectAt(x, y)) != nullptr) {
                     if(Tank *t = dynamic_cast<Tank*>(&entities[i])) {
-                        checkCollision(*t, obj);
+                        checkCollision(*t, *obj);
                     } else if(Projectile *p = dynamic_cast<Projectile*>(&entities[i])) {
-                        checkCollision(*p, obj, i);
+                        checkCollision(*p, *obj, i);
                     }
                 }
             }
