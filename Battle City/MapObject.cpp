@@ -9,7 +9,7 @@
 #include "MapObject.hpp"
 #include "Color.hpp"
 
-MapObject::MapObject(int x, int y, Color color) : color(color) {
+MapObject::MapObject(int x, int y, int width, int height, Color color) : width(width), height(height), color(color) {
     this->topLeft.setX(x);
     this->topLeft.setY(y);
 }
@@ -24,6 +24,14 @@ int MapObject::getCoordX() const{
 
 int MapObject::getCoordY() const{
     return topLeft.getY();
+}
+
+int MapObject::getWidth() const{
+    return width;
+}
+
+int MapObject::getHeight() const{
+    return height;
 }
 
 Color MapObject::getColor() const{

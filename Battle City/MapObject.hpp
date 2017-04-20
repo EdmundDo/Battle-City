@@ -18,7 +18,7 @@ using namespace std;
 class MapObject{
     
 public:
-    MapObject(int x, int y, Color color);
+    MapObject(int x, int y, int width, int height, Color color);
     
     /**
      * Requires: r, g, b must be between 0 and 255
@@ -29,6 +29,8 @@ public:
     virtual string getName() const;
     virtual int getCoordX() const;
     virtual int getCoordY() const;
+    virtual int getWidth() const;
+    virtual int getHeight() const;
     virtual Color getColor() const;
     virtual void setColor(Color &color);
     virtual void setColor(int r, int g, int b);
@@ -39,6 +41,7 @@ protected:
     
     string name;
     Point2D topLeft;
+    int width, height;
     Color color;
     
 };
