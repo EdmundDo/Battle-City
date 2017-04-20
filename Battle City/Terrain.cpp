@@ -8,7 +8,7 @@
 
 #include "Terrain.hpp"
 
-Terrain::Terrain(int x, int y, bool isPassable) : MapObject(x, y), isPassable(isPassable) {}
+Terrain::Terrain(int x, int y, Color color, bool isPassable) : MapObject(x, y, color), isPassable(isPassable) {}
 
 bool Terrain::getIsPassable() const{
     return isPassable;
