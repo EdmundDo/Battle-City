@@ -8,6 +8,8 @@
 
 #include "MapIO.hpp"
 #include "Color.hpp"
+#include "Terrain.hpp"
+#include "Obstacle.hpp"
 
 MapIO::MapIO() {}
 
@@ -25,22 +27,25 @@ Map MapIO::read() {
     
     // Creates the map
     string width, height;
-    in >> width;
-    in >> height;
+    getline(in, width);
+    getline(in, height);
     
     Map map(stoi(width), stoi(height));
     
     // reads the file
     string type, line;
-    while(in >> type) {         // first line is object type
+    while(getline(in, type)) {         // first line is object type
         
         string name;
         Color color;
         int coordX = -1, coordY = -1;
         bool isPassable = true;
         
-        while(line != "}") {    // ending object type declaration
+        while(!in.eof()) {    // ending object type declaration
             getline(in, line);
+            if(line == "}") {
+                break;
+            }
             
             // checks for the type of line and assigns the value appropriately
             if (line.find("name=") != string::npos) {
@@ -58,7 +63,7 @@ Map MapIO::read() {
             } else if(line.find("x=") != string::npos) {
                 coordX = stoi(line.substr(2, line.length()));
             } else if(line.find("y=") != string::npos) {
-                coordX = stoi(line.substr(2, line.length()));
+                coordY = stoi(line.substr(2, line.length()));
             } else if(type == "terrain" && line.find("isPassable=") != string::npos) {
                 string strIsPassable = line.substr(11, line.length());
                 if(strIsPassable == "false") {
