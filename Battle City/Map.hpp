@@ -10,6 +10,7 @@
 #define Map_hpp
 
 #include "Point2D.hpp"
+#include "MapObject.hpp"
 
 #include <vector>
 #include <random>
