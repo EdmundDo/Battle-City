@@ -1,13 +1,32 @@
 //
 //  Terrain.hpp
-//  Battle City
+//  CS120
 //
-//  Created by Edmund Do on 4/3/17.
-//  Copyright © 2017 Edmund Do. All rights reserved.
+//  Created by Shaw on 4/14/17.
+//  Copyright © 2017 Shaw. All rights reserved.
 //
 
 #ifndef Terrain_hpp
 #define Terrain_hpp
+#include "Obstacle.hpp"
+
+class Terrain:public Obstacle{
+    
+public:
+    
+    Terrain();
+    
+    bool getIsPassable();
+    
+    void setIsPassable(bool a);
+    
+private:
+    
+    bool isPassable;
+    
+    
+};
+
 
 #include <stdio.h>
 
