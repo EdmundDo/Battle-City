@@ -1,9 +1,38 @@
 //
 //  Obstacle.cpp
-//  Battle City
+//  CS120
 //
-//  Created by Edmund Do on 4/3/17.
-//  Copyright © 2017 Edmund Do. All rights reserved.
+//  Created by Shaw on 4/13/17.
+//  Copyright © 2017 Shaw. All rights reserved.
 //
 
 #include "Obstacle.hpp"
+
+
+Obstacle::Obstacle(Terrain a):underlyingTerrain(a){
+    
+}
+
+
+ Terrain Obstacle::getunderlyingTerrain(){
+     
+     return underlyingTerrain;
+     
+}
+
+
+
+void Obstacle::setUnderlyingTerrain(Terrain a){
+    
+    underlyingTerrain = a;
+    
+}
+
+DestructibleObstacle::DestructibleObstacle(Terrain a, double h):Obstacle(a),health(h){
+    
+}
+
+
+double DestructibleObstacle::getRemainingHealth(){
+    return health;
+}
