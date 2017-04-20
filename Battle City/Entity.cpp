@@ -68,3 +68,9 @@ Color Entity::getColor() const{
 void Entity::setColor(Color &color) {
     this->color = color;
 }
+
+void Entity::setColor(int r, int g, int b) {
+    this->color.red = r;
+    this->color.green = g;
+    this->color.blue = b;
+}

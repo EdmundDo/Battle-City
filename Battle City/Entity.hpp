@@ -33,7 +33,7 @@ public:
     virtual void move (Sign sign);
     
     /**
-     * Requires: nothing
+     * Requires: r, g, b must be between 0 and 255
      * Modifies: directions
      * Effects: getters and setters
      */
@@ -48,6 +48,7 @@ public:
     virtual void setDirection(double s);
     virtual Color getColor() const;
     virtual void setColor(Color &color);
+    virtual void setColor(int r, int g, int b);
 
     virtual void draw() = 0;
 

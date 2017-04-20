@@ -18,17 +18,20 @@ using namespace std;
 class MapObject{
     
 public:
-    MapObject(int x, int y);
+    MapObject(int x, int y, Color color);
     
     /**
-     * Requires: nothing
-     * Modifies: nothing
-     * Effects: getters
+     * Requires: r, g, b must be between 0 and 255
+     * Modifies: color
+     * Effects: getters and setters
      */
     
     virtual string getName() const;
     virtual int getCoordX() const;
     virtual int getCoordY() const;
+    virtual Color getColor() const;
+    virtual void setColor(Color &color);
+    virtual void setColor(int r, int g, int b);
     
     virtual void draw() = 0;
     
