@@ -16,7 +16,9 @@ Map::Map(string filepath) {
     loadMapFromFile(filepath);
 }
 
-Map::Map(int width, int height) : width(width), height(height) {}
+Map::Map(int width, int height) : width(width), height(height) {
+    preferredStartCoords.push_back(Point2D(0, 0));
+}
 
 Map::~Map() {}
 

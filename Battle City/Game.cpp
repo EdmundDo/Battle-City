@@ -41,7 +41,7 @@ void Game::createPlayerTank(TankKeyBindings bindings, Color color) {
 }
 
 void Game::createPlayerTank(TankKeyBindings bindings, int x, int y, int direction, Color color) {
-    Tank tank(10, x, y, direction, color, false, controllers.size(), entities);
+    Tank tank(100, x, y, direction, color, false, controllers.size(), &entities);
     PlayerController p(tank, bindings);
     controllers.push_back(&p);
 }
