@@ -19,16 +19,14 @@ void test_tank();
 void test_projectitle();
 
 int main() {
-    cout << "hello world" << endl;
+ 
     test_tank();
     test_projectitle();
     
     
     
     
-    
     return 0;
-
 
 }
 
@@ -82,7 +80,6 @@ void test_tank(){
 }
 
 
-
 void test_projectitle(){
     
     Color color;
@@ -113,7 +110,6 @@ void test_projectitle(){
     }else{
         cout<< "Fail" << endl;
     }
-    
     
     
 }
