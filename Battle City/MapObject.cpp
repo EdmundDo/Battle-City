@@ -9,7 +9,7 @@
 #include "MapObject.hpp"
 #include "Color.hpp"
 
-MapObject::MapObject(int x, int y, int width, int height, Color color) : width(width), height(height), color(color) {
+MapObject::MapObject(string name, int x, int y, int width, int height, Color color) : name(name), width(width), height(height), color(color) {
     this->topLeft.setX(x);
     this->topLeft.setY(y);
 }
