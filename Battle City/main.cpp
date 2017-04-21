@@ -10,6 +10,9 @@
 #include "PlayerController.hpp"
 #include "Tank.hpp"
 #include "MapIO.hpp"
+#include "Obstacle.hpp"
+#include "Terrain.hpp"
+
 
 #include <iostream>
 using namespace std;
@@ -33,8 +36,19 @@ void testMapIO() {
     
     m.addMapObj(o);
     m.addMapObj(t);
+    m.addPreferredStartCoord(7, 8);
     
     MapIO::write(m, "map.txt");
+    MapData md = MapIO::read("map.txt");
+    cout << "Width: " << md.width << " Height: " << md.height << endl;
+    for (int i = 0; i < md.preferredStartCoords.size(); i++) {
+        cout << md.preferredStartCoords[i].getX() << " " << md.preferredStartCoords[i].getY() << endl;
+    }
+    
+    for (int i = 0; i < md.mapObjs.size(); i++) {
+        cout << md.mapObjs[i]->getName() << " " << md.mapObjs[i]->getCoordX() << " " << md.mapObjs[i]->getCoordY() << endl;
+    }
+    
 }
 
 void testPlayerControllers() {
