@@ -26,6 +26,15 @@ int MapObject::getCoordY() const{
     return topLeft.getY();
 }
 
+void MapObject::setXcoord(int x){
+    topLeft.setX(x);
+}
+
+void MapObject::setYcoord(int y){
+    topLeft.setY(y);
+}
+
+
 int MapObject::getWidth() const{
     return width;
 }

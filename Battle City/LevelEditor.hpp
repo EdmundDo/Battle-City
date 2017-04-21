@@ -24,9 +24,9 @@ public:
     
    
     
-    void addObstacle(int x,int y,int height, int width,Color color, Terrain terrain);
+    void addObstacle(string name,int x,int y,int height, int width,Color color, Terrain terrain);
     
-    void addTerrain(int x,int y, int height, int width, Color color, bool isPassible);
+    void addTerrain(string name, int x,int y, int height, int width, Color color, bool isPassible);
     
     void removeMapObjAt(int x, int y);
     

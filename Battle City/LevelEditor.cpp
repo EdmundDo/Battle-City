@@ -8,17 +8,17 @@
 
 #include "LevelEditor.hpp"
 
-void LevelEditor::addObstacle(int x, int y, int height, int width, Color color, Terrain terrain){
+void LevelEditor::addObstacle(string name,int x, int y, int height, int width, Color color, Terrain terrain){
     
-    Obstacle o(x, y, height, width,color,terrain);
+    Obstacle o(name,x, y, height, width,color,terrain);
     
     currentMap.addMapObj(o);
 }
 
-void LevelEditor::addTerrain(int x, int y, int height, int width, Color color, bool isPassible){
+void LevelEditor::addTerrain(string name,int x, int y, int height, int width, Color color, bool isPassible){
     
     
-    Terrain t(x, y,height, width,color,isPassible);
+    Terrain t(name,x, y,height, width,color,isPassible);
     
     currentMap.addMapObj(t);
     
@@ -31,7 +31,8 @@ void LevelEditor::removeMapObjAt(int x, int y){
 
 void LevelEditor::addPreferredStart(int x, int y){
     
-    currentMap.addPreferredStartCoord（x,y);
+    currentMap.addPreferredStartCoord(x,y);
+    
     
 }
 
@@ -41,7 +42,15 @@ void LevelEditor::removePreferredStart(int x, int y){
 
 
 void LevelEditor::fillTerrain(Terrain t){
-    for(int x=0;x<){
+    for(int x=0;x<currentMap.getWidth();x++){
+        for(int y=0;y<currentMap.getHeight();y++){
+            if(currentMap.getMapObjectAt(x,y)==nullptr){
+                t.setXcoord(x);
+                  t.setYcoord(y);
+                currentMap.addMapObj(t);
+            }
+            
+        }
         
     }
 }
