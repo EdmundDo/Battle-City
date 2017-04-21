@@ -49,6 +49,9 @@ public:
     virtual Color getColor() const;
     virtual void setColor(Color &color);
     virtual void setColor(int r, int g, int b);
+    virtual bool getCanPass();
+    virtual void setCanPass(bool tf);
+
 
     virtual void draw() = 0;
 

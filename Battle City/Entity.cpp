@@ -23,8 +23,8 @@ void Entity::move(Sign sign) {
     dx = cos(dirRads);
     dy = sin(dirRads);
     
-    topLeft.setX(sign * dx);
-    topLeft.setY(sign * dy);
+    topLeft.setX(topLeft.getX() + sign * dx);
+    topLeft.setY(topLeft.getY() + sign * dy);
 }
 
 double Entity::getX() const{
@@ -75,4 +75,12 @@ void Entity::setColor(int r, int g, int b) {
     this->color.red = r;
     this->color.green = g;
     this->color.blue = b;
+}
+
+bool Entity::getCanPass() {
+    return canPass;
+}
+
+void Entity::setCanPass(bool tf) {
+    canPass = tf;
 }
