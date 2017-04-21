@@ -16,6 +16,13 @@
 #include <string>
 using namespace std;
 
+struct MapData {
+    vector<Point2D> preferredStartCoords;
+    vector<MapObject*> mapObjs;
+    
+    int width, height;
+};
+
 class MapIO {
 public:
     MapIO();
@@ -35,7 +42,7 @@ public:
      * Effects: reads the mapobjects of the Map into a new Map
      */
     
-    static Map read(string filepath);
+    static MapData read(string filepath);
 };
 
 #endif /* MapIO_hpp */

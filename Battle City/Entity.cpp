@@ -14,6 +14,8 @@ Entity::Entity(double x, double y, double direction, Color color, bool canPass) 
     topLeft.setY(y);
 }
 
+Entity::~Entity() {}
+
 void Entity::move(Sign sign) {
     double dirRads = direction * M_PI / 180.0;
     double dx, dy;

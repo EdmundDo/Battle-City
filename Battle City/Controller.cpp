@@ -8,11 +8,11 @@
 
 #include "Controller.hpp"
 
-Controller::Controller (Tank tank) : tank(tank) {}
+Controller::Controller (Tank &tank) : tank(tank) {}
 
 Controller::~Controller() {}
 
-Projectile Controller::shoot() {
+void Controller::shoot() {
     tank.shoot();
 }
 

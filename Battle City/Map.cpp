@@ -7,6 +7,7 @@
 //
 
 #include "Map.hpp"
+#include "MapIO.hpp"
 
 #include <random>
 #include <vector>
@@ -90,4 +91,14 @@ int Map::getWidth() const {
 
 int Map::getHeight() const {
     return height;
+}
+
+void Map::loadMapFromFile(string filepath) {
+    MapData mapData = MapIO::read(filepath);
+    
+    this->width = mapData.width;
+    this->height = mapData.height;
+    
+    this->preferredStartCoords = mapData.preferredStartCoords;
+    this->mapObjs = mapData.mapObjs;
 }

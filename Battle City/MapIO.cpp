@@ -56,7 +56,7 @@ void MapIO::write(Map &map, string filepath) {
     }
 }
 
-Map MapIO::read(string filepath) {
+MapData MapIO::read(string filepath) {
     
     ifstream in(filepath);
     
@@ -65,7 +65,9 @@ Map MapIO::read(string filepath) {
     getline(in, width);
     getline(in, height);
     
-    Map map(stoi(width), stoi(height));
+    MapData mapData;
+    mapData.width = stoi(width);
+    mapData.height = stoi(height);
     
     // reads the file
     string type, line;
@@ -115,15 +117,15 @@ Map MapIO::read(string filepath) {
         if(type == "obstacle") {
             
             Obstacle o(name, coordX, coordY, width, height, color);
-            map.addMapObj(o);
+            mapData.mapObjs.push_back(&o);
             
         } else if(type == "terrain") {
             
             Terrain t(name, coordX, coordY, width, height, color, isPassable);
-            map.addMapObj(t);
+            mapData.mapObjs.push_back(&t);
             
         }
     }
     
-    return map;
+    return mapData;
 }

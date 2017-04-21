@@ -21,6 +21,10 @@ void Obstacle::setUnderlyingTerrain(Terrain a){
     underlyingTerrain = a;
 }
 
+void Obstacle::draw() {
+    
+}
+
 
 
 DestructibleObstacle::DestructibleObstacle(string name, int x, int y, int width, int height, Color color, Terrain a, double h) : Obstacle(name, x, y, width, height, color, a), health(h) {}

@@ -54,24 +54,12 @@ public:
 
 protected:
     
-    
     bool canPass;
     double direction,
         height, width;
     Color color;
     Point2D topLeft;
-
-
 };
-
-
-
-
-
-
-
-
-
 
 
 #endif /* Entity_hpp */
