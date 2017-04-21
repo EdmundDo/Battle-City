@@ -16,7 +16,8 @@ class Obstacle : public MapObject{
 
 public:
      //constructor
-    Obstacle(int x, int y, int width, int height, Color color, Terrain a);
+    Obstacle(string name, int x, int y, int width, int height, Color color);
+    Obstacle(string name, int x, int y, int width, int height, Color color, Terrain a);
     
     /**
      * Requires: nothing
@@ -40,7 +41,7 @@ class DestructibleObstacle : public Obstacle{
 public:
     
     //constructor
-    DestructibleObstacle(int x, int y, int width, int height, Color color, Terrain a, double health);
+    DestructibleObstacle(string name, int x, int y, int width, int height, Color color, Terrain a, double health);
     
     /**
      * Requires: nothing

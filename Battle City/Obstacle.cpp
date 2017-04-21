@@ -9,7 +9,9 @@
 #include "Obstacle.hpp"
 
 
-Obstacle::Obstacle(int x, int y, int width, int height, Color color, Terrain a) : MapObject(x, y, width, height, color), underlyingTerrain(a) {}
+Obstacle::Obstacle(string name, int x, int y, int width, int height, Color color) : MapObject(name, x, y, width, height, color), underlyingTerrain(Terrain("nothing", x, y, width, height, color, true)) {}
+
+Obstacle::Obstacle(string name, int x, int y, int width, int height, Color color, Terrain a) : MapObject(name, x, y, width, height, color), underlyingTerrain(a) {}
 
 Terrain Obstacle::getunderlyingTerrain(){
     return underlyingTerrain;
@@ -21,7 +23,7 @@ void Obstacle::setUnderlyingTerrain(Terrain a){
 
 
 
-DestructibleObstacle::DestructibleObstacle(int x, int y, int width, int height, Color color, Terrain a, double h) : Obstacle(x, y, width, height, color, a), health(h) {}
+DestructibleObstacle::DestructibleObstacle(string name, int x, int y, int width, int height, Color color, Terrain a, double h) : Obstacle(name, x, y, width, height, color, a), health(h) {}
 
 void DestructibleObstacle::setRemainingHealth(double health) {
     this->health = health;
