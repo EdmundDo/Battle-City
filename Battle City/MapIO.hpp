@@ -28,7 +28,7 @@ public:
      */
     
     void setFilePath(string filepath);
-    void getFilePath() const;
+    string getFilePath() const;
     
     /**
      * Requires: nothing
@@ -46,7 +46,7 @@ public:
      * Effects: reads the mapobjects of the Map into a new Map
      */
     
-    void read();
+    Map read();
     
 private:
     string filepath;

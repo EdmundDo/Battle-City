@@ -7,50 +7,123 @@
 //
 
 #include "MapIO.hpp"
+#include "Color.hpp"
+#include "Terrain.hpp"
+#include "Obstacle.hpp"
 
-void MapIO::write(Map &map){
-    for (int x=0; x< map.getWidth(),x++){
-        
-        out << "30 "<<endl;
-        
-        for(int y=0; y<map.getHeight(),y++){
-            
-            out << "10"<<endl;
-        
+MapIO::MapIO() {}
+
+MapIO::~MapIO() {}
+
+void MapIO::write(Map &map, string filepath) {
     
-            Obstacle *o = map.getObstacleAt(x,y);
-            if (o!= nullptr){
+    ofstream out(filepath);
+    
+    out << map.getWidth() << endl;
+    out << map.getHeight() << endl;
+    
+    for(int x = 0; x < map.getWidth(); x++) {
+        
+        for(int y = 0; y < map.getHeight(); y++) {
+            
+            if(Obstacle *o = map.getObstacleAt(x,y)) {
+                
                 out << "obstacle"<<endl;
                 out << "{" <<endl;
-                out << "name=" << o->getName() <<endl;
-                out << "color=" << o->getColor()<< endl;
-                out << "x=" <<o->getX()<<endl;
-                out << "Y=" <<o->getY()<<endl;
-                out << "}" <<endl;
-                
-            }
-        
-        
-            Terrain * t = map.getTerrainAt(x, y);
-            
-            if (t!= nullptr){
+                out << "name=" << o->getName() << endl;
+                out << "width=" << o->getWidth() << endl;
+                out << "height=" << o->getHeight() << endl;
+                out << "color=" << o->getColor().red << " " << o->getColor().green << " " << o->getColor().blue << endl;
+                out << "x=" << o->getCoordX() << endl;
+                out << "Y=" << o->getCoordY() << endl;
+                out << "}=end" << endl;
+
+            } else if(Terrain * t = map.getTerrainAt(x, y)) {
                 
                 out << "terrain"<<endl;
                 out << "{" <<endl;
-                out << "name=" << t-o->getName() <<endl;
-                out << "color=" << t->getColor() <<endl;
-                out << "x=" <<t->getX()<<endl;
-                out << "y=" <<t->getY()<<endl;
-                out << "isPassable="<<t->getIsPassable()<<endl;
-                out << "}" <<endl;
+                out << "name=" << t->getName() << endl;
+                out << "width=" << t->getWidth() << endl;
+                out << "height=" << t->getHeight() << endl;
+                out << "color=" << t->getColor().red << " " << t->getColor().green << " " << t->getColor().blue << endl;
+                out << "x=" << t->getCoordX() << endl;
+                out << "y=" << t->getCoordY() << endl;
+                out << "isPassable=" << t->getIsPassable() << endl;
+                out << "}=end" << endl;
+                
             }
-           
+        }
+    }
+}
+
+Map MapIO::read(string filepath) {
+    
+    ifstream in(filepath);
+    
+    // Creates the map
+    string width, height;
+    getline(in, width);
+    getline(in, height);
+    
+    Map map(stoi(width), stoi(height));
+    
+    // reads the file
+    string type, line;
+    while(getline(in, type)) {         // first line is object type
+        
+        string name;
+        Color color;
+        int width, height, coordX = -1, coordY = -1;
+        bool isPassable = true;
+        
+        while(!in.eof()) {    // ending object type declaration
+            getline(in, line);
+            if(line == "}=end") {
+                break;
+            }
+            
+            // checks for the type of line and assigns the value appropriately
+            if (line.find("name=") != string::npos) {
+                name = line.substr(5, line.length());
+            } else if (line.find("width=") != string::npos) {
+                width = stoi(line.substr(6, line.length()));
+            } else if (line.find("height=") != string::npos) {
+                height = stoi(line.substr(7, line.length()));
+            }else if(line.find("color=") != string::npos) {
+                
+                string strColor = line.substr(6, line.length());
+                int rgIndex = strColor.find(" ");
+                int gbIndex = strColor.find(" ", rgIndex + 1);
+                
+                color.red = stoi(strColor.substr(0, rgIndex));
+                color.green = stoi(strColor.substr(rgIndex, gbIndex - rgIndex));
+                color.blue = stoi(strColor.substr(gbIndex, line.length() - gbIndex));
+                
+            } else if(line.find("x=") != string::npos) {
+                coordX = stoi(line.substr(2, line.length()));
+            } else if(line.find("y=") != string::npos) {
+                coordY = stoi(line.substr(2, line.length()));
+            } else if(type == "terrain" && line.find("isPassable=") != string::npos) {
+                string strIsPassable = line.substr(11, line.length());
+                if(strIsPassable == "false") {
+                    isPassable = false;
+                }
+            }
+        }
+        
+        // creates the relevant object
+        if(type == "obstacle") {
+            
+            Obstacle o(name, coordX, coordY, width, height, color);
+            map.addMapObj(o);
+            
+        } else if(type == "terrain") {
+            
+            Terrain t(name, coordX, coordY, width, height, color, isPassable);
+            map.addMapObj(t);
             
         }
-       
-        
     }
     
-    
-    
+    return map;
 }
