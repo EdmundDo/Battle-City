@@ -75,8 +75,8 @@ private:
     bool isPlaying;
     
     Map map;
-    vector<Entity> entities;
-    vector<Controller> controllers;
+    vector<Entity*> entities;
+    vector<Controller*> controllers;
     
     /**
      * Helper methods for update()

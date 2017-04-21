@@ -18,7 +18,7 @@ using namespace std;
 class MapObject{
     
 public:
-    MapObject(int x, int y, int width, int height, Color color);
+    MapObject(string name, int x, int y, int width, int height, Color color);
     
     /**
      * Requires: r, g, b must be between 0 and 255

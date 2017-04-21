@@ -14,7 +14,7 @@
 
 class Controller {
 public:
-    Controller(Tank tank);
+    Controller(Tank &tank);
     virtual ~Controller();
     
     /**
@@ -31,7 +31,7 @@ public:
      * Effect: calls tank.shoot()
      */
     
-    virtual Projectile shoot();
+    virtual void shoot();
     
     /**
      * Requires: nothing

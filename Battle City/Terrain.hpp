@@ -15,7 +15,7 @@ class Terrain : public MapObject{
     
 public:
     
-    Terrain(int x, int y, int width, int height, Color color, bool isPassable);
+    Terrain(string name, int x, int y, int width, int height, Color color, bool isPassable);
     
     /**
      * Requires: nothing

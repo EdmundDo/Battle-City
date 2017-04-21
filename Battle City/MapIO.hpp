@@ -16,27 +16,25 @@
 #include <string>
 using namespace std;
 
+struct MapData {
+    vector<Point2D> preferredStartCoords;
+    vector<MapObject*> mapObjs;
+    
+    int width, height;
+};
+
 class MapIO {
 public:
     MapIO();
     ~MapIO();
     
     /**
-     * Requires: filepath exists
-     * Modifies: filepath
-     * Effects: getters and setters
-     */
-    
-    void setFilePath(string filepath);
-    void getFilePath() const;
-    
-    /**
      * Requires: nothing
      * Modifies: nothing
      * Effects: writes the mapbojects of the map into a file
      */
-    
-    void write(Map &map);
+
+    static void write(Map &map, string filepath);
     
     /**
      * Requires: filepath exists
@@ -44,12 +42,7 @@ public:
      * Effects: reads the mapobjects of the Map into a new Map
      */
     
-    void read();
-    
-private:
-    string filepath;
-    ofstream out;
-    ifstream in;
+    static MapData read(string filepath);
 };
 
 #endif /* MapIO_hpp */

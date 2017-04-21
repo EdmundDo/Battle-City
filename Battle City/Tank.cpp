@@ -12,7 +12,7 @@
 #include <vector>
 using namespace std;
 
-Tank::Tank(double health, double x, double y, double direction, Color color, bool canPass, int controllerId, vector<Entity> *entities) : Entity(x, y, direction, color, canPass), health(health), controllerId(controllerId), entities(entities) {
+Tank::Tank(double health, double x, double y, double direction, Color color, bool canPass, int controllerId, vector<Entity*> &entities) : Entity(x, y, direction, color, canPass), health(health), controllerId(controllerId), entities(entities) {
     width = 20;
     height = 40;
 }
@@ -26,6 +26,12 @@ void Tank::rotate(Sign sign) {
     } else {
         direction++;
     }
+    
+    if(direction > 359) {
+        direction -= 360;
+    } else if(direction < 0) {
+        direction += 360;
+    }
 }
 
 void Tank::shoot() {
@@ -37,7 +43,7 @@ void Tank::shoot() {
     dy = sin(dirRads);
     
     Projectile p(5, dx, dy, direction, getColor(), true);
-    entities->push_back(p);
+    entities.push_back(&p);
 }
 
 

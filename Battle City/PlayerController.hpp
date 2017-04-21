@@ -18,7 +18,7 @@ struct TankKeyBindings {
 
 class PlayerController : public Controller {
 public:
-    PlayerController(Tank tank, TankKeyBindings bindings);
+    PlayerController(Tank &tank, TankKeyBindings bindings);
     ~PlayerController();
     
     /**
