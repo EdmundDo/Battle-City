@@ -11,4 +11,7 @@
 
 #include <stdio.h>
 
+class LevelEditor{
+    
+};
 #endif /* LevelEditor_hpp */

@@ -85,11 +85,17 @@ private:
     void updateMap();
     void updateEntities();
     
+    /**
+     * Requires: nothing
+     * Modifies: p
+     * Effects: destroys p if collision with mobj
+     */
+    
     void checkCollision(Projectile &p, MapObject &mobj, int i);
     
     /**
      * Requires: nothing
-     * Modifies: nothing
+     * Modifies: t's controller
      * Effects: prevents the entity from moving through mobj
      */
     
@@ -97,11 +103,17 @@ private:
     
     /**
      * Requires: nothing
-     * Modifies: e1, e2
-     * Effects: e1 and e2 interacts
+     * Modifies: t
+     * Effects: tank takes damage from projectile if collision
      */
     
-    void checkCollision(Tank &t, Projectile &p);
+    void checkCollision(Tank &t, Projectile &p, int i);
+    
+    /**
+     * Requires: nothing
+     * Modifies: t1 controller and t2 controller
+     * Effects: stops the tanks from moving through one another
+     */
     
     void checkCollision(Tank &t1, Tank &t2);
 };

@@ -41,6 +41,10 @@ void Game::createPlayerTank(TankKeyBindings bindings, int x, int y, int directio
     controllers.push_back(PlayerController(tank, bindings));
 }
 
+void Game::loadMap(Map &map) {
+    this->map = map;
+}
+
 void Game::update() {
     updateMap();
     updateEntities();
@@ -62,9 +66,9 @@ void Game::checkCollisions() {
                 MapObject* obj;
                 if((obj = map.getMapObjectAt(x, y)) != nullptr) {
                     if(Tank *t = dynamic_cast<Tank*>(&entities[i])) {
-                        checkCollision(*t, obj);
+                        checkCollision(*t, *obj);
                     } else if(Projectile *p = dynamic_cast<Projectile*>(&entities[i])) {
-                        checkCollision(*p, obj, i);
+                        checkCollision(*p, *obj, i);
                     }
                 }
             }
@@ -73,10 +77,11 @@ void Game::checkCollisions() {
         for(int j = 0; j < entities.size(); j++) {
             // Check if entities[i] and entities[j] overlap
             if(Tank *t1 = dynamic_cast<Tank*>(&entities[i])) {
-                if(Tank *t2 = dynamic_cast<Tank*>(&entities[i])) {
+                if(Tank *t2 = dynamic_cast<Tank*>(&entities[j])) {
                     checkCollision(*t1, *t2);
-                } else if(Projectile *p = dynamic_cast<Projectile*>(&entities[i])) {
-                    checkCollision(*t1, *p);
+                    checkCollision(*t2, *t1);
+                } else if(Projectile *p = dynamic_cast<Projectile*>(&entities[j])) {
+                    checkCollision(*t1, *p, i);
                 }
             }
         }
@@ -123,15 +128,12 @@ void Game::checkCollision(Tank &t1, Tank &t2) {
     int controllerIdTwo = t2.getControllerId();
     
     if(true) {              // Check if overlapping on t1 front and t2 right side
-        // disable moving forward
         controllers[controllerIdOne].setCanMoveForward(false);
         controllers[controllerIdTwo].setCanRotateRight(false);
     } else if(true) {       // Check if overlapping on t1 front and t2 left side
-        // disable moving backward
         controllers[controllerIdOne].setCanMoveForward(false);
         controllers[controllerIdTwo].setCanRotateLeft(false);
     } else if(true) {       // Check if overlapping on t1 back and t2 right side
-        // disable rotating right
         controllers[controllerIdOne].setCanMoveBack(false);
         controllers[controllerIdTwo].setCanRotateRight(false);
     } else if(true) {       // Check if obstacle overlaps t1 back and t2 left side
@@ -140,8 +142,10 @@ void Game::checkCollision(Tank &t1, Tank &t2) {
     }
 }
 
-void Game::checkCollision(Tank &t, Projectile &p) {
+void Game::checkCollision(Tank &t, Projectile &p, int i) {
     if(true) {              // Check if projectile and tank are overlapping
         t.setHealth(t.getHealth() - p.getDamage());
     }
+    
+    entities.erase(entities.begin() + i);
 }
