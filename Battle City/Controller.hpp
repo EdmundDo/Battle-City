@@ -63,12 +63,12 @@ public:
     virtual void setCanMoveBack(bool tf);
     virtual bool getCanMoveBack() const;
     virtual void setCanRotateRight(bool tf);
-    virtual bool getCanRotateright() const;
+    virtual bool getCanRotateRight() const;
     virtual void setCanRotateLeft(bool tf);
-    virtual bool getCanMRotateLeft() const;
+    virtual bool getCanRotateLeft() const;
     
 protected:
-    Tank tank;                  // Tank associated with this object
+    Tank* tank;                  // Tank associated with this object
     bool canMoveForward, canMoveBack, canRotateRight, canRotateLeft;
 };
 

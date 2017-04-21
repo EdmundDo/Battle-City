@@ -13,6 +13,8 @@
 #include "Terrain.hpp"
 #include "LevelEditor.hpp"
 #include "Color.hpp"
+#include "PlayerController.hpp"
+#include "MapIO.hpp"
 
 #include <vector>
 #include <iostream>
@@ -22,6 +24,8 @@ void testObstacleandTerrain();
 void testLevelEditor();
 void testTank();
 void testProjectile();
+void testMapIO();
+void testPlayerControllers();
 
 
 int main(int argc, const char * argv[]) {
@@ -30,11 +34,12 @@ int main(int argc, const char * argv[]) {
     testLevelEditor();
     testTank();
     testProjectile();
+    testMapIO();
     return 0;
 
 }
 
-//Testing tank.
+// Testing tank.
 
 void testTank(){
     Color color;
@@ -56,7 +61,7 @@ void testTank(){
     t.rotate(ENEG);
     if (direction > t.getDirection()){
         cout <<"PASS 2"<<endl;
-        }
+    }
     
     //Testing shoot.
     
@@ -72,9 +77,7 @@ void testTank(){
     if (20 == t.getHealth()) {
         cout << "PASS 4"<< endl;
     } else {
-
         cout << "FAIL"<<endl;
-        
     }
     
     //Testing getControllerID.
@@ -83,10 +86,8 @@ void testTank(){
     t.getControllerId();
     if (controllerId == t.getControllerId()){
         cout<<"PASS 5"<< endl;
-        
-    }else{
+    } else {
         cout << "FAIL" <<endl;
-    
     }
    
 
@@ -94,19 +95,14 @@ void testTank(){
     
     if(1 == t.getX()){
         cout <<"PASS 6"<<endl;
-       
-        
-    }else{
+    } else {
         cout << "FAIL"<<endl;
-        
     }
     
     //Testing getY.
     
     if(2 == t.getY()){
         cout <<"PASS 7" <<endl;
-        
-        
     }else{
         cout << "FAIL" <<endl;
     }
@@ -116,10 +112,8 @@ void testTank(){
     t.getWidth();
     if(30==t.getWidth()){
         cout <<"PASS 8"<<endl;
-        
     }else{
         cout << "FAIL"<<endl;
-   
     }
     
     //Testing setHeight and getHeight.
@@ -128,7 +122,6 @@ void testTank(){
     t.getHeight();
     if(40==t.getHeight()){
         cout << "PASS 9"<<endl;
-        
     }else{
         cout << "FAIL" <<endl;
     }
@@ -140,13 +133,9 @@ void testTank(){
    
     if (color.red == 225){
         cout << "PASS 10"<<endl;
-        
     }else{
         cout << "FAIL"<<endl;
-        
     }
-    
-    
 }
 
 void testObstacleandTerrain(){
@@ -217,14 +206,9 @@ void testProjectile(){
     
     if (30==p.getDamage()){
         cout << "PASS 11" <<endl;
-        
-    }else{
-        
+    } else {
         cout<<"Fail" << endl;
- 
     }
-    
-    
     
     //Testing setCanPass and getCanPass.
     
@@ -238,3 +222,139 @@ void testProjectile(){
     
 
 }
+
+void testMapIO() {
+    Map m(10, 10);
+    Color color;
+    color.red = 212;
+    color.green = 97;
+    color.blue = 123;
+    Obstacle o("Wall", 1, 1, 1, 1, color);
+    Terrain t("Grass", 1, 2, 1, 1, color, true);
+    
+    m.addMapObj(o);
+    m.addMapObj(t);
+    
+    MapIO::write(m, "map.txt");
+}
+
+void testPlayerControllers() {
+    TankKeyBindings tkb;
+    tkb.mbk = 's';
+    tkb.mfk = 'w';
+    tkb.rlk = 'a';
+    tkb.rrk = 'd';
+    tkb.sk = 'm';
+    
+    Color color;
+    color.red = 212;
+    color.green = 97;
+    color.blue = 123;
+    
+    vector<Entity*> entities;
+    
+    Tank t(100, 10, 20, 90, color, false, 0, entities);
+    PlayerController pc(t, tkb);
+    
+    // Move in Y direction
+    int x = t.getX(), y = t.getY();
+    cout << "Tank CoordY: " << y << " CoordX: " << x << endl;
+    pc.act('w');
+    if(y < t.getY()) {
+        cout << "PASSED 1" << endl;
+    }
+    x = t.getX(), y = t.getY();
+    cout << "Tank CoordY: " << y << " CoordX: " << x << endl;
+    
+    x = t.getX(), y = t.getY();
+    cout << "Tank CoordY: " << y << " CoordX: " << x << endl;
+    pc.act('s');
+    if(y > t.getY()) {
+        cout << "PASSED 2" << endl;
+    }
+    x = t.getX(), y = t.getY();
+    cout << "Tank CoordY: " << y << " CoordX: " << x << endl;
+    
+    // test direction
+    int dir = t.getDirection();
+    cout << "Tank dir: " << dir << endl;
+    pc.act('a');
+    if(dir < t.getDirection()) {
+        cout << "PASSED 3" << endl;
+    }
+    dir = t.getDirection();
+    cout << "Tank dir: " << x << endl;
+
+    dir = t.getDirection();
+    cout << "Tank dir: " << dir << endl;
+    pc.act('d');
+    if(dir > t.getDirection()) {
+        cout << "PASSED 4" << endl;
+    }
+    dir = t.getDirection();
+    cout << "Tank dir: " << dir << endl;
+    
+    // test moving in x (aka 0 degrees)
+    for(int i = 0; i < 90; i++) {
+        pc.act('d');
+    }
+    
+    dir = t.getDirection();
+    cout << "Tank dir: " << dir << endl;
+    
+    x = t.getX(), y = t.getY();
+    cout << "Tank CoordY: " << y << " CoordX: " << x << endl;
+    pc.act('w');
+    if(x < t.getX()) {
+        cout << "PASSED 5" << endl;
+    }
+    x = t.getX(), y = t.getY();
+    cout << "Tank CoordY: " << y << " CoordX: " << x << endl;
+    
+    x = t.getX(), y = t.getY();
+    cout << "Tank CoordY: " << y << " CoordX: " << x << endl;
+    pc.act('s');
+    if(x > t.getX()) {
+        cout << "PASSED 6" << endl;
+    }
+    x = t.getX(), y = t.getY();
+    cout << "Tank CoordY: " << y << " CoordX: " << x << endl;
+    
+    // testing getters and setters
+    pc.setCanMoveBack(false);
+    pc.setCanMoveForward(false);
+    pc.setCanRotateLeft(false);
+    pc.setCanRotateRight(false);
+    
+    if(!pc.getCanMoveBack()) {
+        cout << "Passed 7" << endl;
+    }
+    if(!pc.getCanMoveForward()) {
+        cout << "Passed 8" << endl;
+    }
+    if(!pc.getCanRotateRight()) {
+        cout << "Passed 9" << endl;
+    }
+    if(!pc.getCanMoveBack()) {
+        cout << "Passed 10" << endl;
+    }
+    
+    pc.act('w');
+    if(pc.getCanMoveBack()) {
+        cout << "Passed 11" << endl;
+    }
+    pc.act('s');
+    if(pc.getCanMoveForward()) {
+        cout << "Passed 12" << endl;
+    }
+    pc.act('d');
+    if(pc.getCanRotateLeft()) {
+        cout << "Passed 13" << endl;
+    }
+    pc.act('a');
+    if(pc.getCanRotateRight()) {
+        cout << "Passed 14" << endl;
+    }
+}
+
+

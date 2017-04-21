@@ -12,7 +12,7 @@
 class Point2D {
 public:
     Point2D();
-    Point2D(int x, int y);
+    Point2D(double x, double y);
     
     /**
      * Requires: nothing
@@ -20,10 +20,10 @@ public:
      * Effects: getters and setters
      */
     
-    int getX() const;
-    void setX(int x);
-    int getY() const;
-    void setY(int y);
+    double getX() const;
+    void setX(double x);
+    double getY() const;
+    void setY(double y);
     
     /**
      * Requires: nothing
@@ -34,8 +34,8 @@ public:
     static double distance(const Point2D &p1, const Point2D &p2);
     
 private:
-    int x;
-    int y;
+    double x;
+    double y;
 };
 
 #endif /* Point2D_hpp */

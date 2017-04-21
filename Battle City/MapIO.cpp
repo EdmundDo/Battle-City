@@ -22,6 +22,16 @@ void MapIO::write(Map &map, string filepath) {
     out << map.getWidth() << endl;
     out << map.getHeight() << endl;
     
+    vector<Point2D> startCoords = map.getPreferredStartCoords();
+    for(int i = 0; i < startCoords.size(); i++) {
+        Point2D startCoord = startCoords[i];
+        out << "preferredStart" << endl;
+        out << "{" << endl;
+        out << "x=" << endl;
+        out << "y=" << endl;
+        out << "}=end" << endl;
+    }
+    
     for(int x = 0; x < map.getWidth(); x++) {
         
         for(int y = 0; y < map.getHeight(); y++) {
@@ -71,14 +81,14 @@ MapData MapIO::read(string filepath) {
     
     // reads the file
     string type, line;
-    while(getline(in, type)) {         // first line is object type
+    while(getline(in, type)) {          // first line is data type
         
         string name;
         Color color;
-        int width, height, coordX = -1, coordY = -1;
+        int width = -1, height = -1, coordX = -1, coordY = -1;
         bool isPassable = true;
         
-        while(!in.eof()) {    // ending object type declaration
+        while(!in.eof()) {              // ending object type declaration
             getline(in, line);
             if(line == "}=end") {
                 break;
@@ -123,6 +133,11 @@ MapData MapIO::read(string filepath) {
             
             Terrain t(name, coordX, coordY, width, height, color, isPassable);
             mapData.mapObjs.push_back(&t);
+            
+        } else if (type == "preferredStart") {
+            
+            Point2D p(coordX, coordY);
+            mapData.preferredStartCoords.push_back(p);
             
         }
     }

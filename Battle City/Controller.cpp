@@ -8,17 +8,17 @@
 
 #include "Controller.hpp"
 
-Controller::Controller (Tank &tank) : tank(tank) {}
+Controller::Controller (Tank &tank) : tank(&tank), canMoveForward(true), canMoveBack(true), canRotateRight(true), canRotateLeft(true) {}
 
 Controller::~Controller() {}
 
 void Controller::shoot() {
-    tank.shoot();
+    tank->shoot();
 }
 
 void Controller::rotateLeft() {
     if(canRotateLeft) {
-        tank.rotate(EPOS);
+        tank->rotate(EPOS);
     }
     
     if(!canRotateRight) {
@@ -28,7 +28,7 @@ void Controller::rotateLeft() {
 
 void Controller::rotateRight() {
     if(canRotateRight) {
-        tank.rotate(ENEG);
+        tank->rotate(ENEG);
     }
     
     if(!canRotateLeft) {
@@ -38,7 +38,7 @@ void Controller::rotateRight() {
 
 void Controller::moveForward() {
     if(canMoveForward) {
-        tank.move(EPOS);
+        tank->move(EPOS);
     }
     
     if(!canMoveBack) {
@@ -48,7 +48,7 @@ void Controller::moveForward() {
 
 void Controller::moveBackward() {
     if(canMoveBack) {
-        tank.move(ENEG);
+        tank->move(ENEG);
     }
     
     if(!canMoveForward) {
@@ -76,7 +76,7 @@ void Controller::setCanRotateRight(bool tf) {
     canRotateRight = tf;
 }
 
-bool Controller::getCanRotateright() const {
+bool Controller::getCanRotateRight() const {
     return canRotateRight;
 }
 
@@ -84,10 +84,10 @@ void Controller::setCanRotateLeft(bool tf) {
     canRotateLeft = tf;
 }
 
-bool Controller::getCanMRotateLeft() const {
+bool Controller::getCanRotateLeft() const {
     return canRotateLeft;
 }
 
 Tank Controller::getTank() const {
-    return tank;
+    return *tank;
 }
