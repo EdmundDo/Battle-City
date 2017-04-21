@@ -21,7 +21,7 @@ Map::Map(int width, int height) : width(width), height(height) {}
 Map::~Map() {}
 
 void Map::addPreferredStartCoord(int x, int y) {
-    Point2D point = {x, y};
+    Point2D point(x, y);
     preferredStartCoords.push_back(point);
 }
 
@@ -83,6 +83,10 @@ Terrain* Map::getTerrainAt(int x, int y) const {
     }
     
     return nullptr;
+}
+
+vector<Point2D> Map::getPreferredStartCoords() const {
+    return preferredStartCoords;
 }
 
 int Map::getWidth() const {

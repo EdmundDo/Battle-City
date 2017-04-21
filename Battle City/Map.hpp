@@ -73,6 +73,7 @@ public:
     MapObject* getMapObjectAt(int x, int y) const;
     Obstacle* getObstacleAt(int x, int y) const;
     Terrain* getTerrainAt(int x, int y) const;
+    vector<Point2D> getPreferredStartCoords() const;
     
     int getWidth() const;
     int getHeight() const;
