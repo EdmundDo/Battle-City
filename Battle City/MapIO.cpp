@@ -27,8 +27,8 @@ void MapIO::write(Map &map, string filepath) {
         Point2D startCoord = startCoords[i];
         out << "preferredStart" << endl;
         out << "{" << endl;
-        out << "x=" << endl;
-        out << "y=" << endl;
+        out << "x=" << startCoord.getX() << endl;
+        out << "y=" << startCoord.getY() << endl;
         out << "}=end" << endl;
     }
     
@@ -45,7 +45,7 @@ void MapIO::write(Map &map, string filepath) {
                 out << "height=" << o->getHeight() << endl;
                 out << "color=" << o->getColor().red << " " << o->getColor().green << " " << o->getColor().blue << endl;
                 out << "x=" << o->getCoordX() << endl;
-                out << "Y=" << o->getCoordY() << endl;
+                out << "y=" << o->getCoordY() << endl;
                 out << "}=end" << endl;
 
             } else if(Terrain * t = map.getTerrainAt(x, y)) {
