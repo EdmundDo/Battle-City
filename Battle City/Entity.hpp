@@ -53,6 +53,7 @@ public:
 
 protected:
     
+    
     bool canPass;
     double direction,
         height, width;

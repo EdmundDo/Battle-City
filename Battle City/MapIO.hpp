@@ -36,6 +36,8 @@ public:
      * Effects: writes the mapbojects of the map into a file
      */
     
+    
+
     void write(Map &map);
     
     /**
