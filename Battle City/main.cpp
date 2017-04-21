@@ -12,17 +12,119 @@
 #include "MapIO.hpp"
 #include "Obstacle.hpp"
 #include "Terrain.hpp"
+#include "Game.hpp"
 
 
 #include <iostream>
 using namespace std;
 
+void testGame();
+void testMap();
 void testMapIO();
 void testPlayerControllers();
 
 int main(int argc, const char * argv[]) {
-    testMapIO();
+    testGame();
     return 0;
+}
+
+void testGame() {
+    Map m(20, 10);
+    Color color;
+    color.red = 212;
+    color.green = 97;
+    color.blue = 123;
+    
+    // Add mapobjs
+    Obstacle o("Wall", 1, 2, 3, 4, color);
+    Terrain t("Water", 2, 1, 3, 4, color, false);
+    m.addMapObj(o);
+    m.addMapObj(t);
+    
+    // Controller
+    TankKeyBindings tkb;
+    tkb.mbk = 's';
+    tkb.mfk = 'w';
+    tkb.rlk = 'a';
+    tkb.rrk = 'd';
+    tkb.sk = 'm';
+    
+    Color color2;
+    color.red = 212;
+    color.green = 97;
+    color.blue = 123;
+    
+    vector<Entity*> entities;
+    
+    Game game(m);
+    
+    game.createPlayerTank(tkb, color2);
+    
+    if(game.checkGameStatus()) {
+        cout << "Passed 1" << endl;
+    }
+    
+    
+    
+}
+
+void testMap() {
+    Map m(20, 10);
+    Color color;
+    color.red = 212;
+    color.green = 97;
+    color.blue = 123;
+    
+    if(m.getWidth() == 20) {
+        cout << "Passed 1" << endl;
+    }
+    
+    if(m.getHeight() == 10) {
+        cout << "Passed 2" << endl;
+    }
+    
+    // Add mapobjs
+    Obstacle o("Wall", 1, 2, 3, 4, color);
+    Terrain t("Water", 2, 1, 3, 4, color, false);
+    m.addMapObj(o);
+    m.addMapObj(t);
+    
+    if(m.getObstacleAt(1, 2)->getName() == "Wall") {
+        cout << "Passed 3" << endl;
+    }
+    
+    if(m.getTerrainAt(2, 1)->getName() == "Water") {
+        cout << "Passed 4" << endl;
+    }
+    
+    if(m.getMapObjectAt(2, 1)->getName() == "Water") {
+        cout << "Passed 4.1" << endl;
+    }
+    
+    // Adding and removing startCoords
+    m.addPreferredStartCoord(2, 3);
+    Point2D p = m.getRandomStartCoords();
+    if(p.getX() == 2 && p.getY() == 3 && m.getPreferredStartCoords().size() == 1) {
+        cout << "Passed 5" << endl;
+    }
+    
+    // Run again to check randomness
+    m.addPreferredStartCoord(1, 2);
+    Point2D p2 = m.getRandomStartCoords();
+    cout << p2.getX() << " " << p2.getY() << endl;
+    
+    m.removePreferredStartCoord(1, 2);
+    if(m.getPreferredStartCoords().size() == 1) {
+        cout << "Passed 5.1" << endl;
+    }
+    
+    m.removePreferredStartCoord(2, 2);
+    
+    // Remove mapobj
+    m.removeMapObjAt(2, 1);
+    if(m.getMapObjectAt(2, 1) == nullptr) {
+        cout << "Passed 6" << endl;
+    }
 }
 
 void testMapIO() {
