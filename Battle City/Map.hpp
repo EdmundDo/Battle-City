@@ -46,7 +46,7 @@ public:
     void addMapObj(MapObject &mobj);
     
     /**
-     * Requires: x < width and y < height
+     * Requires: x < \width and y < height
      * Modifies: mapObjs
      * Effects: Removes an object to the map
      */

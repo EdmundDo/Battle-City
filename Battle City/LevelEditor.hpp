@@ -10,8 +10,35 @@
 #define LevelEditor_hpp
 
 #include <stdio.h>
+#include "Map.hpp"
+#include "Color.hpp"
+#include "Terrain.hpp"
+#include "Obstacle.hpp"
+
+using namespace std;
 
 class LevelEditor{
+    
+public:
+    LevelEditor();
+    
+   
+    
+    void addObstacle(int x,int y,int height, int width,Color color, Terrain terrain);
+    
+    void addTerrain(int x,int y, int height, int width, Color color, bool isPassible);
+    
+    void removeMapObjAt(int x, int y);
+    
+    void addPreferredStart(int x, int y);
+    
+    void removePreferredStart(int x, int y);
+    
+    void fillTerrain(Terrain t);
+    
+    
+private:
+    Map currentMap;
     
 };
 #endif /* LevelEditor_hpp */
