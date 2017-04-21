@@ -18,8 +18,7 @@ public:
     Terrain(string name, int x, int y, int width, int height, Color color, bool isPassable);
     
     
-    
-    
+
     /**
      * Requires: nothing
      * Modifies: nothing
