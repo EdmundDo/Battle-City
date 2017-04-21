@@ -15,16 +15,21 @@
 using namespace std;
 
 
-int main() {
+void test_tank();
+void test_projectitle();
 
-    
-    
+int main() {
+    cout << "hello world" << endl;
+    test_tank();
+    test_projectitle();
     
     
     
     
     
     return 0;
+
+
 }
 
 void test_tank(){
@@ -38,27 +43,26 @@ void test_tank(){
     double direction = t.getDirection();
     t.rotate(EPOS);
     if(direction< t.getDirection()){
-        cout<< "PASS" <<endl;
+        cout<< "PASS1" <<endl;
     }
     
     direction = t.getDirection();
     t.rotate(ENEG);
     if (direction > t.getDirection()){
-        cout <<"PASS"<<endl;
+        cout <<"PASS2"<<endl;
         }
     
     
     t.shoot();
-    if (entities[0]){
-        cout <<"PASS"<<endl;
-    
+    if (entities[0]!=nullptr){
+        cout <<"PASS3"<<endl;
     }
     
    
     t.setHealth(20);
     t.getHealth();
     if (20 == t.getHealth()) {
-        cout << "PASS"<< endl;
+        cout << "PASS4"<< endl;
     } else {
 
         cout << "FAIL"<<endl;
@@ -68,7 +72,7 @@ void test_tank(){
     double controllerId = 0;
     t.getControllerId();
     if (controllerId == t.getControllerId()){
-        cout<<"PASS"<< endl;
+        cout<<"PASS5"<< endl;
         
     }else{
         cout << "FAIL" <<endl;
@@ -93,7 +97,7 @@ void test_projectitle(){
 
     
     if (30==p.getDamage()){
-        cout << "PASS" <<endl;
+        cout << "PASS6" <<endl;
         
     }else{
         
@@ -105,7 +109,7 @@ void test_projectitle(){
     p.setCanPass(false);
     
     if (false==p.getCanPass()){
-        cout << "PASS" << endl;
+        cout << "PASS7" << endl;
     }else{
         cout<< "Fail" << endl;
     }
