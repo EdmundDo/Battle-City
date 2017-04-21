@@ -8,6 +8,10 @@
 
 #include "LevelEditor.hpp"
 
+LevelEditor::LevelEditor(Map m):currentMap(m){
+    
+}
+
 void LevelEditor::addObstacle(string name,int x, int y, int height, int width, Color color, Terrain terrain){
     
     Obstacle o(name,x, y, height, width,color,terrain);
@@ -38,6 +42,11 @@ void LevelEditor::addPreferredStart(int x, int y){
 
 void LevelEditor::removePreferredStart(int x, int y){
     currentMap.removePreferredStartCoord(x,y);
+}
+
+
+void LevelEditor::save(){
+    MapIO::write(currentMap, "map.txt");
 }
 
 

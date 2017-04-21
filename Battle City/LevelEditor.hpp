@@ -14,13 +14,14 @@
 #include "Color.hpp"
 #include "Terrain.hpp"
 #include "Obstacle.hpp"
+#include "MapIO.hpp"
 
 using namespace std;
 
 class LevelEditor{
     
 public:
-    LevelEditor();
+    LevelEditor(Map m);
     
    
     
@@ -36,6 +37,7 @@ public:
     
     void fillTerrain(Terrain t);
     
+    void save();
     
 private:
     Map currentMap;
