@@ -16,6 +16,7 @@ class Obstacle : public MapObject{
 
 public:
      //constructor
+    
     Obstacle(string name, int x, int y, int width, int height, Color color);
     Obstacle(string name, int x, int y, int width, int height, Color color, Terrain a);
     
