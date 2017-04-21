@@ -35,6 +35,10 @@ public:
     virtual void setColor(Color &color);
     virtual void setColor(int r, int g, int b);
     
+    virtual void setXcoord(int x);
+    virtual void setYcoord(int y);
+
+    
     virtual void draw() = 0;
     
 protected:
