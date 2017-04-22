@@ -9,33 +9,63 @@
 #ifndef LevelEditor_hpp
 #define LevelEditor_hpp
 
-#include <stdio.h>
 #include "Map.hpp"
 #include "Color.hpp"
 #include "Terrain.hpp"
-#include "Obstacle.hpp"
-
-using namespace std;
 
 class LevelEditor{
     
 public:
     LevelEditor();
     
-   
+    /**
+     * Requires: x < currentMap.width, y < currentMap.height
+     * Modifies: currentMap
+     * Effects: Adds an obstacle to currentMap
+     */
     
-    void addObstacle(string name,int x,int y,int height, int width,Color color, Terrain terrain);
+    void addObstacle(string name,int x, int y, int height, int width, Color color);
+    void addObstacle(string name,int x,int y,int height, int width, Color color, Terrain terrain);
+    
+    /**
+     * Requires: x < currentMap.width, y < currentMap.height
+     * Modifies: currentMap
+     * Effects: Adds an terrain to currentMap
+     */
     
     void addTerrain(string name, int x,int y, int height, int width, Color color, bool isPassible);
     
+    /**
+     * Requires: x < currentMap.width, y < currentMap.height
+     * Modifies: currentMap
+     * Effects: Removes an object to currentMap
+     */
+    
     void removeMapObjAt(int x, int y);
+    
+    /**
+     * Requires: x < currentMap.width, y < currentMap.height
+     * Modifies: currentMap
+     * Effects: Adds a preferred start to currentMap
+     */
     
     void addPreferredStart(int x, int y);
     
+    /**
+     * Requires: x < currentMap.width, y < currentMap.height
+     * Modifies: currentMap
+     * Effects: Removes a preferred start to currentMap
+     */
+    
     void removePreferredStart(int x, int y);
     
-    void fillTerrain(Terrain t);
+    /**
+     * Requires: nothing
+     * Modifies: currentMap
+     * Effects: Fills the empty slots with the specified terrain
+     */
     
+    void fillTerrain(Terrain t);
     
 private:
     Map currentMap;
