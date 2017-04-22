@@ -15,7 +15,7 @@
 class Projectile : public Entity{
   
 public:
-    Projectile(double damage, double x, double y, double direction, Color color, bool canPass);
+    Projectile(double damage, double x, double y, double direction, Color color, bool canPassAllTerrain = true);
     ~Projectile();
     
     /**

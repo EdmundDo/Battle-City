@@ -199,9 +199,8 @@ void testProjectile(){
     color.red = 4;
     color.blue = 5;
     color.green = 6;
-    vector <Entity*> entities;
     
-    Projectile p(200,3,4,5,color,false);
+    Projectile p(200,3,4,5,color);
     
     p.setDamage(30);
 
@@ -215,9 +214,9 @@ void testProjectile(){
     
     //Testing setCanPass and getCanPass.
     
-    p.setCanPass(false);
+    p.setCanPassAllTerrain(false);
     
-    if (false==p.getCanPass()){
+    if (false==p.getCanPassAllTerrain()){
         cout << "PASS 12" << endl;
     }else{
         cout<< "Fail" << endl;

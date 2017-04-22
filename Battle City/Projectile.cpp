@@ -9,7 +9,7 @@
 #include "Projectile.hpp"
 
 
-Projectile::Projectile(double damage, double x, double y, double direction, Color color, bool canPass): Entity(x, y, direction, color, canPass), damage(damage) {
+Projectile::Projectile(double damage, double x, double y, double direction, Color color, bool canPassAllTerrain): Entity(x, y, direction, color, canPassAllTerrain), damage(damage) {
     width = 10;
     height = 10;
 }
