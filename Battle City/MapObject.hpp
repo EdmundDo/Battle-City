@@ -27,17 +27,15 @@ public:
      */
     
     virtual string getName() const;
-    virtual int getCoordX() const;
-    virtual int getCoordY() const;
+    virtual int getX() const;
+    virtual void setX(int x);
+    virtual int getY() const;
+    virtual void setY(int y);
     virtual int getWidth() const;
     virtual int getHeight() const;
     virtual Color getColor() const;
     virtual void setColor(Color &color);
     virtual void setColor(int r, int g, int b);
-    
-    virtual void setXcoord(int x);
-    virtual void setYcoord(int y);
-
     
     virtual void draw() = 0;
     

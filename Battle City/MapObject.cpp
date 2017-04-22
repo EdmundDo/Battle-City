@@ -18,22 +18,21 @@ string MapObject::getName() const{
     return name;
 }
 
-int MapObject::getCoordX() const{
+int MapObject::getX() const{
     return topLeft.getX();
 }
 
-int MapObject::getCoordY() const{
-    return topLeft.getY();
-}
-
-void MapObject::setXcoord(int x){
+void MapObject::setX(int x){
     topLeft.setX(x);
 }
 
-void MapObject::setYcoord(int y){
-    topLeft.setY(y);
+int MapObject::getY() const{
+    return topLeft.getY();
 }
 
+void MapObject::setY(int y){
+    topLeft.setY(y);
+}
 
 int MapObject::getWidth() const{
     return width;
