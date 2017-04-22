@@ -292,7 +292,8 @@ void testMap() {
     // Adding and removing startCoords
     m.addPreferredStartCoord(2, 3);
     Point2D p = m.getRandomStartCoords();
-    if(p.getX() == 2 && p.getY() == 3 && m.getPreferredStartCoords().size() == 1) {
+    cout << p.getX() << " " << p.getY() << endl;
+    if(m.getPreferredStartCoords().size() == 2) {
         cout << "Passed 5" << endl;
     }
     
@@ -302,7 +303,7 @@ void testMap() {
     cout << p2.getX() << " " << p2.getY() << endl;
     
     m.removePreferredStartCoord(1, 2);
-    if(m.getPreferredStartCoords().size() == 1) {
+    if(m.getPreferredStartCoords().size() == 2) {
         cout << "Passed 5.1" << endl;
     }
     
