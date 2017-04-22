@@ -48,8 +48,8 @@ void LevelEditor::fillTerrain(Terrain *t){
     for(int x=0;x<currentMap.getWidth();x++){
         for(int y=0;y<currentMap.getHeight();y++){
             if(currentMap.getMapObjectAt(x,y)==nullptr){
-                t->setXcoord(x);
-                t->setYcoord(y);
+                t->setX(x);
+                t->setY(y);
                 currentMap.addMapObj(t);
             }
         }

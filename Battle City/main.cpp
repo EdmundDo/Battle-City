@@ -334,7 +334,7 @@ void testMapIO() {
     }
     
     for (int i = 0; i < md.mapObjs.size(); i++) {
-        cout << md.mapObjs[i]->getName() << " " << md.mapObjs[i]->getCoordX() << " " << md.mapObjs[i]->getCoordY() << endl;
+        cout << md.mapObjs[i]->getName() << " " << md.mapObjs[i]->getX() << " " << md.mapObjs[i]->getY() << endl;
     }
     
 }

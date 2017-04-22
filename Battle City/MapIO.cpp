@@ -42,8 +42,8 @@ void MapIO::write(Map &map, string filepath) {
                 out << "width=" << o->getWidth() << endl;
                 out << "height=" << o->getHeight() << endl;
                 out << "color=" << o->getColor().red << " " << o->getColor().green << " " << o->getColor().blue << endl;
-                out << "x=" << o->getCoordX() << endl;
-                out << "y=" << o->getCoordY() << endl;
+                out << "x=" << o->getX() << endl;
+                out << "y=" << o->getY() << endl;
                 out << "}=end" << endl;
 
             } else if(Terrain *t = map.getTerrainAt(x, y)) {
@@ -53,8 +53,8 @@ void MapIO::write(Map &map, string filepath) {
                 out << "width=" << t->getWidth() << endl;
                 out << "height=" << t->getHeight() << endl;
                 out << "color=" << t->getColor().red << " " << t->getColor().green << " " << t->getColor().blue << endl;
-                out << "x=" << t->getCoordX() << endl;
-                out << "y=" << t->getCoordY() << endl;
+                out << "x=" << t->getX() << endl;
+                out << "y=" << t->getY() << endl;
                 out << "isPassable=" << t->getIsPassable() << endl;
                 out << "}=end" << endl;
                 
