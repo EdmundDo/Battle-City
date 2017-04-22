@@ -9,7 +9,7 @@
 #include "Entity.hpp"
 #include <cmath>
 
-Entity::Entity(double x, double y, double direction, Color color, bool canPass) : direction(direction), color(color), canPass(canPass) {
+Entity::Entity(double x, double y, double direction, Color color, bool canPassAllTerrain) : direction(direction), color(color), canPassAllTerrain(canPassAllTerrain) {
     topLeft.setX(x);
     topLeft.setY(y);
 }
@@ -74,10 +74,10 @@ void Entity::setColor(int r, int g, int b) {
     this->color.blue = b;
 }
 
-bool Entity::getCanPass() {
-    return canPass;
+bool Entity::getCanPassAllTerrain() {
+    return canPassAllTerrain;
 }
 
-void Entity::setCanPass(bool tf) {
-    canPass = tf;
+void Entity::setCanPassAllTerrain(bool tf) {
+    canPassAllTerrain = tf;
 }

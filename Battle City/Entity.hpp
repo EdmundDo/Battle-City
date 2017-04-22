@@ -49,19 +49,19 @@ public:
     virtual Color getColor() const;
     virtual void setColor(Color &color);
     virtual void setColor(int r, int g, int b);
-    virtual bool getCanPass();
-    virtual void setCanPass(bool tf);
+    virtual bool getCanPassAllTerrain();
+    virtual void setCanPassAllTerrain(bool tf);
 
 
     virtual void draw() = 0;
 
 protected:
     
-    bool canPass;
+    bool canPassAllTerrain;
     double direction,
         height, width;
-    Color color;
     Point2D topLeft;
+    Color color;
 };
 
 
