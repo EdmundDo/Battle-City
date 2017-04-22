@@ -42,10 +42,6 @@ void LevelEditor::save(string filename) {
 void LevelEditor::load(string filepath) {
     Map map(filepath);
     currentMap = map;
-    
-    cout << currentMap.getHeight() << endl;
-    cout << currentMap.getWidth() << endl;
-    cout << currentMap.getMapObjectAt(1, 1)->getName() << endl;
 }
 
 void LevelEditor::fillTerrain(Terrain *t){
