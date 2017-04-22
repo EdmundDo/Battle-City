@@ -2,8 +2,8 @@
 //  Tank.hpp
 //  Battle City
 //
-//  Created by Edmund Do on 4/3/17.
-//  Copyright © 2017 Edmund Do. All rights reserved.
+//  Created by Yixiong Zhang on 4/3/17.
+//  Copyright © 2017 Yixiong Zhang. All rights reserved.
 //
 
 #ifndef Tank_hpp
@@ -50,7 +50,7 @@ public:
     
 private:
     int controllerId;
-    vector<Entity*> entities;
+    vector<Entity*> *entities;
     double health;
 };
 

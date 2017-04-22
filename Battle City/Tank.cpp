@@ -2,8 +2,8 @@
 //  Tank.cpp
 //  Battle City
 //
-//  Created by Edmund Do on 4/3/17.
-//  Copyright © 2017 Edmund Do. All rights reserved.
+//  Created by Yixiong Zhang on 4/3/17.
+//  Copyright © 2017 Yixiong Zhang. All rights reserved.
 //
 
 #include "Tank.hpp"
@@ -12,7 +12,7 @@
 #include <vector>
 using namespace std;
 
-Tank::Tank(double health, double x, double y, double direction, Color color, bool canPass, int controllerId, vector<Entity*> &entities) : Entity(x, y, direction, color, canPass), health(health), controllerId(controllerId), entities(entities) {
+Tank::Tank(double health, double x, double y, double direction, Color color, bool canPass, int controllerId, vector<Entity*> &entities) : Entity(x, y, direction, color, canPass), health(health), controllerId(controllerId), entities(&entities) {
     width = 20;
     height = 40;
 }
@@ -43,7 +43,7 @@ void Tank::shoot() {
     dy = sin(dirRads);
     
     Projectile p(5, dx, dy, direction, getColor(), true);
-    entities.push_back(&p);
+    entities->push_back(&p);
 }
 
 

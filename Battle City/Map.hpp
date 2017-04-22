@@ -64,9 +64,6 @@ public:
     
     Point2D getRandomStartCoords() const;
     
-    
-    
-    
     /**
      * Requires: nothing
      * Modifies: nothing

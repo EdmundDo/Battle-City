@@ -2,8 +2,8 @@
 //  Projectile.hpp
 //  Battle City
 //
-//  Created by Edmund Do on 4/3/17.
-//  Copyright © 2017 Edmund Do. All rights reserved.
+//  Created by Yixiong Zhang on 4/3/17.
+//  Copyright © 2017 Yixiong Zhang. All rights reserved.
 //
 
 #ifndef Projectile_hpp
