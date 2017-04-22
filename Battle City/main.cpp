@@ -19,7 +19,6 @@
 #include "Terrain.hpp"
 #include "Game.hpp"
 
-
 #include <vector>
 #include <iostream>
 using namespace std;
@@ -36,14 +35,14 @@ void testPlayerControllers();
 
 int main(int argc, const char * argv[]) {
     
-//    testObstacleandTerrain();
+    testObstacleandTerrain();
     testLevelEditor();
-//    testTank();
-//    testProjectile();
-//    testGame();
-//    testMap();
-//    testMapIO();
-//    testPlayerControllers();
+    testTank();
+    testProjectile();
+    testGame();
+    testMap();
+    testMapIO();
+    testPlayerControllers();
     return 0;
 
 }
@@ -186,7 +185,7 @@ void testLevelEditor(){
     l.addTerrain("stand", 1, 3, 3, 4,color,true);
     l.addTerrain("Rocks", 2, 1, 3, 4, color, false);
     l.addObstacle("Cliffs", 1, 2, 3, 4, color,t);
-    l.save();
+    l.save("map.txt");
     l.load("map.txt");
 
     l.addPreferredStart(1, 2);
