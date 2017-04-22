@@ -253,6 +253,7 @@ void testGame() {
     Game game(m);
     
     game.createPlayerTank(tkb, color2);
+    game.createPlayerTank(tkb, color);
     
     if(game.checkGameStatus()) {
         cout << "Passed 1" << endl;
@@ -460,6 +461,11 @@ void testPlayerControllers() {
     pc.act('a');
     if(pc.getCanRotateRight()) {
         cout << "Passed 14" << endl;
+    }
+    
+    pc.act('m');
+    if(entities.size() > 0) {
+        cout << "Passed 15" << endl;
     }
 }
 

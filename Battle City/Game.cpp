@@ -10,6 +10,7 @@
 #include "Point2D.hpp"
 
 #include <random>
+#include <iostream>
 using namespace std;
 
 Game::Game(Map map) : map(map) {}
@@ -19,15 +20,17 @@ Game::~Game() {}
 bool Game::checkGameStatus() {
     for(int i = 0; i < controllers.size(); i++) {
         if(controllers[i]->getTank().getHealth() == 0) {
+            // Removes unused controllers
             controllers.erase(controllers.begin() + i);
         }
     }
-    
+
     if (controllers.size() == 0) {
+        // draw change to game over screen
         isPlaying = false;
         return false;
     } else if (controllers.size() == 1) {
-        controllers[0]->getTank().getColor(); // This tank won
+        // This tank won do change to game over screen
         isPlaying = false;
         return false;
     }
@@ -41,9 +44,11 @@ void Game::createPlayerTank(TankKeyBindings bindings, Color color) {
 }
 
 void Game::createPlayerTank(TankKeyBindings bindings, int x, int y, int direction, Color color) {
-    Tank tank(100, x, y, direction, color, false, controllers.size(), &entities);
+    Tank tank(100, x, y, direction, color, false, controllers.size(), entities);
     PlayerController p(tank, bindings);
     controllers.push_back(&p);
+    entities.push_back(&tank);
+    return;
 }
 
 void Game::loadMap(Map &map) {
@@ -58,7 +63,6 @@ void Game::update() {
 void Game::checkCollisions() {
     for(int i = 0; i < entities.size(); i++) {
         // Check for overlapping coordinates
-        
         double ex = entities[i]->getX();
         double ey = entities[i]->getY();
         double ewidth = entities[i]->getWidth();

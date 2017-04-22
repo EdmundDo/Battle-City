@@ -68,7 +68,7 @@ public:
     virtual bool getCanRotateLeft() const;
     
 protected:
-    Tank* tank;                  // Tank associated with this object
+    Tank &tank;                  // Tank associated with this object
     bool canMoveForward, canMoveBack, canRotateRight, canRotateLeft;
 };
 

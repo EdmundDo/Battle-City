@@ -50,7 +50,7 @@ public:
     
 private:
     int controllerId;
-    vector<Entity*> *entities;
+    vector<Entity*> &entities;
     double health;
 };
 
