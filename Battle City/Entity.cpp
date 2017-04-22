@@ -34,7 +34,6 @@ double Entity::getX() const{
 
 double Entity::getY() const{
     return topLeft.getY();
-    
 }
 
 double Entity::getHeight() const {
@@ -55,12 +54,10 @@ void Entity::setWidth(double width) {
 
 double Entity::getDirection() const{
     return direction;
-    
 }
 
 void Entity::setDirection(double s){
     direction = s;
-    
 }
 
 Color Entity::getColor() const{

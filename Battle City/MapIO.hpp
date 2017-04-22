@@ -11,14 +11,13 @@
 
 #include "Map.hpp"
 
-#include <iostream>
 #include <fstream>
 #include <string>
 using namespace std;
 
 struct MapData {
     vector<Point2D> preferredStartCoords;
-    vector<std::unique_ptr<MapObject>> mapObjs;
+    vector<unique_ptr<MapObject>> mapObjs;
     
     int width, height;
 };

@@ -9,9 +9,6 @@
 #include "Map.hpp"
 #include "MapIO.hpp"
 
-#include <random>
-#include <vector>
-
 Map::Map(string filepath) {
     loadMapFromFile(filepath);
 }
@@ -36,8 +33,8 @@ void Map::removePreferredStartCoord(int x, int y) {
 }
 
 void Map::addMapObj(MapObject *mobj) {
-    std::unique_ptr<MapObject> mobjp(mobj);
-    mapObjs.push_back(std::move(mobjp));
+    unique_ptr<MapObject> mobjp(mobj);
+    mapObjs.push_back(move(mobjp));
 }
 
 void Map::removeMapObjAt(int x, int y) {
@@ -101,7 +98,7 @@ int Map::getHeight() const {
 }
 
 Map& Map::operator = (Map &map) {
-    this->mapObjs = std::move(map.mapObjs);
+    this->mapObjs = move(map.mapObjs);
     this->width = map.width;
     this->height = map.height;
     this->preferredStartCoords = map.preferredStartCoords;
@@ -117,6 +114,6 @@ void Map::loadMapFromFile(string filepath) {
     this->preferredStartCoords = mapData.preferredStartCoords;
     
     for(int i = 0; i < mapData.mapObjs.size(); i++) {
-        mapObjs.push_back(std::move(mapData.mapObjs[i]));
+        mapObjs.push_back(move(mapData.mapObjs[i]));
     }
 }

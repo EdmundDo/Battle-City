@@ -79,11 +79,11 @@ public:
     int getHeight() const;
     
     // Overloaded operators
-    Map& operator = (Map &map);
+    Map& operator= (Map &map);
     
 private:
     vector<Point2D> preferredStartCoords;
-    vector<std::unique_ptr<MapObject>> mapObjs;
+    vector<unique_ptr<MapObject>> mapObjs;
     int width, height;
     
     void loadMapFromFile(string filepath);

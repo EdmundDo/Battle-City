@@ -36,7 +36,6 @@ void MapIO::write(Map &map, string filepath) {
         for(int y = 0; y < map.getHeight(); y++) {
             
             if(Obstacle *o = map.getObstacleAt(x,y)) {
-                cout << "made it 1" << endl;
                 out << "obstacle"<<endl;
                 out << "{" <<endl;
                 out << "name=" << o->getName() << endl;
@@ -48,7 +47,6 @@ void MapIO::write(Map &map, string filepath) {
                 out << "}=end" << endl;
 
             } else if(Terrain *t = map.getTerrainAt(x, y)) {
-                cout << "made it 2" << endl;
                 out << "terrain"<<endl;
                 out << "{" <<endl;
                 out << "name=" << t->getName() << endl;
@@ -124,11 +122,11 @@ MapData MapIO::read(string filepath) {
         
         // creates the relevant object
         if(type == "obstacle") {
-            std::unique_ptr<MapObject> o(new Obstacle(name, coordX, coordY, width, height, color));
-            mapData.mapObjs.push_back(std::move(o));
+            unique_ptr<MapObject> o(new Obstacle(name, coordX, coordY, width, height, color));
+            mapData.mapObjs.push_back(move(o));
         } else if(type == "terrain") {
-            std::unique_ptr<MapObject> t(new Terrain(name, coordX, coordY, width, height, color, isPassable));
-            mapData.mapObjs.push_back(std::move(t));
+            unique_ptr<MapObject> t(new Terrain(name, coordX, coordY, width, height, color, isPassable));
+            mapData.mapObjs.push_back(move(t));
         } else if (type == "preferredStart") {
             Point2D p(coordX, coordY);
             mapData.preferredStartCoords.push_back(p);

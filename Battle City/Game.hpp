@@ -67,8 +67,8 @@ private:
     bool isPlaying;
     
     Map &map;
-    vector<std::unique_ptr<Entity>> entities;
-    vector<std::unique_ptr<Controller>> controllers;
+    vector<unique_ptr<Entity>> entities;
+    vector<unique_ptr<Controller>> controllers;
     
     /**
      * Helper methods for update()

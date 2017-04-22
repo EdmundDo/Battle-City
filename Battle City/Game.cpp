@@ -10,8 +10,6 @@
 #include "Point2D.hpp"
 
 #include <random>
-#include <iostream>
-using namespace std;
 
 Game::Game(Map &map) : map(map) {}
 
@@ -43,11 +41,11 @@ void Game::createPlayerTank(TankKeyBindings bindings, Color color) {
 }
 
 void Game::createPlayerTank(TankKeyBindings bindings, int x, int y, int direction, Color color) {
-    std::unique_ptr<Tank> tank(new Tank(100, x, y, direction, color, false, controllers.size(), entities));
-    std::unique_ptr<PlayerController> p (new PlayerController(*tank.get(), bindings));
+    unique_ptr<Tank> tank(new Tank(100, x, y, direction, color, false, controllers.size(), entities));
+    unique_ptr<PlayerController> p (new PlayerController(*tank.get(), bindings));
     
-    controllers.push_back(std::move(p));
-    entities.push_back(std::move(tank));
+    controllers.push_back(move(p));
+    entities.push_back(move(tank));
 }
 
 void Game::update() {
