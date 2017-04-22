@@ -63,6 +63,7 @@ MapObject* Map::getMapObjectAt(int x, int y) const {
 
 Obstacle* Map::getObstacleAt(int x, int y) const {
     for(int i = 0; i < mapObjs.size(); i++) {
+        cout<<i<<endl;
         if(x == mapObjs[i]->getCoordX() && y == mapObjs[i]->getCoordY()) {
             if(Obstacle* o = dynamic_cast<Obstacle*>(mapObjs[i])) {
                 return o;

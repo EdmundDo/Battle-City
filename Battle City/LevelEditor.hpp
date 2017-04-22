@@ -12,11 +12,11 @@
 #include "Map.hpp"
 #include "Color.hpp"
 #include "Terrain.hpp"
+#include "MapIO.hpp"
 
-class LevelEditor{
-    
+class LevelEditor {
 public:
-    LevelEditor();
+    LevelEditor(Map m);
     
     /**
      * Requires: x < currentMap.width, y < currentMap.height
@@ -67,8 +67,17 @@ public:
     
     void fillTerrain(Terrain t);
     
+    /**
+     * Requires: nothing
+     * Modifies: nothing
+     * Effects: Saves the map
+     */
+    
+    void save();
+    
 private:
     Map currentMap;
     
 };
+
 #endif /* LevelEditor_hpp */
