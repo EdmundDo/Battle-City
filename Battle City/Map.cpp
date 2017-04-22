@@ -35,8 +35,9 @@ void Map::removePreferredStartCoord(int x, int y) {
     }
 }
 
-void Map::addMapObj(MapObject &mobj) {
-    mapObjs.push_back(&mobj);
+void Map::addMapObj(MapObject *mobj) {
+    std::unique_ptr<MapObject> mobjp(mobj);
+    mapObjs.push_back(std::move(mobjp));
 }
 
 void Map::removeMapObjAt(int x, int y) {
@@ -56,7 +57,7 @@ Point2D Map::getRandomStartCoords() const {
 MapObject* Map::getMapObjectAt(int x, int y) const {
     for(int i = 0; i < mapObjs.size(); i++) {
         if(x == mapObjs[i]->getCoordX() && y == mapObjs[i]->getCoordY()) {
-            return mapObjs[i];
+            return mapObjs[i].get();
         }
     }
     
@@ -65,9 +66,8 @@ MapObject* Map::getMapObjectAt(int x, int y) const {
 
 Obstacle* Map::getObstacleAt(int x, int y) const {
     for(int i = 0; i < mapObjs.size(); i++) {
-        cout<<i<<endl;
         if(x == mapObjs[i]->getCoordX() && y == mapObjs[i]->getCoordY()) {
-            if(Obstacle* o = dynamic_cast<Obstacle*>(mapObjs[i])) {
+            if(Obstacle* o = dynamic_cast<Obstacle*>(mapObjs[i].get())) {
                 return o;
             }
         }
@@ -79,7 +79,7 @@ Obstacle* Map::getObstacleAt(int x, int y) const {
 Terrain* Map::getTerrainAt(int x, int y) const {
     for(int i = 0; i < mapObjs.size(); i++) {
         if(x == mapObjs[i]->getCoordX() && y == mapObjs[i]->getCoordY()) {
-            if(Terrain* t = dynamic_cast<Terrain*>(mapObjs[i])) {
+            if(Terrain* t = dynamic_cast<Terrain*>(mapObjs[i].get())) {
                 return t;
             }
         }
@@ -100,6 +100,14 @@ int Map::getHeight() const {
     return height;
 }
 
+Map& Map::operator = (Map &map) {
+    this->mapObjs = std::move(map.mapObjs);
+    this->width = map.width;
+    this->height = map.height;
+    this->preferredStartCoords = map.preferredStartCoords;
+    return *this;
+}
+
 void Map::loadMapFromFile(string filepath) {
     MapData mapData = MapIO::read(filepath);
     
@@ -107,5 +115,8 @@ void Map::loadMapFromFile(string filepath) {
     this->height = mapData.height;
     
     this->preferredStartCoords = mapData.preferredStartCoords;
-    this->mapObjs = mapData.mapObjs;
+    
+    for(int i = 0; i < mapData.mapObjs.size(); i++) {
+        mapObjs.push_back(std::move(mapData.mapObjs[i]));
+    }
 }

@@ -16,7 +16,7 @@
 
 class LevelEditor {
 public:
-    LevelEditor(Map m);
+    LevelEditor(Map &m);
     
     /**
      * Requires: x < currentMap.width, y < currentMap.height
@@ -65,7 +65,7 @@ public:
      * Effects: Fills the empty slots with the specified terrain
      */
     
-    void fillTerrain(Terrain t);
+    void fillTerrain(Terrain *t);
     
     /**
      * Requires: nothing
@@ -75,8 +75,16 @@ public:
     
     void save();
     
+    /**
+     * Requires: nothing
+     * Modifies: nothing
+     * Effects: loads the map from a txt
+     */
+    
+    void load(string filepath);
+    
 private:
-    Map currentMap;
+    Map &currentMap;
     
 };
 

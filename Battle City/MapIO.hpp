@@ -18,7 +18,7 @@ using namespace std;
 
 struct MapData {
     vector<Point2D> preferredStartCoords;
-    vector<MapObject*> mapObjs;
+    vector<std::unique_ptr<MapObject>> mapObjs;
     
     int width, height;
 };

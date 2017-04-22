@@ -13,14 +13,13 @@
 #include <iostream>
 using namespace std;
 
-Game::Game(Map map) : map(map) {}
+Game::Game(Map &map) : map(map) {}
 
 Game::~Game() {}
 
 bool Game::checkGameStatus() {
     for(int i = 0; i < controllers.size(); i++) {
-        if(controllers[i]->getTank().getHealth() == 0) {
-            // Removes unused controllers
+        if(controllers[i].get()->getTank().getHealth() == 0) {
             controllers.erase(controllers.begin() + i);
         }
     }
@@ -44,15 +43,11 @@ void Game::createPlayerTank(TankKeyBindings bindings, Color color) {
 }
 
 void Game::createPlayerTank(TankKeyBindings bindings, int x, int y, int direction, Color color) {
-    Tank tank(100, x, y, direction, color, false, controllers.size(), entities);
-    PlayerController p(tank, bindings);
-    controllers.push_back(&p);
-    entities.push_back(&tank);
-    return;
-}
-
-void Game::loadMap(Map &map) {
-    this->map = map;
+    std::unique_ptr<Tank> tank(new Tank(100, x, y, direction, color, false, controllers.size(), entities));
+    std::unique_ptr<PlayerController> p (new PlayerController(*tank.get(), bindings));
+    
+    controllers.push_back(std::move(p));
+    entities.push_back(std::move(tank));
 }
 
 void Game::update() {
@@ -74,9 +69,9 @@ void Game::checkCollisions() {
             for (int y = ey + entities[i]->getHeight(); y > ey - eheight; y--) {
                 MapObject* obj;
                 if((obj = map.getMapObjectAt(x, y)) != nullptr) {
-                    if(Tank *t = dynamic_cast<Tank*>(entities[i])) {
+                    if(Tank *t = dynamic_cast<Tank*>(entities[i].get())) {
                         checkCollision(*t, *obj);
-                    } else if(Projectile *p = dynamic_cast<Projectile*>(entities[i])) {
+                    } else if(Projectile *p = dynamic_cast<Projectile*>(entities[i].get())) {
                         checkCollision(*p, *obj, i);
                     }
                 }
@@ -85,11 +80,11 @@ void Game::checkCollisions() {
         
         for(int j = 0; j < entities.size(); j++) {
             // Check if entities[i] and entities[j] overlap
-            if(Tank *t1 = dynamic_cast<Tank*>(entities[i])) {
-                if(Tank *t2 = dynamic_cast<Tank*>(entities[j])) {
+            if(Tank *t1 = dynamic_cast<Tank*>(entities[i].get())) {
+                if(Tank *t2 = dynamic_cast<Tank*>(entities[j].get())) {
                     checkCollision(*t1, *t2);
                     checkCollision(*t2, *t1);
-                } else if(Projectile *p = dynamic_cast<Projectile*>(entities[j])) {
+                } else if(Projectile *p = dynamic_cast<Projectile*>(entities[j].get())) {
                     checkCollision(*t1, *p, i);
                 }
             }

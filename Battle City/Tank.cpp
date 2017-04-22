@@ -12,7 +12,7 @@
 #include <vector>
 using namespace std;
 
-Tank::Tank(double health, double x, double y, double direction, Color color, bool canPass, int controllerId, vector<Entity*> &entities) : Entity(x, y, direction, color, canPass), health(health), controllerId(controllerId), entities(&entities) {
+Tank::Tank(double health, double x, double y, double direction, Color color, bool canPass, int controllerId, vector<std::unique_ptr<Entity>> &entities) : Entity(x, y, direction, color, canPass), health(health), controllerId(controllerId), entities(entities) {
     width = 20;
     height = 40;
 }
@@ -42,8 +42,8 @@ void Tank::shoot() {
     dx = cos(dirRads);
     dy = sin(dirRads);
     
-    Projectile p(5, dx, dy, direction, getColor(), true);
-    entities->push_back(&p);
+    std::unique_ptr<Projectile> p (new Projectile(5, dx, dy, direction, getColor(), true));
+    entities.push_back(std::move(p));
 }
 
 

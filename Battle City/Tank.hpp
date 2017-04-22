@@ -17,7 +17,7 @@ using namespace std;
 
 class Tank : public Entity{
 public:
-    Tank(double health, double x, double y, double direction, Color color, bool canPass, int controllerId, vector<Entity*> &entities);
+    Tank(double health, double x, double y, double direction, Color color, bool canPass, int controllerId, vector<std::unique_ptr<Entity>> &entities);
     ~Tank();
     
     /**
@@ -50,7 +50,7 @@ public:
     
 private:
     int controllerId;
-    vector<Entity*> &entities;
+    vector<std::unique_ptr<Entity>> &entities;
     double health;
 };
 

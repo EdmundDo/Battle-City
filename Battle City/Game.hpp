@@ -20,7 +20,7 @@ using namespace std;
 
 class Game {
 public:
-    Game(Map map);
+    Game(Map &map);
     ~Game();
     
     /**
@@ -48,14 +48,6 @@ public:
     void createPlayerTank(TankKeyBindings bindings, int x, int y, int direction, Color color);
     
     /**
-     * Requires: nothing
-     * Modifies: map
-     * Effects: Loads a playable map
-     */
-    
-    void loadMap(Map &map);
-    
-    /**
      * Requires: isPlaying == true
      * Modifies: map and entities
      * Effects: updates the map and entities in the game
@@ -74,9 +66,9 @@ public:
 private:
     bool isPlaying;
     
-    Map map;
-    vector<Entity*> entities;
-    vector<Controller*> controllers;
+    Map &map;
+    vector<std::unique_ptr<Entity>> entities;
+    vector<std::unique_ptr<Controller>> controllers;
     
     /**
      * Helper methods for update()

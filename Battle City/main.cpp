@@ -36,12 +36,14 @@ void testPlayerControllers();
 
 int main(int argc, const char * argv[]) {
     
-    testObstacleandTerrain();
+//    testObstacleandTerrain();
     testLevelEditor();
-    testTank();
-    testProjectile();
-    testMapIO();
-    testGame();
+//    testTank();
+//    testProjectile();
+//    testGame();
+//    testMap();
+//    testMapIO();
+//    testPlayerControllers();
     return 0;
 
 }
@@ -53,9 +55,9 @@ void testTank(){
     color.red = 1;
     color.blue = 2;
     color.green = 3;
-    vector <Entity*> entities;
+    vector <std::unique_ptr<Entity>> entities;
 
-    Tank t(100,1,2,3,color,false,0,entities);
+    Tank t(100, 1, 2, 3, color, false, 0, entities);
     double direction = t.getDirection();
     t.rotate(EPOS);
     if(direction< t.getDirection()){
@@ -177,16 +179,16 @@ void testLevelEditor(){
     color.blue = 123;
     
     // Add mapobjs
-       Terrain t("Water", 2, 1, 3, 4, color, false);
+    Terrain t("Water", 2, 1, 3, 4, color, false);
     
     LevelEditor l(m);
     
-//    l.addTerrain("stand",1,2,3,4,color,true);
-//    l.addObstacle("Wall", 1, 2, 3, 4, color,t);
-//    l.save();
+//    l.addTerrain("stand", 1, 3, 3, 4,color,true);
+//    l.addTerrain("Rocks", 2, 1, 3, 4, color, false);
+//    l.addObstacle("Cliffs", 1, 2, 3, 4, color,t);
+    l.load("map.txt");
 
     l.addPreferredStart(1, 2);
-    
 }
 
 // Testing projectile.
@@ -230,10 +232,8 @@ void testGame() {
     color.blue = 123;
     
     // Add mapobjs
-    Obstacle o("Wall", 1, 2, 3, 4, color);
-    Terrain t("Water", 2, 1, 3, 4, color, false);
-    m.addMapObj(o);
-    m.addMapObj(t);
+    m.addMapObj(new Obstacle("Wall", 1, 2, 3, 4, color));
+    m.addMapObj(new Terrain("Water", 2, 1, 3, 4, color, false));
     
     // Controller
     TankKeyBindings tkb;
@@ -247,8 +247,6 @@ void testGame() {
     color.red = 212;
     color.green = 97;
     color.blue = 123;
-    
-    vector<Entity*> entities;
     
     Game game(m);
     
@@ -276,10 +274,9 @@ void testMap() {
     }
     
     // Add mapobjs
-    Obstacle o("Wall", 1, 2, 3, 4, color);
-    Terrain t("Water", 2, 1, 3, 4, color, false);
-    m.addMapObj(o);
-    m.addMapObj(t);
+    m.addMapObj(new Obstacle("Wall", 1, 2, 3, 4, color));
+    m.addMapObj(new Obstacle("Wall", 3, 2, 3, 4, color));
+    m.addMapObj(new Terrain("Water", 2, 1, 3, 4, color, false));
     
     if(m.getObstacleAt(1, 2)->getName() == "Wall") {
         cout << "Passed 3" << endl;
@@ -325,11 +322,9 @@ void testMapIO() {
     color.red = 212;
     color.green = 97;
     color.blue = 123;
-    Obstacle o("Wall", 1, 1, 1, 1, color);
-    Terrain t("Grass", 1, 2, 1, 1, color, true);
     
-    m.addMapObj(o);
-    m.addMapObj(t);
+    m.addMapObj(new Obstacle("Wall", 1, 1, 1, 1, color));
+    m.addMapObj(new Terrain("Grass", 1, 2, 1, 1, color, true));
     m.addPreferredStartCoord(7, 8);
     
     MapIO::write(m, "map.txt");
@@ -358,7 +353,7 @@ void testPlayerControllers() {
     color.green = 97;
     color.blue = 123;
     
-    vector<Entity*> entities;
+    vector<std::unique_ptr<Entity>> entities;
     
     Tank t(100, 10, 20, 90, color, false, 0, entities);
     PlayerController pc(t, tkb);

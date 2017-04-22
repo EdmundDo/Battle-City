@@ -46,7 +46,7 @@ public:
      * Effects: Adds an object to the map
      */
     
-    void addMapObj(MapObject &mobj);
+    void addMapObj(MapObject *mobj);
     
     /**
      * Requires: x < \width and y < height
@@ -78,9 +78,12 @@ public:
     int getWidth() const;
     int getHeight() const;
     
+    // Overloaded operators
+    Map& operator = (Map &map);
+    
 private:
     vector<Point2D> preferredStartCoords;
-    vector<MapObject*> mapObjs;
+    vector<std::unique_ptr<MapObject>> mapObjs;
     int width, height;
     
     void loadMapFromFile(string filepath);
