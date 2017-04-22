@@ -35,8 +35,8 @@ void LevelEditor::removePreferredStart(int x, int y){
     currentMap.removePreferredStartCoord(x,y);
 }
 
-void LevelEditor::save() {
-    MapIO::write(currentMap, "map.txt");
+void LevelEditor::save(string filename) {
+    MapIO::write(currentMap, filename);
 }
 
 void LevelEditor::load(string filepath) {

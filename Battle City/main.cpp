@@ -183,9 +183,10 @@ void testLevelEditor(){
     
     LevelEditor l(m);
     
-//    l.addTerrain("stand", 1, 3, 3, 4,color,true);
-//    l.addTerrain("Rocks", 2, 1, 3, 4, color, false);
-//    l.addObstacle("Cliffs", 1, 2, 3, 4, color,t);
+    l.addTerrain("stand", 1, 3, 3, 4,color,true);
+    l.addTerrain("Rocks", 2, 1, 3, 4, color, false);
+    l.addObstacle("Cliffs", 1, 2, 3, 4, color,t);
+    l.save();
     l.load("map.txt");
 
     l.addPreferredStart(1, 2);

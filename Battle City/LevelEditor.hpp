@@ -68,12 +68,12 @@ public:
     void fillTerrain(Terrain *t);
     
     /**
-     * Requires: nothing
+     * Requires: filename.length > 0
      * Modifies: nothing
      * Effects: Saves the map
      */
     
-    void save();
+    void save(string filename);
     
     /**
      * Requires: nothing
