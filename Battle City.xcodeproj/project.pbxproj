@@ -23,6 +23,7 @@
 		38B6C7A61EAD4868007FFCDB /* GameWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 38B6C7A41EAD4868007FFCDB /* GameWindow.cpp */; };
 		38B6C7A91EADAC2D007FFCDB /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38B6C7A81EADAC2D007FFCDB /* GLUT.framework */; };
 		38B6C7AB1EADAC33007FFCDB /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38B6C7AA1EADAC33007FFCDB /* OpenGL.framework */; };
+		38B6C7AE1EAE9350007FFCDB /* GameMenu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 38B6C7AC1EAE9350007FFCDB /* GameMenu.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -71,6 +72,8 @@
 		38B6C7A51EAD4868007FFCDB /* GameWindow.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GameWindow.hpp; sourceTree = "<group>"; };
 		38B6C7A81EADAC2D007FFCDB /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = System/Library/Frameworks/GLUT.framework; sourceTree = SDKROOT; };
 		38B6C7AA1EADAC33007FFCDB /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
+		38B6C7AC1EAE9350007FFCDB /* GameMenu.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameMenu.cpp; sourceTree = "<group>"; };
+		38B6C7AD1EAE9350007FFCDB /* GameMenu.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GameMenu.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,6 +116,8 @@
 				388448E51E9305F500CB253D /* test.cpp */,
 				38B6C7A41EAD4868007FFCDB /* GameWindow.cpp */,
 				38B6C7A51EAD4868007FFCDB /* GameWindow.hpp */,
+				38B6C7AC1EAE9350007FFCDB /* GameMenu.cpp */,
+				38B6C7AD1EAE9350007FFCDB /* GameMenu.hpp */,
 				388448EE1E93091900CB253D /* Game.cpp */,
 				388448EF1E93091900CB253D /* Game.hpp */,
 				388448F11E93093D00CB253D /* LevelEditor.cpp */,
@@ -239,6 +244,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				388449031E9309FF00CB253D /* Terrain.cpp in Sources */,
+				38B6C7AE1EAE9350007FFCDB /* GameMenu.cpp in Sources */,
 				382ECB321EA79E1900C84379 /* MapIO.cpp in Sources */,
 				388448FD1E9309EA00CB253D /* MapObject.cpp in Sources */,
 				3884490C1E930A2700CB253D /* Tank.cpp in Sources */,

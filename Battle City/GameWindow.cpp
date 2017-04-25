@@ -8,6 +8,8 @@
 
 #include "GameWindow.hpp"
 #include "Game.hpp"
+#include "LevelEditor.hpp"
+#include "GameMenu.hpp"
 
 #include <string>
 using namespace std;
@@ -20,6 +22,8 @@ int wd;
 int mouseX, mouseY;
 enum GameState {menu, lvlEditor, gameplay, gameOver};
 unique_ptr<Game> game;
+unique_ptr<LevelEditor> editor;
+unique_ptr<GameMenu> menu;
 GameState state;
 
 void init() {
@@ -141,6 +145,62 @@ void kbd(unsigned char key, int x, int y) {
     if (key == 27) {
         glutDestroyWindow(wd);
         exit(0);
+    }
+    
+    switch(key) {
+        case 119:
+            // 'w' pressed
+            switch(state) {
+                case menu:
+                    break;
+                case lvlEditor:
+                    break;
+                case gameplay:
+                    break;
+            }
+            break;
+        case 97:
+            // 'a' pressed
+            switch(state) {
+                case menu:
+                    break;
+                case lvlEditor:
+                    break;
+                case gameplay:
+                    break;
+            }
+            break;
+        case 100:
+            // 'd' pressed
+            switch(state) {
+                case menu:
+                    break;
+                case lvlEditor:
+                    break;
+                case gameplay:
+                    break;
+            }
+            break;
+        case 115:
+            // 's' pressed
+            switch(state) {
+                case menu:
+                    break;
+                case lvlEditor:
+                    break;
+                case gameplay:
+                    break;
+            }
+            break;
+        case 27:
+            glutDestroyWindow(wd);
+            exit(0);
+        default:
+            // otherwise
+            if(state == gameOver) {
+                state = menu;
+            }
+            break;
     }
     
     glutPostRedisplay();
