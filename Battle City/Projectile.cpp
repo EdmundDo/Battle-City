@@ -7,7 +7,7 @@
 //
 
 #include "Projectile.hpp"
-
+#include "GameWindow.hpp"
 
 Projectile::Projectile(double damage, double x, double y, double direction, Color color, bool canPassAllTerrain): Entity(x, y, direction, color, canPassAllTerrain), damage(damage) {
     width = 10;
@@ -24,7 +24,17 @@ double Projectile::getDamage() const{
     return damage;    
 }
 
+
 void Projectile::draw() {
+
+    glColor3f(color.red, color.green, color.blue);
+    glBegin(GL_QUADS);
+    glVertex2i(topLeft.getX(), topLeft.getY());
+    glVertex2i(topLeft.getX() + width, topLeft.getY());
+    glVertex2i(topLeft.getX() + width, topLeft.getY() + height);
+    glVertex2i(topLeft.getX(), topLeft.getY() + height);
+    glEnd();
+    
     
 }
 
