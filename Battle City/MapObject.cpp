@@ -13,6 +13,11 @@ MapObject::MapObject(string name, int x, int y, int width, int height, Color col
     this->topLeft.setX(x);
     this->topLeft.setY(y);
 }
+void MapObject::draw(){
+    
+}
+
+
 
 string MapObject::getName() const{
     return name;
@@ -55,4 +60,6 @@ void MapObject::setColor(int r, int g, int b) {
     this->color.green = g;
     this->color.blue = b;
 }
+
+
 
