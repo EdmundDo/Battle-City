@@ -63,6 +63,8 @@ public:
     
     void checkCollisions();
     
+    void draw();
+    
 private:
     bool isPlaying;
     

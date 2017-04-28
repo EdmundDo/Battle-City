@@ -10,8 +10,11 @@
 #include "Game.hpp"
 #include "LevelEditor.hpp"
 #include "GameMenu.hpp"
+#include "Obstacle.hpp"
+#include "Terrain.hpp"
 
 #include <string>
+#include <iostream>
 using namespace std;
 
 // GL params
@@ -23,14 +26,14 @@ int mouseX, mouseY;
 enum GameState {menu, lvlEditor, gameplay, gameOver};
 unique_ptr<Game> game;
 unique_ptr<LevelEditor> editor;
-unique_ptr<GameMenu> menu;
-GameState state;
+unique_ptr<GameMenu> gameMenu(new GameMenu());
+GameState gstate;
 
 void init() {
     width = 700;
     height = 500;
     mouseX = mouseY = -1;
-    state = menu;
+    gstate = menu;
 }
 
 void initGL() {
@@ -42,27 +45,7 @@ void initGL() {
 // display helpers
 
 void displayMenu() {
-    int tStartX = 215, tStartY = 100;
-    string title = "BATTLE CITY";
-    
-    glColor3f(150.0/255.0, 22.0/255.0, 11.0/255.0);
-    for (int i = 0; i < title.length(); i++, tStartX += 25) {
-        glRasterPos2i(tStartX, tStartY);
-        glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, title[i]);
-    }
-    
-    
-    int mStartX = 300, mStartY = 200;
-    string menuItem[] = {"Start Game", "Map Editor", "Credits"};
-    
-    glColor3f(1, 1, 1);
-    for(int i = 0; i < sizeof(menuItem) / sizeof(menuItem[0]); i++) {
-        glRasterPos2i(mStartX, mStartY);
-        for (int j = 0; j < menuItem[i].length(); j++) {
-            glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, menuItem[i][j]);
-        }
-        mStartY += 50;
-    }
+    gameMenu->draw();
 }
 
 /**
@@ -80,7 +63,7 @@ void displayMap() {
 
 void displayLevelEditor() {
     // do something
-    
+    editor->draw();
 }
 
 /**
@@ -89,7 +72,7 @@ void displayLevelEditor() {
 
 void displayGameplay() {
     // do something
-    
+    game->draw();
 }
 
 /**
@@ -119,7 +102,7 @@ void display() {
     
     // DRAW THINGS
     
-    switch(state) {
+    switch(gstate) {
         case menu:
             displayMenu();
             break;
@@ -148,57 +131,126 @@ void kbd(unsigned char key, int x, int y) {
     }
     
     switch(key) {
-        case 119:
-            // 'w' pressed
-            switch(state) {
+        case 'w':
+            switch(gstate) {
                 case menu:
+                    gameMenu->nextSelection();
                     break;
                 case lvlEditor:
+                    switch (editor->getSelectedColorIndex()) {
+                        case 0:
+                            editor->changeRedVal(POS);
+                            break;
+                        case 1:
+                            editor->changeGreenVal(POS);
+                            break;
+                        case 2:
+                            editor->changeBlueVal(POS);
+                            break;
+                        default:
+                            break;
+                    }
                     break;
                 case gameplay:
+                    break;
+                default:
                     break;
             }
             break;
-        case 97:
-            // 'a' pressed
-            switch(state) {
+        case 'a':
+            switch(gstate) {
                 case menu:
                     break;
                 case lvlEditor:
+                    editor->nextSelection();
                     break;
                 case gameplay:
+                    break;
+                default:
                     break;
             }
             break;
-        case 100:
-            // 'd' pressed
-            switch(state) {
+        case 'd':
+            switch(gstate) {
                 case menu:
                     break;
                 case lvlEditor:
+                    editor->nextSelection();
                     break;
                 case gameplay:
+                    break;
+                default:
                     break;
             }
             break;
-        case 115:
-            // 's' pressed
-            switch(state) {
+        case 's':
+            switch(gstate) {
                 case menu:
+                    gameMenu->nextSelection();
+                    break;
+                case lvlEditor:
+                    switch (editor->getSelectedColorIndex()) {
+                        case 0:
+                            editor->changeRedVal(NEG);
+                            break;
+                        case 1:
+                            editor->changeGreenVal(NEG);
+                            break;
+                        case 2:
+                            editor->changeBlueVal(NEG);
+                            break;
+                        default:
+                            break;
+                    }
+                    break;
+                case gameplay:
+                    break;
+                default:
+                    break;
+            }
+            break;
+        case 'c':
+            switch (gstate) {
+                case lvlEditor:
+                    editor->nextColorSelection();
+                    break;
+                default:
+                    break;
+            }
+        case 13:
+            // enter key
+            switch(gstate) {
+                case menu:
+                    switch(gameMenu->getCurrentSelection()) {
+                        case startGame:
+                            game.reset(new Game(*gameMenu->getMap()));
+                            gstate = gameplay;
+                            cout << "changed state gameplay" << endl;
+                            break;
+                        case mapEditor:
+                            editor.reset(new LevelEditor(20, 20));
+                            gstate = lvlEditor;
+                            cout << "changed state lvl" << endl;
+                            break;
+                    }
+                    cout << "made it" << endl;
                     break;
                 case lvlEditor:
                     break;
                 case gameplay:
+                    break;
+                default:
                     break;
             }
             break;
         case 27:
+            // esc key
             glutDestroyWindow(wd);
             exit(0);
         default:
             // otherwise
-            if(state == gameOver) {
-                state = menu;
+            if(gstate == gameOver) {
+                gstate = menu;
             }
             break;
     }
@@ -222,12 +274,49 @@ void cursor(int x, int y) {
 // state will be GLUT_UP or GLUT_DOWN
 void mouse(int button, int state, int x, int y) {
     // do something
+    cout << "clicked in window" << endl;
+    switch(gstate) {
+        case menu:
+            break;
+        case lvlEditor:
+            cout << "clicked in lvleditor" << endl;
+            if(button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {
+                int objX = x / 10, objY = x / 10;
+                Color color = {1, 1, 1};
+                MapObject* obj = editor->getCurrentSelection();
+                
+                if((Obstacle* oObj = dynamic_cast<Obstacle*>(obj))) {
+                    editor->addObstacle(obj->getName(), objX, objY, 10, 10, obj->getColor());
+                } else if (Terrain* tObj = dynamic_cast<Terrain*>(obj)){
+                    editor->addTerrain(obj->getName(), <#int x#>, <#int y#>, <#int height#>, <#int width#>, <#Color color#>, <#bool isPassible#>)(obj->getName(), objX, objY, 10, 10, obj->getColor());
+                }
+                cout << "Added object at: " << objX << ", " << objY << endl;
+            }
+            
+            if(button == GLUT_RIGHT_BUTTON && state == GLUT_DOWN) {
+                int px = x / 10, py = x / 10;
+                editor->addPreferredStart(px, py);
+            }
+            
+            break;
+        case gameplay:
+            cout << "clicked in gameplay" << endl;
+            break;
+        case gameOver:
+            break;
+    }
     
     glutPostRedisplay();
 }
 
 void timer(int extra) {
     // do something
+    if(gstate == gameplay) {
+        game->update();
+    }
+    
+    glutPostRedisplay();
+    glutTimerFunc(10, timer, 0);
 }
 
 int main(int argc, char** argv) {
