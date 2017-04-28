@@ -90,16 +90,27 @@ void Game::checkCollisions() {
     }
 }
 
+void Game::draw() {
+    Color color;
+    color.red = 1;
+    color.green = 1;
+    color.blue = 1 ;
+    
+    Obstacle o ("water",1,1,50,50,color);
+    o.draw();
+    map.drawMap();
+    
+    for(int i = 0; i < entities.size(); i++) {
+        entities[i]->draw();
+    }
+}
+
 void Game::updateMap() {
     // Empty for the time being until we have time to implement destructible obstacles
 }
 
 void Game::updateEntities() {
     checkCollisions();
-    
-    for(int i = 0; i < entities.size(); i++) {
-        entities[i]->draw();
-    }
 }
 
 void Game::checkCollision(Projectile &p, MapObject &mobj, int i) {

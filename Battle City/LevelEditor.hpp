@@ -14,9 +14,12 @@
 #include "Terrain.hpp"
 #include "MapIO.hpp"
 
+enum LSign {NEG = -1, POS = 1};
+
 class LevelEditor {
 public:
-    LevelEditor(Map &m);
+    LevelEditor(int width, int height);
+    LevelEditor(string filepath);
     
     /**
      * Requires: x < currentMap.width, y < currentMap.height
@@ -83,8 +86,34 @@ public:
     
     void load(string filepath);
     
+    /**
+     * Requires: nothing
+     * Modifies: nothing
+     * Effects: Reads the possible objects from a txt
+     */
+    
+    void readObjects();
+    
+    void nextSelection();
+    void nextColorSelection();
+    
+    MapObject* getCurrentSelection();
+    int getCurrentSelectionIndex();
+    void setCurrentSelection(int i);
+    int getSelectedColorIndex();
+    void setSelectedColorIndex(int i);
+    
+    void changeRedVal(LSign sign);
+    void changeGreenVal(LSign sign);
+    void changeBlueVal(LSign sign);
+    
+    void draw();
+    
 private:
-    Map &currentMap;
+    Map currentMap;
+    vector<unique_ptr<MapObject>> mapObjs;
+    
+    int selectedIndex, selectedColorIndex, red, green, blue;
     
 };
 

@@ -81,6 +81,8 @@ public:
     // Overloaded operators
     Map& operator= (Map &map);
     
+    void drawMap();
+    
 private:
     vector<Point2D> preferredStartCoords;
     vector<unique_ptr<MapObject>> mapObjs;

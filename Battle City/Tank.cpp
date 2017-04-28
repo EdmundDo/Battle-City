@@ -7,6 +7,7 @@
 //
 
 #include "Tank.hpp"
+#include "GameWindow.hpp"
 
 #include <cmath>
 
@@ -54,10 +55,23 @@ void Tank::setHealth(double h){
     }
 }
 
+
 int Tank::getControllerId() {
     return controllerId;
 }
 
+
+
 void Tank::draw() {
     
+    glColor3f(color.red, color.green, color.blue);
+    glBegin(GL_QUADS);
+    glVertex2i(topLeft.getX(), topLeft.getY());
+    glVertex2i(topLeft.getX() + width, topLeft.getY());
+    glVertex2i(topLeft.getX() + width, topLeft.getY() + height);
+    glVertex2i(topLeft.getX(), topLeft.getY() + height);
+    glEnd();
+    
 }
+
+

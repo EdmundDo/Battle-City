@@ -105,6 +105,12 @@ Map& Map::operator = (Map &map) {
     return *this;
 }
 
+void Map::drawMap() {
+    for(int i = 0; i < mapObjs.size(); i++) {
+        mapObjs[i]->draw();
+    }
+}
+
 void Map::loadMapFromFile(string filepath) {
     MapData mapData = MapIO::read(filepath);
     

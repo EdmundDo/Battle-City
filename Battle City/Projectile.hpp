@@ -12,6 +12,7 @@
 #include "Tank.hpp"
 
 
+
 class Projectile : public Entity{
   
 public:
@@ -33,7 +34,6 @@ private:
     double damage;
     
   
-    
 };
 
     
