@@ -85,7 +85,7 @@ private:
      * Effects: destroys p if collision with mobj
      */
     
-    void checkCollision(Projectile &p, MapObject &mobj, int i);
+    bool checkCollision(Projectile &p, MapObject &mobj);
     
     /**
      * Requires: nothing
@@ -101,7 +101,7 @@ private:
      * Effects: tank takes damage from projectile if collision
      */
     
-    void checkCollision(Tank &t, Projectile &p, int i);
+    bool checkCollision(Tank &t, Projectile &p);
     
     /**
      * Requires: nothing
@@ -110,6 +110,9 @@ private:
      */
     
     void checkCollision(Tank &t1, Tank &t2);
+    
+    bool isOverlapping(int xIn, int yIn, MapObject &mobj) const;
+    bool isOverlapping(int xIn, int yIn, Entity &entity) const;
 };
 
 #endif /* Game_hpp */

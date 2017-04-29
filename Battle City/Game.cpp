@@ -70,7 +70,9 @@ void Game::checkCollisions() {
                     if(Tank *t = dynamic_cast<Tank*>(entities[i].get())) {
                         checkCollision(*t, *obj);
                     } else if(Projectile *p = dynamic_cast<Projectile*>(entities[i].get())) {
-                        checkCollision(*p, *obj, i);
+                        if(checkCollision(*p, *obj)) {
+                            entities.erase(entities.begin() + i);
+                        }
                     }
                 }
             }
@@ -83,7 +85,9 @@ void Game::checkCollisions() {
                     checkCollision(*t1, *t2);
                     checkCollision(*t2, *t1);
                 } else if(Projectile *p = dynamic_cast<Projectile*>(entities[j].get())) {
-                    checkCollision(*t1, *p, i);
+                    if(checkCollision(*t1, *p)) {
+                        entities.erase(entities.begin() + i);
+                    }
                 }
             }
         }
@@ -113,52 +117,134 @@ void Game::updateEntities() {
     checkCollisions();
 }
 
-void Game::checkCollision(Projectile &p, MapObject &mobj, int i) {
-    if(true) {      // If an obstacle and overlaps in front
-        entities.erase(entities.begin() + i);
+bool Game::checkCollision(Projectile &p, MapObject &mobj) {
+    
+    bool topLeftOverlap = isOverlapping(p.getX(), p.getY(), mobj),
+        topRightOverlap = isOverlapping(p.getX() + p.getWidth(), p.getY(), mobj),
+        bottomLeftOverlap = isOverlapping(p.getX(), p.getY() + p.getHeight(), mobj),
+        bottomRightOverlap = isOverlapping(p.getX() + p.getWidth(), p.getY() + p.getHeight(), mobj);
+    
+    if(topLeftOverlap || topRightOverlap || bottomLeftOverlap || bottomRightOverlap) {
+        return true;
     }
+    
+    return false;
 }
 
 void Game::checkCollision(Tank &t, MapObject &mobj) {
     int controllerId = t.getControllerId();
     
-    if(true) {              // Check if obstacle overlaps in front
+    bool topLeftOverlap = isOverlapping(t.getX(), t.getY(), mobj),
+        topRightOverlap = isOverlapping(t.getX() + t.getWidth(), t.getY(), mobj),
+        bottomLeftOverlap = isOverlapping(t.getX(), t.getY() + t.getHeight(), mobj),
+        bottomRightOverlap = isOverlapping(t.getX() + t.getWidth(), t.getY() + t.getHeight(), mobj);
+    
+    // Check if obstacle overlaps in front
+    if(topLeftOverlap || topRightOverlap) {
         // disable moving forward
         controllers[controllerId]->setCanMoveForward(false);
-    } else if(true) {       // Check if obstacle overlaps in back
+    }
+    
+    // Check if obstacle overlaps in back
+    if(bottomLeftOverlap || bottomRightOverlap) {
         // disable moving backward
         controllers[controllerId]->setCanMoveBack(false);
-    } else if(true) {       // Check if obstacle overlaps the right side
-        // disable rotating right
-        controllers[controllerId]->setCanRotateRight(false);
-    } else if(true) {       // Check if obstacle overlaps the left side
+    }
+    
+    // Check if obstacle overlaps the left side, topLeft coordinate already checked so check bottomLeft
+    if(topLeftOverlap || bottomLeftOverlap) {
+        // disable rotating left
         controllers[controllerId]->setCanRotateLeft(false);
     }
+    
+    // Check if obstacle overlaps the right side, topRight coordinate already checked so check bottomRight
+    if(topRightOverlap || bottomRightOverlap) {
+        // disable rotating right
+        controllers[controllerId]->setCanRotateRight(false);
+    }
+}
+
+bool Game::checkCollision(Tank &t, Projectile &p) {
+    // Check if projectile and tank are overlapping
+    
+    bool topLeftOverlap = isOverlapping(t.getX(), t.getY(), p),
+        topRightOverlap = isOverlapping(t.getX() + t.getWidth(), t.getY(), p),
+        bottomLeftOverlap = isOverlapping(t.getX(), t.getY() + t.getHeight(), p),
+        bottomRightOverlap = isOverlapping(t.getX() + t.getWidth(), t.getY() + t.getHeight(), p);
+    
+    if(topLeftOverlap || topRightOverlap || bottomLeftOverlap || bottomRightOverlap) {
+        t.setHealth(t.getHealth() - p.getDamage());
+        return true;
+    }
+    
+    return false;
 }
 
 void Game::checkCollision(Tank &t1, Tank &t2) {
     int controllerIdOne = t1.getControllerId();
-    int controllerIdTwo = t2.getControllerId();
     
-    if(true) {              // Check if overlapping on t1 front and t2 right side
+    bool topLeftOverlap = isOverlapping(t1.getX(), t1.getY(), t2),
+        topRightOverlap = isOverlapping(t1.getX() + t1.getWidth(), t1.getY(), t2),
+        bottomLeftOverlap = isOverlapping(t1.getX(), t1.getY() + t1.getHeight(), t2),
+        bottomRightOverlap = isOverlapping(t1.getX() + t1.getWidth(), t1.getY() + t1.getHeight(), t2);
+    
+    // Check if overlapping on t1 front
+    if(topLeftOverlap || topRightOverlap) {
         controllers[controllerIdOne]->setCanMoveForward(false);
-        controllers[controllerIdTwo]->setCanRotateRight(false);
-    } else if(true) {       // Check if overlapping on t1 front and t2 left side
-        controllers[controllerIdOne]->setCanMoveForward(false);
-        controllers[controllerIdTwo]->setCanRotateLeft(false);
-    } else if(true) {       // Check if overlapping on t1 back and t2 right side
+    }
+    
+    // Check if overlapping on t1 back
+    if(bottomLeftOverlap || bottomRightOverlap) {
         controllers[controllerIdOne]->setCanMoveBack(false);
-        controllers[controllerIdTwo]->setCanRotateRight(false);
-    } else if(true) {       // Check if obstacle overlaps t1 back and t2 left side
-        controllers[controllerIdOne]->setCanMoveBack(false);
-        controllers[controllerIdTwo]->setCanRotateLeft(false);
+    }
+    
+    // Check if overlapping on t1 left side
+    if(topLeftOverlap || bottomLeftOverlap) {
+        controllers[controllerIdOne]->setCanRotateLeft(false);
+    }
+    
+    // Check if obstacle overlaps t1 right side
+    if(topRightOverlap || bottomRightOverlap) {
+        controllers[controllerIdOne]->setCanRotateRight(false);
     }
 }
 
-void Game::checkCollision(Tank &t, Projectile &p, int i) {
-    if(true) {              // Check if projectile and tank are overlapping
-        t.setHealth(t.getHealth() - p.getDamage());
+bool Game::isOverlapping(int xIn, int yIn, MapObject &mobj) const {
+    if (xIn < mobj.getX()) {
+        // out of bounds to the left of the rectangle
+        return false;
     }
-    
-    entities.erase(entities.begin() + i);
+    if (xIn > mobj.getX() + mobj.getWidth()) {
+        // out of bounds to the right of the rectangle
+        return false;
+    }
+    if (yIn < mobj.getY()) {
+        // out of bounds above the rectangle
+        return false;
+    }
+    if (yIn > mobj.getY() + mobj.getHeight()) {
+        // out of bounds below the rectangle
+        return false;
+    }
+    return true;
+}
+
+bool Game::isOverlapping(int xIn, int yIn, Entity &entity) const {
+    if (xIn < entity.getX()) {
+        // out of bounds to the left of the rectangle
+        return false;
+    }
+    if (xIn > entity.getX() + entity.getWidth()) {
+        // out of bounds to the right of the rectangle
+        return false;
+    }
+    if (yIn < entity.getY()) {
+        // out of bounds above the rectangle
+        return false;
+    }
+    if (yIn > entity.getY() + entity.getHeight()) {
+        // out of bounds below the rectangle
+        return false;
+    }
+    return true;
 }
