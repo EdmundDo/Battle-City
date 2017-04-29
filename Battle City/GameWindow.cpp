@@ -152,6 +152,7 @@ void kbd(unsigned char key, int x, int y) {
                     }
                     break;
                 case gameplay:
+                    game->handleKey('w');
                     break;
                 default:
                     break;
@@ -165,6 +166,7 @@ void kbd(unsigned char key, int x, int y) {
                     editor->nextSelection();
                     break;
                 case gameplay:
+                    game->handleKey('a');
                     break;
                 default:
                     break;
@@ -178,6 +180,7 @@ void kbd(unsigned char key, int x, int y) {
                     editor->nextSelection();
                     break;
                 case gameplay:
+                    game->handleKey('d');
                     break;
                 default:
                     break;
@@ -204,11 +207,24 @@ void kbd(unsigned char key, int x, int y) {
                     }
                     break;
                 case gameplay:
+                    game->handleKey('s');
                     break;
                 default:
                     break;
             }
             break;
+        case 32:
+            switch(gstate) {
+                case menu:
+                    break;
+                case lvlEditor:
+                    break;
+                case gameplay:
+                    game->handleKey(32);
+                    break;
+                default:
+                    break;
+            }
         case 'c':
             switch (gstate) {
                 case lvlEditor:
