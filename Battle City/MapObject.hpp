@@ -11,6 +11,7 @@
 
 #include "Color.hpp"
 #include "Point2D.hpp"
+#include "graphics.hpp"
 
 #include <string>
 using namespace std;

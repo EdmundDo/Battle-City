@@ -26,8 +26,7 @@ public:
     bool getIsPassable() const;
     void setIsPassable(bool a);
     
-    virtual void draw() override;
-    
+      
 private:
     bool isPassable;
 };

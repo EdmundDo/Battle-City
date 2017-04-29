@@ -18,6 +18,3 @@ void Terrain::setIsPassable(bool a ){
     isPassable = a;
 }
 
-void Terrain::draw() {
-    
-}
