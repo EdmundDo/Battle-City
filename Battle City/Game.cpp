@@ -48,6 +48,12 @@ void Game::createPlayerTank(TankKeyBindings bindings, int x, int y, int directio
     entities.push_back(move(tank));
 }
 
+void Game::handleKey(char a) {
+    for(int i = 0; i < controllers.size(); i++) {
+        controllers[i]->act(a);
+    }
+}
+
 void Game::update() {
     updateMap();
     updateEntities();

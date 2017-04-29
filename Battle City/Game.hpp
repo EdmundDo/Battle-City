@@ -48,6 +48,14 @@ public:
     void createPlayerTank(TankKeyBindings bindings, int x, int y, int direction, Color color);
     
     /**
+     * Requires: nothing
+     * Modifies: tank
+     * Effects: triggers the controller
+     */
+    
+    void handleKey(char a);
+    
+    /**
      * Requires: isPlaying == true
      * Modifies: map and entities
      * Effects: updates the map and entities in the game
