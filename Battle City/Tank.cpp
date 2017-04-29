@@ -21,9 +21,9 @@ Tank::~Tank() {}
 
 void Tank::rotate(Sign sign) {
     if(sign == ENEG) {
-        direction--;
+        direction -= 90;
     } else {
-        direction++;
+        direction += 90;
     }
     
     if(direction > 359) {
