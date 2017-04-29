@@ -13,6 +13,7 @@ MapObject::MapObject(string name, int x, int y, int width, int height, Color col
     this->topLeft.setX(x);
     this->topLeft.setY(y);
 }
+
 void MapObject::draw(){
     glColor3f(color.red, color.green, color.blue);
     glBegin(GL_QUADS);
@@ -22,8 +23,6 @@ void MapObject::draw(){
     glVertex2i(topLeft.getX()+getHeight(),topLeft.getY()+getWidth());
     glEnd();
 }
-
-
 
 string MapObject::getName() const{
     return name;

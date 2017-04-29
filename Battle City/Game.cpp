@@ -106,8 +106,6 @@ void Game::draw() {
     color.green = 1;
     color.blue = 1 ;
     
-    Obstacle o ("water",1,1,50,50,color);
-    o.draw();
     map.drawMap();
     
     for(int i = 0; i < entities.size(); i++) {

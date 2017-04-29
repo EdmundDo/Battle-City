@@ -310,7 +310,7 @@ void mouse(int button, int state, int x, int y) {
                 if(Obstacle* oObj = dynamic_cast<Obstacle*>(obj)) {
                     editor->addObstacle(oObj->getName(), objX, objY, 10, 10, oObj->getColor());
                 } else if (Terrain* tObj = dynamic_cast<Terrain*>(obj)){
-                    editor->addTerrain(obj->getName(), objX, objY, 10, 10, tObj->getColor(), tObj->getIsPassable());
+                    editor->addTerrain(tObj->getName(), objX, objY, 10, 10, tObj->getColor(), tObj->getIsPassable());
                 }
                 
                 cout << "Added object at: " << objX << ", " << objY << endl;

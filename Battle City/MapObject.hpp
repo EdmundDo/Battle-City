@@ -38,7 +38,7 @@ public:
     virtual void setColor(Color &color);
     virtual void setColor(int r, int g, int b);
     
-    virtual void draw() = 0;
+    virtual void draw();
     
 protected:
     
