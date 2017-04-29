@@ -32,6 +32,16 @@ void Map::removePreferredStartCoord(int x, int y) {
     }
 }
 
+bool Map::doesPreferredStartCoordExist(int x, int y) {
+    for(int i = 0; i < preferredStartCoords.size(); i++) {
+        if(x == preferredStartCoords[i].getX() && y == preferredStartCoords[i].getY()) {
+            return true;
+        }
+    }
+    
+    return false;
+}
+
 void Map::addMapObj(MapObject *mobj) {
     unique_ptr<MapObject> mobjp(mobj);
     mapObjs.push_back(move(mobjp));

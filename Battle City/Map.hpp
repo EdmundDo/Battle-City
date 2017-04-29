@@ -41,6 +41,14 @@ public:
     void removePreferredStartCoord(int x, int y);
     
     /**
+     * Requires: x < width and y < height
+     * Modifies: nothing
+     * Effects: Sees if a preferred start coord exists
+     */
+    
+    bool doesPreferredStartCoordExist(int x, int y);
+    
+    /**
      * Requires: mobj.getX() < width and mobj.getY() < height
      * Modifies: mapObjs
      * Effects: Adds an object to the map

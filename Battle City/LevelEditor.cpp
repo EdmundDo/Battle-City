@@ -18,11 +18,15 @@ LevelEditor::LevelEditor(string filepath) : currentMap(filepath), selectedIndex(
 }
 
 void LevelEditor::addObstacle(string name,int x, int y, int height, int width, Color color) {
-    currentMap.addMapObj(new Obstacle(name, x, y, height, width, color));
+    if(!currentMap.doesPreferredStartCoordExist(x, y)) {
+        currentMap.addMapObj(new Obstacle(name, x, y, height, width, color));
+    }
 }
 
-void LevelEditor::addObstacle(string name,int x, int y, int height, int width, Color color, Terrain terrain){
-    currentMap.addMapObj(new Obstacle(name,x, y, height, width,color, terrain));
+void LevelEditor::addObstacle(string name,int x, int y, int height, int width, Color color, Terrain terrain) {
+    if(!currentMap.doesPreferredStartCoordExist(x, y)) {
+        currentMap.addMapObj(new Obstacle(name,x, y, height, width,color, terrain));
+    }
 }
 
 void LevelEditor::addTerrain(string name,int x, int y, int height, int width, Color color, bool isPassible){
@@ -34,7 +38,9 @@ void LevelEditor::removeMapObjAt(int x, int y){
 }
 
 void LevelEditor::addPreferredStart(int x, int y){
-    currentMap.addPreferredStartCoord(x,y);
+    if(currentMap.getMapObjectAt(x, y) == nullptr) {
+        currentMap.addPreferredStartCoord(x,y);
+    }
 }
 
 void LevelEditor::removePreferredStart(int x, int y){
