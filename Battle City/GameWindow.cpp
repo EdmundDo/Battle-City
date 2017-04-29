@@ -223,10 +223,16 @@ void kbd(unsigned char key, int x, int y) {
                 case menu:
                     switch(gameMenu->getCurrentSelection()) {
                         case startGame:
+                        {
                             game.reset(new Game(*gameMenu->getMap()));
                             gstate = gameplay;
                             cout << "changed state gameplay" << endl;
+                            TankKeyBindings kb = {'w','a','s','d'};
+                            Color color = {1,0,0};
+                            game->createPlayerTank(kb,color);
+                            
                             break;
+                        }
                         case mapEditor:
                             editor.reset(new LevelEditor(20, 20));
                             gstate = lvlEditor;
@@ -284,12 +290,6 @@ void mouse(int button, int state, int x, int y) {
                 int objX = x / 10, objY = x / 10;
                 Color color = {1, 1, 1};
                 MapObject* obj = editor->getCurrentSelection();
-                
-                if((Obstacle* oObj = dynamic_cast<Obstacle*>(obj))) {
-                    editor->addObstacle(obj->getName(), objX, objY, 10, 10, obj->getColor());
-                } else if (Terrain* tObj = dynamic_cast<Terrain*>(obj)){
-                    editor->addTerrain(obj->getName(), <#int x#>, <#int y#>, <#int height#>, <#int width#>, <#Color color#>, <#bool isPassible#>)(obj->getName(), objX, objY, 10, 10, obj->getColor());
-                }
                 cout << "Added object at: " << objX << ", " << objY << endl;
             }
             
