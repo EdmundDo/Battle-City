@@ -1,0 +1,21 @@
+500
+500
+preferredStart
+{
+x=0
+y=0
+}=end
+preferredStart
+{
+x=7
+y=8
+}=end
+obstacle
+{
+name=Wall
+width=20
+height=20
+color=217 97 220
+x=50
+y=50
+}=end

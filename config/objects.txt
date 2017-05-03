@@ -1,0 +1,23 @@
+obstacle
+{
+name=Wall
+width=10
+height=10
+color=0 0 0
+}=end
+terrain
+{
+name=Grass
+width=10
+height=10
+color=0 255 0
+isPassable=true
+}=end
+terrain
+{
+name=Water
+width=10
+height=10
+color=0 255 0
+isPassable=true
+}=end

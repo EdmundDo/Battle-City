@@ -154,9 +154,11 @@ void Game::checkCollision(Tank &t, MapObject &mobj) {
             controllers[controllerId]->setCanMoveForward(false);
         } else if(t.getDirection() == 270) {
             controllers[controllerId]->setCanMoveBack(false);
-        } else if((topRightOverlap && bottomRightOverlap) && t.getDirection() == 0) {
-            controllers[controllerId]->setCanMoveForward(false);
         }
+    }
+    
+    if((topRightOverlap && bottomRightOverlap) && t.getDirection() == 0) {
+        controllers[controllerId]->setCanMoveForward(false);
     }
     
     // Check if obstacle overlaps in back
@@ -168,22 +170,24 @@ void Game::checkCollision(Tank &t, MapObject &mobj) {
             controllers[controllerId]->setCanMoveForward(false);
         } else if((topRightOverlap && bottomRightOverlap) || (topLeftOverlap && bottomLeftOverlap)) {
             controllers[controllerId]->setCanMoveForward(false);
-        } else if ((topLeftOverlap && bottomLeftOverlap) && t.getDirection() == 180) {
-            controllers[controllerId]->setCanMoveForward(false);
         }
     }
     
-    // Check if obstacle overlaps the left side, topLeft coordinate already checked so check bottomLeft
-    if(topLeftOverlap || bottomLeftOverlap) {
-        // disable rotating left
-        controllers[controllerId]->setCanRotateLeft(false);
+    if ((topLeftOverlap && bottomLeftOverlap) && t.getDirection() == 180) {
+        controllers[controllerId]->setCanMoveForward(false);
     }
     
-    // Check if obstacle overlaps the right side, topRight coordinate already checked so check bottomRight
-    if((topRightOverlap || bottomRightOverlap) && controllers[controllerId]->getCanRotateLeft()) {
-        // disable rotating right
-        controllers[controllerId]->setCanRotateRight(false);
-    }
+    // Check if obstacle overlaps the left side, topLeft coordinate already checked so check bottomLeft
+//    if(topLeftOverlap || bottomLeftOverlap) {
+//        // disable rotating left
+//        controllers[controllerId]->setCanRotateLeft(false);
+//    }
+//    
+//    // Check if obstacle overlaps the right side, topRight coordinate already checked so check bottomRight
+//    if((topRightOverlap || bottomRightOverlap) && controllers[controllerId]->getCanRotateLeft()) {
+//        // disable rotating right
+//        controllers[controllerId]->setCanRotateRight(false);
+//    }
 }
 
 bool Game::checkCollision(Tank &t, Projectile &p) {
