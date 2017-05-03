@@ -152,6 +152,7 @@ void kbd(unsigned char key, int x, int y) {
                     }
                     break;
                 case gameplay:
+                    cout << "w pressed in gameplay" << endl;
                     game->handleKey('w');
                     break;
                 default:
@@ -166,6 +167,7 @@ void kbd(unsigned char key, int x, int y) {
                     editor->nextSelection();
                     break;
                 case gameplay:
+                    cout << "a pressed in gameplay" << endl;
                     game->handleKey('a');
                     break;
                 default:
@@ -180,6 +182,7 @@ void kbd(unsigned char key, int x, int y) {
                     editor->nextSelection();
                     break;
                 case gameplay:
+                    cout << "d pressed in gameplay" << endl;
                     game->handleKey('d');
                     break;
                 default:
@@ -207,6 +210,7 @@ void kbd(unsigned char key, int x, int y) {
                     }
                     break;
                 case gameplay:
+                    cout << "s pressed in gameplay" << endl;
                     game->handleKey('s');
                     break;
                 default:
@@ -242,8 +246,8 @@ void kbd(unsigned char key, int x, int y) {
                         {
                             game.reset(new Game(*gameMenu->getMap()));
                             gstate = gameplay;
-                            cout << "changed state gameplay" << endl;
-                            TankKeyBindings kb = {'w','a','s','d'};
+                            
+                            TankKeyBindings kb = {'a','d','w','s',' '};
                             Color color = {1,0,0};
                             game->createPlayerTank(kb,color);
                             
@@ -255,7 +259,6 @@ void kbd(unsigned char key, int x, int y) {
                             cout << "changed state lvl" << endl;
                             break;
                     }
-                    cout << "made it" << endl;
                     break;
                 case lvlEditor:
                     break;

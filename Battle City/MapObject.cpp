@@ -17,10 +17,10 @@ MapObject::MapObject(string name, int x, int y, int width, int height, Color col
 void MapObject::draw(){
     glColor3f(color.red, color.green, color.blue);
     glBegin(GL_QUADS);
-    glVertex2i(topLeft.getX(),topLeft.getY());
-    glVertex2i(topLeft.getX()+getHeight(),topLeft.getY());
-    glVertex2i(topLeft.getX(),topLeft.getY()+getWidth());
-    glVertex2i(topLeft.getX()+getHeight(),topLeft.getY()+getWidth());
+    glVertex2i(topLeft.getX(), topLeft.getY());
+    glVertex2i(topLeft.getX() + width, topLeft.getY());
+    glVertex2i(topLeft.getX() + width, topLeft.getY() + height);
+    glVertex2i(topLeft.getX(), topLeft.getY() + height);
     glEnd();
 }
 

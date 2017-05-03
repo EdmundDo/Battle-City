@@ -33,6 +33,14 @@ public:
     virtual void move (Sign sign);
     
     /**
+     * Requires: nothing
+     * Modifies: coordX, coordY
+     * Effects: moves the entity in the direction the entity is facing at a specified rate
+     */
+    
+    virtual void move (Sign sign, double rate);
+    
+    /**
      * Requires: r, g, b must be between 0 and 255
      * Modifies: directions
      * Effects: getters and setters

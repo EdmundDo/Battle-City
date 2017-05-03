@@ -20,6 +20,12 @@ public:
     ~Projectile();
     
     /**
+     * @See Entity#move(Sign)
+     */
+    
+    virtual void move(Sign sign) override;
+    
+    /**
      * Requires: nothing
      * Modifies: damage
      * Effects: getters and setters
@@ -29,6 +35,9 @@ public:
     double getDamage() const;
     
     virtual void draw() override;
+    
+    static const int WIDTH = 10;
+    static const int HEIGHT = 10;
     
 private:
     double damage;

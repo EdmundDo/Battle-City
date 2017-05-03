@@ -10,11 +10,15 @@
 #include "GameWindow.hpp"
 
 Projectile::Projectile(double damage, double x, double y, double direction, Color color, bool canPassAllTerrain): Entity(x, y, direction, color, canPassAllTerrain), damage(damage) {
-    width = 10;
-    height = 10;
+    width = WIDTH;
+    height = WIDTH;
 }
 
 Projectile::~Projectile() {}
+
+void Projectile::move(Sign sign) {
+    Entity::move(sign, 5);
+}
 
 void Projectile::setDamage(double d){
     damage = d;

@@ -17,14 +17,18 @@ Entity::Entity(double x, double y, double direction, Color color, bool canPassAl
 Entity::~Entity() {}
 
 void Entity::move(Sign sign) {
+    move(sign, 1);
+}
+
+void Entity::move(Sign sign, double rate) {
     double dirRads = direction * M_PI / 180.0;
     double dx, dy;
     
     dx = cos(dirRads);
-    dy = sin(dirRads);
+    dy = -sin(dirRads);
     
-    topLeft.setX(topLeft.getX() + sign * dx);
-    topLeft.setY(topLeft.getY() + sign * dy);
+    topLeft.setX(topLeft.getX() + sign * dx * rate);
+    topLeft.setY(topLeft.getY() + sign * dy * rate);
 }
 
 double Entity::getX() const{

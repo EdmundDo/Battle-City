@@ -21,6 +21,12 @@ public:
     ~Tank();
     
     /**
+     * @See Entity#move(Sign)
+     */
+    
+    virtual void move(Sign sign) override;
+    
+    /**
      * Requires: nothing
      * Modifies: entities
      * Effects: creates a projectile

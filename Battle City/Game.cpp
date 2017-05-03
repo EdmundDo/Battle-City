@@ -85,14 +85,16 @@ void Game::checkCollisions() {
         }
         
         for(int j = 0; j < entities.size(); j++) {
-            // Check if entities[i] and entities[j] overlap
-            if(Tank *t1 = dynamic_cast<Tank*>(entities[i].get())) {
-                if(Tank *t2 = dynamic_cast<Tank*>(entities[j].get())) {
-                    checkCollision(*t1, *t2);
-                    checkCollision(*t2, *t1);
-                } else if(Projectile *p = dynamic_cast<Projectile*>(entities[j].get())) {
-                    if(checkCollision(*t1, *p)) {
-                        entities.erase(entities.begin() + i);
+            if(j != i) {
+                // Check if entities[i] and entities[j] overlap
+                if(Tank *t1 = dynamic_cast<Tank*>(entities[i].get())) {
+                    if(Tank *t2 = dynamic_cast<Tank*>(entities[j].get())) {
+                        checkCollision(*t1, *t2);
+                        checkCollision(*t2, *t1);
+                    } else if(Projectile *p = dynamic_cast<Projectile*>(entities[j].get())) {
+                        if(checkCollision(*t1, *p)) {
+                            entities.erase(entities.begin() + i);
+                        }
                     }
                 }
             }
@@ -101,13 +103,7 @@ void Game::checkCollisions() {
 }
 
 void Game::draw() {
-    Color color;
-    color.red = 1;
-    color.green = 1;
-    color.blue = 1 ;
-    
     map.drawMap();
-    
     for(int i = 0; i < entities.size(); i++) {
         entities[i]->draw();
     }
@@ -118,6 +114,14 @@ void Game::updateMap() {
 }
 
 void Game::updateEntities() {
+    // Update bullets
+    
+    for(int i = 0; i < entities.size(); i++) {
+        if(Projectile* p = dynamic_cast<Projectile*>(entities[i].get())) {
+            p->move(EPOS);
+        }
+    }
+    
     checkCollisions();
 }
 
@@ -143,16 +147,30 @@ void Game::checkCollision(Tank &t, MapObject &mobj) {
         bottomLeftOverlap = isOverlapping(t.getX(), t.getY() + t.getHeight(), mobj),
         bottomRightOverlap = isOverlapping(t.getX() + t.getWidth(), t.getY() + t.getHeight(), mobj);
     
-    // Check if obstacle overlaps in front
+    // Check if obstaclse overlaps in front
     if(topLeftOverlap || topRightOverlap) {
         // disable moving forward
-        controllers[controllerId]->setCanMoveForward(false);
+        if(t.getDirection() == 90) {
+            controllers[controllerId]->setCanMoveForward(false);
+        } else if(t.getDirection() == 270) {
+            controllers[controllerId]->setCanMoveBack(false);
+        } else if((topRightOverlap && bottomRightOverlap) && t.getDirection() == 0) {
+            controllers[controllerId]->setCanMoveForward(false);
+        }
     }
     
     // Check if obstacle overlaps in back
-    if(bottomLeftOverlap || bottomRightOverlap) {
+    if((bottomLeftOverlap || bottomRightOverlap) && controllers[controllerId]->getCanMoveForward()) {
         // disable moving backward
-        controllers[controllerId]->setCanMoveBack(false);
+        if(t.getDirection() == 90) {
+            controllers[controllerId]->setCanMoveBack(false);
+        } else if(t.getDirection() == 270) {
+            controllers[controllerId]->setCanMoveForward(false);
+        } else if((topRightOverlap && bottomRightOverlap) || (topLeftOverlap && bottomLeftOverlap)) {
+            controllers[controllerId]->setCanMoveForward(false);
+        } else if ((topLeftOverlap && bottomLeftOverlap) && t.getDirection() == 180) {
+            controllers[controllerId]->setCanMoveForward(false);
+        }
     }
     
     // Check if obstacle overlaps the left side, topLeft coordinate already checked so check bottomLeft
@@ -162,7 +180,7 @@ void Game::checkCollision(Tank &t, MapObject &mobj) {
     }
     
     // Check if obstacle overlaps the right side, topRight coordinate already checked so check bottomRight
-    if(topRightOverlap || bottomRightOverlap) {
+    if((topRightOverlap || bottomRightOverlap) && controllers[controllerId]->getCanRotateLeft()) {
         // disable rotating right
         controllers[controllerId]->setCanRotateRight(false);
     }
@@ -185,6 +203,7 @@ bool Game::checkCollision(Tank &t, Projectile &p) {
 }
 
 void Game::checkCollision(Tank &t1, Tank &t2) {
+    double dir = t1.getDirection();
     int controllerIdOne = t1.getControllerId();
     
     bool topLeftOverlap = isOverlapping(t1.getX(), t1.getY(), t2),
@@ -192,13 +211,13 @@ void Game::checkCollision(Tank &t1, Tank &t2) {
         bottomLeftOverlap = isOverlapping(t1.getX(), t1.getY() + t1.getHeight(), t2),
         bottomRightOverlap = isOverlapping(t1.getX() + t1.getWidth(), t1.getY() + t1.getHeight(), t2);
     
-    // Check if overlapping on t1 front
+    // Check if overlapping on t1 top
     if(topLeftOverlap || topRightOverlap) {
         controllers[controllerIdOne]->setCanMoveForward(false);
     }
     
-    // Check if overlapping on t1 back
-    if(bottomLeftOverlap || bottomRightOverlap) {
+    // Check if overlapping on t1 bottom
+    if((bottomLeftOverlap || bottomRightOverlap) && !controllers[controllerIdOne]->getCanMoveForward()) {
         controllers[controllerIdOne]->setCanMoveBack(false);
     }
     
@@ -208,7 +227,7 @@ void Game::checkCollision(Tank &t1, Tank &t2) {
     }
     
     // Check if obstacle overlaps t1 right side
-    if(topRightOverlap || bottomRightOverlap) {
+    if((topRightOverlap || bottomRightOverlap) && !controllers[controllerIdOne]->getCanRotateLeft()) {
         controllers[controllerIdOne]->setCanRotateRight(false);
     }
 }
@@ -218,18 +237,22 @@ bool Game::isOverlapping(int xIn, int yIn, MapObject &mobj) const {
         // out of bounds to the left of the rectangle
         return false;
     }
+    
     if (xIn > mobj.getX() + mobj.getWidth()) {
         // out of bounds to the right of the rectangle
         return false;
     }
+    
     if (yIn < mobj.getY()) {
         // out of bounds above the rectangle
         return false;
     }
+    
     if (yIn > mobj.getY() + mobj.getHeight()) {
         // out of bounds below the rectangle
         return false;
     }
+    
     return true;
 }
 

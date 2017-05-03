@@ -12,12 +12,43 @@
 #include <cmath>
 
 Tank::Tank(double health, double x, double y, double direction, Color color, bool canPass, int controllerId, vector<unique_ptr<Entity>> &entities) : Entity(x, y, direction, color, canPass), health(health), controllerId(controllerId), entities(entities) {
-    width = 20;
-    height = 40;
+    width = 10;
+    height = 10;
 }
 
-
 Tank::~Tank() {}
+
+void Tank::move(Sign sign) {
+    Entity::move(sign, 1);
+}
+
+void Tank::shoot() {
+    double dirRads = direction * M_PI / 180.0;
+    
+    double dx, dy;
+    
+    dx = cos(dirRads);
+    dy = sin(dirRads);
+    
+    if(direction == 0) {
+        dx = topLeft.getX() + width + dx;
+        dy = topLeft.getY() + dy;
+    } else if(direction == 90) {
+        dx = topLeft.getX() + dx;
+        dy = topLeft.getY() - dy - Projectile::HEIGHT;
+    } else if(direction == 180) {
+        dx = topLeft.getX() - dx - Projectile::WIDTH;
+        dy = topLeft.getY() + dy;
+    } else if(direction == 270) {
+        dx = topLeft.getX() + dx;
+        dy = topLeft.getY() + height + dy;
+    }
+    
+    Color color = {4, 2, 3};
+    
+    unique_ptr<Projectile> p (new Projectile(5, dx, dy, direction, color, true));
+    entities.push_back(std::move(p));
+}
 
 void Tank::rotate(Sign sign) {
     if(sign == ENEG) {
@@ -33,18 +64,6 @@ void Tank::rotate(Sign sign) {
     }
 }
 
-void Tank::shoot() {
-    double dirRads = direction * M_PI / 180.0;
-    
-    double dx, dy;
-    
-    dx = cos(dirRads);
-    dy = sin(dirRads);
-    
-    unique_ptr<Projectile> p (new Projectile(5, dx, dy, direction, getColor(), true));
-    entities.push_back(std::move(p));
-}
-
 double Tank::getHealth(){
     return health;
 }
@@ -55,12 +74,9 @@ void Tank::setHealth(double h){
     }
 }
 
-
 int Tank::getControllerId() {
     return controllerId;
 }
-
-
 
 void Tank::draw() {
     
