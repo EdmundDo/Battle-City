@@ -23,7 +23,7 @@ int wd;
 
 // Game params
 int mouseX, mouseY;
-enum GameState {menu, lvlEditor, gameplay, gameOver};
+enum GameState {menu, lvlEditor, gameplay, gameOver, instructions};   
 unique_ptr<Game> game;
 unique_ptr<LevelEditor> editor;
 unique_ptr<GameMenu> gameMenu(new GameMenu());
@@ -75,6 +75,7 @@ void displayGameplay() {
     game->draw();
 }
 
+
 /**
  * Draws the game over menu. "Click to try again".
  */
@@ -89,6 +90,31 @@ void displayGameOver() {
         glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, message[i]);
     }
 }
+
+
+void displayInstruction(){
+    //Draw stings
+    string message = "Game Instruction";
+    //set color to
+    glColor3f(255.0,255.0 ,255.0 );
+    glRasterPos2i(300,250);
+    for(int i=0; i <message.length(); ++i){
+        glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_10, message[i]);
+    }
+    
+    
+    for (int i = 0; ; i< ++i){
+        
+        
+        
+    }
+    
+       
+    }
+        
+
+}
+
 
 void display() {
     glViewport(0, 0, width, height);
@@ -114,6 +140,9 @@ void display() {
             break;
         case gameOver:
             displayGameOver();
+            break;
+        case instructions:
+            displayInstruction();
             break;
     }
     
