@@ -24,6 +24,9 @@ void Controller::rotateLeft() {
     if(!canRotateRight) {
         canRotateRight = true;
     }
+    
+    canMoveBack = true;
+    canMoveForward = true;
 }
 
 void Controller::rotateRight() {
@@ -34,6 +37,9 @@ void Controller::rotateRight() {
     if(!canRotateLeft) {
         canRotateLeft = true;
     }
+    
+    canMoveBack = true;
+    canMoveForward = true;
 }
 
 void Controller::moveForward() {

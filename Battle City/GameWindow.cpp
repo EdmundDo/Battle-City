@@ -152,7 +152,6 @@ void kbd(unsigned char key, int x, int y) {
                     }
                     break;
                 case gameplay:
-                    cout << "w pressed in gameplay" << endl;
                     game->handleKey('w');
                     break;
                 default:
@@ -167,7 +166,6 @@ void kbd(unsigned char key, int x, int y) {
                     editor->nextSelection();
                     break;
                 case gameplay:
-                    cout << "a pressed in gameplay" << endl;
                     game->handleKey('a');
                     break;
                 default:
@@ -182,7 +180,6 @@ void kbd(unsigned char key, int x, int y) {
                     editor->nextSelection();
                     break;
                 case gameplay:
-                    cout << "d pressed in gameplay" << endl;
                     game->handleKey('d');
                     break;
                 default:
@@ -210,25 +207,90 @@ void kbd(unsigned char key, int x, int y) {
                     }
                     break;
                 case gameplay:
-                    cout << "s pressed in gameplay" << endl;
                     game->handleKey('s');
                     break;
                 default:
                     break;
             }
             break;
-        case 32:
+        case 'i':
             switch(gstate) {
                 case menu:
                     break;
                 case lvlEditor:
                     break;
                 case gameplay:
-                    game->handleKey(32);
+                    game->handleKey('i');
                     break;
                 default:
                     break;
             }
+            break;
+        case 'j':
+            switch(gstate) {
+                case menu:
+                    break;
+                case lvlEditor:
+                    break;
+                case gameplay:
+                    game->handleKey('j');
+                    break;
+                default:
+                    break;
+            }
+            break;
+        case 'l':
+            switch(gstate) {
+                case menu:
+                    break;
+                case lvlEditor:
+                    break;
+                case gameplay:
+                    game->handleKey('l');
+                    break;
+                default:
+                    break;
+            }
+            break;
+        case 'k':
+            switch(gstate) {
+                case menu:
+                    break;
+                case lvlEditor:
+                    break;
+                case gameplay:
+                    game->handleKey('k');
+                    break;
+                default:
+                    break;
+            }
+            break;
+        case ';':
+            switch(gstate) {
+                case menu:
+                    break;;;
+                case lvlEditor:
+                    break;
+                case gameplay:
+                    game->handleKey(';');
+                    break;
+                default:
+                    break;
+            }
+            break;
+        case 'q':
+            switch(gstate) {
+                case menu:
+                    break;
+                case lvlEditor:
+                    break;
+                case gameplay:
+                    game->handleKey('q');
+                    break;
+                default:
+                    break;
+            }
+            break;
         case 'c':
             switch (gstate) {
                 case lvlEditor:
@@ -237,6 +299,7 @@ void kbd(unsigned char key, int x, int y) {
                 default:
                     break;
             }
+            break;
         case 13:
             // enter key
             switch(gstate) {
@@ -247,16 +310,19 @@ void kbd(unsigned char key, int x, int y) {
                             game.reset(new Game(*gameMenu->getMap()));
                             gstate = gameplay;
                             
-                            TankKeyBindings kb = {'a','d','w','s',' '};
-                            Color color = {1,0,0};
-                            game->createPlayerTank(kb,color);
+                            TankKeyBindings kb1 = {'a','d','w','s','q'};
+                            Color color1 = {1,0,0};
+                            game->createPlayerTank(kb1,color1);
+                            
+                            TankKeyBindings kb2 = {'j','l','i','k',';'};
+                            Color color2 = {0,0,1};
+                            game->createPlayerTank(kb2,color2);
                             
                             break;
                         }
                         case mapEditor:
                             editor.reset(new LevelEditor(20, 20));
                             gstate = lvlEditor;
-                            cout << "changed state lvl" << endl;
                             break;
                     }
                     break;
@@ -277,6 +343,68 @@ void kbd(unsigned char key, int x, int y) {
             if(gstate == gameOver) {
                 gstate = menu;
             }
+            break;
+    }
+    
+    glutPostRedisplay();
+}
+
+void kbdup(unsigned char key, int x, int y) {
+    
+    switch(key) {
+        case 'w':
+            switch(gstate) {
+                case menu:
+                    break;
+                case lvlEditor:
+                    break;
+                case gameplay:
+                    game->handleKey('w');
+                    break;
+                default:
+                    break;
+            }
+            break;
+        case 's':
+            switch(gstate) {
+                case menu:
+                    break;
+                case lvlEditor:
+                    break;
+                case gameplay:
+                    game->handleKey('s');
+                    break;
+                default:
+                    break;
+            }
+            break;
+        case 'i':
+            switch(gstate) {
+                case menu:
+                    break;
+                case lvlEditor:
+                    break;
+                case gameplay:
+                    game->handleKey('i');
+                    break;
+                default:
+                    break;
+            }
+            break;
+        case 'k':
+            switch(gstate) {
+                case menu:
+                    break;
+                case lvlEditor:
+                    break;
+                case gameplay:
+                    game->handleKey('k');
+                    break;
+                default:
+                    break;
+            }
+            break;
+        default:
             break;
     }
     
@@ -362,6 +490,8 @@ int main(int argc, char** argv) {
     initGL();
     // register keyboard press event processing function
     glutKeyboardFunc(kbd);
+    glutKeyboardUpFunc(kbdup);
+    glutIgnoreKeyRepeat(true);
     
     // register special event: function keys, arrows, etc.
     glutSpecialFunc(kbdS);

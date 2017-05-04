@@ -80,12 +80,44 @@ int Tank::getControllerId() {
 
 void Tank::draw() {
     
-    glColor3f(color.red, color.green, color.blue);
     glBegin(GL_QUADS);
-    glVertex2i(topLeft.getX(), topLeft.getY());
-    glVertex2i(topLeft.getX() + width, topLeft.getY());
-    glVertex2i(topLeft.getX() + width, topLeft.getY() + height);
-    glVertex2i(topLeft.getX(), topLeft.getY() + height);
+    if(direction == 90) {
+        glColor3f(1, 1, 1);
+        glVertex2i(topLeft.getX(), topLeft.getY());
+        glVertex2i(topLeft.getX() + width, topLeft.getY());
+        glColor3f(color.red, color.green, color.blue);
+        glVertex2i(topLeft.getX() + width, topLeft.getY() + height);
+        glVertex2i(topLeft.getX(), topLeft.getY() + height);
+    }
+    
+    if(direction == 270) {
+        glColor3f(color.red, color.green, color.blue);
+        glVertex2i(topLeft.getX(), topLeft.getY());
+        glVertex2i(topLeft.getX() + width, topLeft.getY());
+        glColor3f(1, 1, 1);
+        glVertex2i(topLeft.getX() + width, topLeft.getY() + height);
+        glVertex2i(topLeft.getX(), topLeft.getY() + height);
+    }
+    
+    if(direction == 0) {
+        glColor3f(color.red, color.green, color.blue);
+        glVertex2i(topLeft.getX(), topLeft.getY());
+        glColor3f(1, 1, 1);
+        glVertex2i(topLeft.getX() + width, topLeft.getY());
+        glVertex2i(topLeft.getX() + width, topLeft.getY() + height);
+        glColor3f(color.red, color.green, color.blue);
+        glVertex2i(topLeft.getX(), topLeft.getY() + height);
+    }
+    
+    if(direction == 180) {
+        glColor3f(1, 1, 1);
+        glVertex2i(topLeft.getX(), topLeft.getY());
+        glColor3f(color.red, color.green, color.blue);
+        glVertex2i(topLeft.getX() + width, topLeft.getY());
+        glVertex2i(topLeft.getX() + width, topLeft.getY() + height);
+        glColor3f(1, 1, 1);
+        glVertex2i(topLeft.getX(), topLeft.getY() + height);
+    }
     glEnd();
     
 }
