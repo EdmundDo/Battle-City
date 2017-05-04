@@ -15,12 +15,12 @@ MapObject::MapObject(string name, int x, int y, int width, int height, Color col
 }
 
 void MapObject::draw(){
-    glColor3f(color.red, color.green, color.blue);
+    glColor3ub(color.red, color.green, color.blue);
     glBegin(GL_QUADS);
-    glVertex2i(topLeft.getX() + 1, topLeft.getY() - 1);
-    glVertex2i(topLeft.getX() + width + 1, topLeft.getY() - 1);
-    glVertex2i(topLeft.getX() + width + 1, topLeft.getY() + height + 1);
-    glVertex2i(topLeft.getX() + 1, topLeft.getY() + height + 1);
+    glVertex2i(topLeft.getX() * 10 + 1, topLeft.getY() * 10 - 1);
+    glVertex2i(topLeft.getX() * 10 + width + 1, topLeft.getY() * 10 - 1);
+    glVertex2i(topLeft.getX() * 10 + width + 1, topLeft.getY() * 10 + height + 1);
+    glVertex2i(topLeft.getX() * 10 + 1, topLeft.getY() * 10 + height + 1);
     glEnd();
 }
 

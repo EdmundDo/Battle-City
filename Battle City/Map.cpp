@@ -43,8 +43,11 @@ bool Map::doesPreferredStartCoordExist(int x, int y) {
 }
 
 void Map::addMapObj(MapObject *mobj) {
-    unique_ptr<MapObject> mobjp(mobj);
-    mapObjs.push_back(move(mobjp));
+    int x = mobj->getX(), y = mobj->getY();
+    if(getMapObjectAt(x, y) == nullptr && !doesPreferredStartCoordExist(x, y)) {
+        unique_ptr<MapObject> mobjp(mobj);
+        mapObjs.push_back(move(mobjp));
+    }
 }
 
 void Map::removeMapObjAt(int x, int y) {

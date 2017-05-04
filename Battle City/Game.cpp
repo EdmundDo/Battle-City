@@ -51,7 +51,9 @@ void Game::createPlayerTank(TankKeyBindings bindings, int x, int y, int directio
 
 void Game::handleKey(char a) {
     for(int i = 0; i < controllers.size(); i++) {
-        controllers[i]->act(a);
+        if(controllers[i] != nullptr) {
+            controllers[i]->act(a);
+        }
     }
 }
 
@@ -104,8 +106,9 @@ void Game::checkCollisions() {
                     } else if(Projectile *p = dynamic_cast<Projectile*>(entities[j].get())) {
                         if(checkCollision(*t1, *p)) {
                             int controllerId = t1->getControllerId();
-                            controllers.erase(controllers.begin() + controllerId);
+                            controllers[i].reset(nullptr);
                             entities.erase(entities.begin() + i);
+                            
                             skipIteration = true;
                             break;
                         }
