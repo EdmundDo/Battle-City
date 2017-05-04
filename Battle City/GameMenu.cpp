@@ -16,7 +16,9 @@ GameMenu::~GameMenu() {}
 void GameMenu::nextSelection() {
     if(currentSelection == startGame) {
         currentSelection = mapEditor;
-    } else if( currentSelection == mapEditor) {
+    } else if(currentSelection == mapEditor) {
+        currentSelection = instructions;
+    } else if (currentSelection == instructions){
         currentSelection = startGame;
     }
 }
@@ -45,7 +47,7 @@ void GameMenu::draw() {
     
     
     int mStartX = 300, mStartY = 200;
-    string menuItem[] = {"Start Game", "Map Editor"};
+    string menuItem[] = {"Start Game", "Map Editor", "Instructions"};
     
     glColor3f(1, 1, 1);
     for(int i = 0; i < sizeof(menuItem) / sizeof(menuItem[0]); i++) {
@@ -73,11 +75,13 @@ void GameMenu::draw() {
 }
 
 string GameMenu::selectionToString(Selection s) {
-    switch (s) {
+    switch(s) {
         case startGame:
             return "Start Game";
         case mapEditor:
             return "Map Editor";
+        case instructions:
+            return "Instructions";
         default:
             return "";
     }

@@ -14,7 +14,7 @@
 #include <string>
 using namespace std;
 
-enum Selection {startGame, mapEditor};
+enum Selection {startGame, mapEditor, instructions};
 
 class GameMenu {
 public:

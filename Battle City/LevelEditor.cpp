@@ -18,18 +18,14 @@ LevelEditor::LevelEditor(string filepath) : currentMap(filepath), selectedIndex(
 }
 
 void LevelEditor::addObstacle(string name,int x, int y, int height, int width, Color color) {
-    if(!currentMap.doesPreferredStartCoordExist(x, y)) {
-        currentMap.addMapObj(new Obstacle(name, x, y, height, width, color));
-    }
+    currentMap.addMapObj(new Obstacle(name, x, y, height, width, color));
 }
 
 void LevelEditor::addObstacle(string name,int x, int y, int height, int width, Color color, Terrain terrain) {
-    if(!currentMap.doesPreferredStartCoordExist(x, y)) {
-        currentMap.addMapObj(new Obstacle(name,x, y, height, width,color, terrain));
-    }
+    currentMap.addMapObj(new Obstacle(name,x, y, height, width, color, terrain));
 }
 
-void LevelEditor::addTerrain(string name,int x, int y, int height, int width, Color color, bool isPassible){
+void LevelEditor::addTerrain(string name,int x, int y, int height, int width, Color color, bool isPassible) {
     currentMap.addMapObj(new Terrain(name,x, y,height, width,color,isPassible));
 }
 
