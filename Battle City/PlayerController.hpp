@@ -21,6 +21,19 @@ public:
     PlayerController(Tank &tank, TankKeyBindings bindings);
     ~PlayerController();
     
+    virtual void update();
+    
+    /**
+     * Requires: nothing
+     * Modifies: forwardFlag and backwardFlag
+     * Effects: holds down movment for better animation
+     */
+    
+    virtual void setForwardFlag(bool tf);
+    virtual bool getForwardFlag() const;
+    virtual void setBackwardFlag(bool tf);
+    virtual bool getBackwardFlag() const;
+    
     /**
      * see Controller#act(char c)
      */
@@ -30,6 +43,7 @@ public:
 private:
     // Binded keys
     char rotateLeftKey, rotateRightKey, moveForwardKey, moveBackwardKey, shootKey;
+    bool forwardFlag, backwardFlag;
 };
 
 #endif /* PlayerController_hpp */
