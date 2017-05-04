@@ -80,6 +80,8 @@ string GameMenu::selectionToString(Selection s) {
             return "Start Game";
         case mapEditor:
             return "Map Editor";
+        case instructions:
+            return "Instructions";
         default:
             return "";
     }
