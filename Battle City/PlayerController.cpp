@@ -23,5 +23,8 @@ void PlayerController::act(char c) {
         moveBackward();
     } else if(c == shootKey) {
         shoot();
+   
     }
 }
+
+
