@@ -24,7 +24,7 @@ int wd;
 // Game params
 int mouseX, mouseY;
 
-enum GameState {menu, lvlEditor, gameplay, gameOver, instruction};
+enum GameState {menu, lvlEditor, gameplay, gameOver, instruction, gameExit};
 
 enum Overlay {none, textField};
 GameState gstate;
@@ -129,21 +129,63 @@ void displayTextField() {
 
 void displayInstruction(){
     //set color to
-
-    int startX = 300; int startY= 100;
-    string messages[] = {"Game Instruction", "W - Move forward"};
     
-    glColor3f(1, 1, 1);
+    // Draw strings
+    string message = "Game Instructions";
+    // set color to lime green
+    glColor3f(50/255.0, 205/255.0, 50/255.0);
+    glRasterPos2i(250, 50);
+    for (int i = 0; i < message.length(); ++i) {
+        glutBitmapCharacter(font, message[i]);
+    }
+
+    int startX = 100; int startY= 100;
+    string messages[] = {"Player 1", "W - Move forward", "S - Move backward", "A - Move left", "D - Move right", "Space - Shoot" };
+    
+    glColor3f(0, 1, 1);
     for(int i = 0; i < sizeof(messages) / sizeof(messages[0]); i++) {
         glRasterPos2i(startX, startY);
         for(int j = 0; j < messages[i].length(); j++) {
             glutBitmapCharacter(font, messages[i][j]);
         }
-        startY += 20;
+        startY += 50;
+    }
+    
+    int startX2 = 400; int startY2= 100;
+    string messages2[] = {"Player 2", "I - Move forward", "K - Move backward", "J - Move left", "L - Move right","; - Shoot" };
+    
+    glColor3f(1, 1, 0);
+    for(int i = 0; i < sizeof(messages2) / sizeof(messages2[0]); i++) {
+        glRasterPos2i(startX2, startY2);
+        for(int j = 0; j < messages2[i].length(); j++) {
+            glutBitmapCharacter(font, messages2[i][j]);
+        }
+        startY2 += 50;
     }
 }
 
+void displayExit(){
+    string message = "Game Exit";
+    glColor3f(50/255.0, 205/255.0, 50/255.0);
+    glRasterPos2i(250, 50);
+    for (int i = 0; i < message.length(); ++i) {
+        glutBitmapCharacter(font, message[i]);
+    }
+    
+//    int startX = 100; int startY= 100;
+//    string messages[] = {"Game Exit" };
+//    
+//    glColor3f(0, 1, 1);
+//    for(int i = 0; i < sizeof(messages) / sizeof(messages[0]); i++) {
+//        glRasterPos2i(startX, startY);
+//        for(int j = 0; j < messages[i].length(); j++) {
+//            glutBitmapCharacter(font, messages[i][j]);
+//        }
+//        startY += 50;
+//    }
+//
 
+}
 
 
 void display() {
@@ -174,6 +216,8 @@ void display() {
         case instruction:
             displayInstruction();
             break;
+        case gameExit:
+            displayExit();
         default:
             break;
     }
@@ -201,171 +245,24 @@ void kbd(unsigned char key, int x, int y) {
     }
     
     if(overlay == none) {
-        switch(key) {
-            case 'w':
-                switch(gstate) {
-                    case menu:
+        switch (gstate) {
+            case menu:
+                switch(key) {
+                    case 'w':
                         gameMenu->nextSelection();
                         break;
-                    case lvlEditor:
-                        editor->nextSelection();
-                        break;
-                    case gameplay:
-                        game->handleKey('w');
-                        break;
-                    default:
-                        break;
-                }
-                break;
-            case 'a':
-                switch(gstate) {
-                    case menu:
-                        gameMenu->nextMapSelection();
-                        break;
-                    case lvlEditor:
-                        editor->nextSelection();
-                        break;
-                    case gameplay:
-                        game->handleKey('a');
-                        break;
-                    default:
-                        break;
-                }
-                break;
-            case 'd':
-                switch(gstate) {
-                    case menu:
-                        gameMenu->nextMapSelection();
-                        break;
-                    case lvlEditor:
-                        editor->nextSelection();
-                        break;
-                    case gameplay:
-                        game->handleKey('d');
-                        break;
-                    default:
-                        break;
-                }
-                break;
-            case 's':
-                switch(gstate) {
-                    case menu:
+                    case 'a':
                         gameMenu->nextSelection();
                         break;
-                    case lvlEditor:
+                    case 'd':
+                        gameMenu->nextSelection();
                         break;
-                    case gameplay:
-                        game->handleKey('s');
+                    case 's':
+                        gameMenu->nextSelection();
                         break;
-                    default:
+                    case 'q':
                         break;
-                }
-                break;
-            case 'i':
-                switch(gstate) {
-                    case menu:
-                        break;
-                    case lvlEditor:
-                        break;
-                    case gameplay:
-                        game->handleKey('i');
-                        break;
-                    default:
-                        break;
-                }
-                break;
-            case 'j':
-                switch(gstate) {
-                    case menu:
-                        break;
-                    case lvlEditor:
-                        break;
-                    case gameplay:
-                        game->handleKey('j');
-                        break;
-                    default:
-                        break;
-                }
-                break;
-            case 'l':
-                switch(gstate) {
-                    case menu:
-                        break;
-                    case lvlEditor:
-                        break;
-                    case gameplay:
-                        game->handleKey('l');
-                        break;
-                    default:
-                        break;
-                }
-                break;
-            case 'k':
-                switch(gstate) {
-                    case menu:
-                        break;
-                    case lvlEditor:
-                        break;
-                    case gameplay:
-                        game->handleKey('k');
-                        break;
-                    default:
-                        break;
-                }
-                break;
-            case ';':
-                switch(gstate) {
-                    case menu:
-                        break;
-                    case lvlEditor:
-                        break;
-                    case gameplay:
-                        game->handleKey(';');
-                        break;
-                    default:
-                        break;
-                }
-                break;
-            case ' ':
-                switch(gstate) {
-                    case menu:
-                        break;
-                    case lvlEditor:
-                        break;
-                    case gameplay:
-                        game->handleKey(' ');
-                        break;
-                    default:
-                        break;
-                }
-                break;
-            case 'q':
-                switch(gstate) {
-                    case menu:
-                        break;
-                    case lvlEditor:
-                        overlay = textField;
-                        query = "Enter save file name: ";
-                        break;
-                    case gameplay:
-                        break;
-                    default:
-                        break;
-                }
-                break;
-            case 'c':
-                switch (gstate) {
-                    case lvlEditor:
-                        editor->nextColorSelection();
-                        break;
-                    default:
-                        break;
-                }
-                break;
-            case 13:
-                // enter key
-                switch(gstate) {
-                    case menu:
+                    case 13:
                         switch(gameMenu->getCurrentSelection()) {
                             case GMStartGame:
                             {
@@ -380,37 +277,85 @@ void kbd(unsigned char key, int x, int y) {
                                 Color color2 = {0,0,1};
                                 game->createPlayerTank(kb2,color2);
                                 
-                                glutIgnoreKeyRepeat(true);
                                 break;
                             }
                             case GMMapEditor:
                                 editor.reset(new LevelEditor(20, 20));
                                 gstate = lvlEditor;
-                                glutIgnoreKeyRepeat(false);
                                 break;
                             case GMInstructions:
                                 gstate = instruction;
-                                glutIgnoreKeyRepeat(false);
+                                break;
+                                
+                            case GMExit:
+                                gstate = gameExit;
                                 break;
                         }
                         break;
-                    case lvlEditor:
+                    default:
                         break;
-                    case gameplay:
+                }
+                        
+            case lvlEditor:
+                switch (key) {
+                    case 'w':
+                        editor->nextSelection();
+                        break;
+                    case 'q':
+                        overlay = textField;
+                        query = "Enter save file name: ";
                         break;
                     default:
                         break;
                 }
                 break;
-            case 27:
-                // esc key
-                glutDestroyWindow(wd);
-                exit(0);
-            default:
-                // otherwise
-                if(gstate == gameOver) {
-                    gstate = menu;
+                
+            case gameplay:
+                switch(key) {
+                    case 'w':
+                        game->handleKey('w');
+                        break;
+                    case 'a':
+                        game->handleKey('a');
+                        break;
+                    case 'd':
+                        game->handleKey('d');
+                        break;
+                    case 's':
+                        game->handleKey('s');
+                        break;
+                    case 'i':
+                        game->handleKey('i');
+                        break;
+                    case 'j':
+                        game->handleKey('j');
+                        break;
+                    case 'l':
+                        game->handleKey('l');
+                        break;
+                    case 'k':
+                        game->handleKey('k');
+                        break;
+                    case ' ':
+                        game->handleKey(' ');
+                        break;
+                    case 'q':
+                        break;
+                    default:
+                        break;
                 }
+                break;
+            case instruction:
+                switch (key) {
+                    case 'q':
+                        // do something
+                        break;
+                    default:
+                        break;
+                }
+                break;
+                
+            default:
                 break;
         }
     } else {
