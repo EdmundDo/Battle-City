@@ -90,6 +90,7 @@ void displayGameplay() {
  * Draws the game over menu. "Click to try again".
  */
 
+
 void displayGameOver() {
     // Draw strings
     string message = "Game Over";
@@ -100,6 +101,11 @@ void displayGameOver() {
         glutBitmapCharacter(font, message[i]);
     }
 }
+
+
+
+
+
 
 void displayTextField() {
     unsigned char inputc[query.length()];
@@ -176,25 +182,12 @@ void displayInstruction(){
 
 void displayExit(){
     string message = "Game Exit";
-    glColor3f(50/255.0, 205/255.0, 50/255.0);
-    glRasterPos2i(250, 50);
+    glColor3f(255, 0, 102);
+    glRasterPos2i(300, 250);
     for (int i = 0; i < message.length(); ++i) {
         glutBitmapCharacter(font, message[i]);
     }
     
-//    int startX = 100; int startY= 100;
-//    string messages[] = {"Game Exit" };
-//    
-//    glColor3f(0, 1, 1);
-//    for(int i = 0; i < sizeof(messages) / sizeof(messages[0]); i++) {
-//        glRasterPos2i(startX, startY);
-//        for(int j = 0; j < messages[i].length(); j++) {
-//            glutBitmapCharacter(font, messages[i][j]);
-//        }
-//        startY += 50;
-//    }
-//
-
 }
 
 
@@ -307,7 +300,7 @@ void kbd(unsigned char key, int x, int y) {
                         break;
                 }
                 break;
-                
+
             case lvlEditor:
                 switch (key) {
                     case 'w':
@@ -363,6 +356,7 @@ void kbd(unsigned char key, int x, int y) {
                         game->handleKey(';');
                         break;
                     case 'q':
+                        gstate = menu;
                         break;
                     default:
                         break;
@@ -372,6 +366,7 @@ void kbd(unsigned char key, int x, int y) {
                 switch (key) {
                     case 'q':
                         // do something
+                        gstate = menu;
                         break;
                     default:
                         break;
@@ -380,6 +375,7 @@ void kbd(unsigned char key, int x, int y) {
                 
             default:
                 break;
+
         }
     } else {
         switch(overlay) {
@@ -566,4 +562,3 @@ int main(int argc, char** argv) {
     glutMainLoop();
     return 0;
 }
-

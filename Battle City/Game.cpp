@@ -16,6 +16,7 @@ Game::Game(Map &map) : map(map) {}
 
 Game::~Game() {}
 
+
 bool Game::checkGameStatus() {
     for(int i = 0; i < controllers.size(); i++) {
         if(controllers[i].get()->getTank().getHealth() == 0) {
