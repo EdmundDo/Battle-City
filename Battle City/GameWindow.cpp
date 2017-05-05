@@ -385,6 +385,7 @@ void kbd(unsigned char key, int x, int y) {
                 
             default:
                 break;
+
         }
     } else {
         switch(overlay) {
