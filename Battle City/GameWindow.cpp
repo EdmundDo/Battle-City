@@ -24,10 +24,12 @@ int wd;
 // Game params
 int mouseX, mouseY;
 
-enum GameState {menu, lvlEditor, gameplay, gameOver};
+enum GameState {menu, lvlEditor, gameplay, gameOver, instruction};
+
 enum Overlay {none, textField};
 GameState gstate;
 Overlay overlay = none;
+
 
 unique_ptr<Game> game;
 unique_ptr<LevelEditor> editor;
@@ -84,6 +86,7 @@ void displayGameplay() {
     game->draw();
 }
 
+
 /**
  * Draws the game over menu. "Click to try again".
  */
@@ -123,6 +126,30 @@ void displayTextField() {
     }
 }
 
+
+void displayInstruction(){
+    //Draw stings
+    string message = "Game Instruction";
+    //set color to
+    glColor3f(255.0,255.0 ,255.0 );
+    glRasterPos2i(300,250);
+    for(int i=0; i <message.length(); ++i){
+        glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_10, message[i]);
+    }
+    
+    
+    for (int i = 0; ; i< ++i){
+        
+        
+        
+    }
+    
+    
+        
+
+}
+
+
 void display() {
     glViewport(0, 0, width, height);
     glMatrixMode(GL_PROJECTION);
@@ -148,6 +175,10 @@ void display() {
         case gameOver:
             displayGameOver();
             break;
+
+        case instruction:
+            displayInstruction();
+
         default:
             break;
     }
@@ -157,6 +188,7 @@ void display() {
             displayTextField();
             break;
         default:
+
             break;
     }
     

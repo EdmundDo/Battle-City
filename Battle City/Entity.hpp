@@ -31,7 +31,7 @@ public:
      */
     
     virtual void move (Sign sign);
-    
+
     /**
      * Requires: nothing
      * Modifies: coordX, coordY

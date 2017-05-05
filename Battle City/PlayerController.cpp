@@ -43,6 +43,7 @@ void PlayerController::act(char c) {
         }
     } else if(c == shootKey) {
         shoot();
+   
     }
 }
 
