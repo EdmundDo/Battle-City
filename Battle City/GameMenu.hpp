@@ -24,10 +24,18 @@ public:
     /**
      * Requires: nothing
      * Modifies: nothing
-     * Effects: chooses the next selection
+     * Effects: chooses the next menu selection
      */
     
     void nextSelection();
+    
+    /**
+     * Requires: nothing
+     * Modifies: nothing
+     * Effects: chooses the next map selection
+     */
+    
+    void nextMapSelection();
     
     /**
      * Requires: nothing
@@ -37,6 +45,7 @@ public:
     
     Selection getCurrentSelection();
     void setCurrentSelection(Selection s);
+    string getCurrentMapSelection();
     Map* getMap();
     
     void draw();
@@ -44,7 +53,10 @@ public:
     static string selectionToString(Selection s);
 private:
     Selection currentSelection;
+    int mapSelection;
     unique_ptr<Map> map;
+    
+    static const string maps[];
 };
 
 #endif /* GameMenu_hpp */

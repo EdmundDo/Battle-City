@@ -29,7 +29,7 @@ string MapObject::getName() const{
 }
 
 int MapObject::getX() const{
-    return topLeft.getX();
+    return topLeft.getX() * 10;
 }
 
 void MapObject::setX(int x){
@@ -37,7 +37,7 @@ void MapObject::setX(int x){
 }
 
 int MapObject::getY() const{
-    return topLeft.getY();
+    return topLeft.getY() * 10;
 }
 
 void MapObject::setY(int y){

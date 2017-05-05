@@ -8,8 +8,6 @@
 
 #include "PlayerController.hpp"
 
-#include <iostream>
-
 PlayerController::PlayerController(Tank &tank, TankKeyBindings bindings) : Controller(tank), rotateLeftKey(bindings.rlk), rotateRightKey(bindings.rrk), moveForwardKey(bindings.mfk), moveBackwardKey(bindings.mbk), shootKey(bindings.sk), forwardFlag(false), backwardFlag(false) {}
 
 PlayerController::~PlayerController() {}
@@ -30,11 +28,9 @@ void PlayerController::act(char c) {
     } else if(c == moveForwardKey) {
         //moveForward();
         if(!forwardFlag) {
-            cout << forwardFlag << endl;
             forwardFlag = true;
             backwardFlag = false;
         } else {
-            cout << forwardFlag << endl;
             forwardFlag = false;
         }
     } else if(c == moveBackwardKey) {
@@ -42,10 +38,8 @@ void PlayerController::act(char c) {
         if(!backwardFlag) {
             backwardFlag = true;
             forwardFlag = false;
-            cout << "flip" << endl;
         } else {
             backwardFlag = false;
-            cout << "flop" << endl;
         }
     } else if(c == shootKey) {
         shoot();

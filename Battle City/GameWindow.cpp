@@ -18,7 +18,7 @@
 using namespace std;
 
 // GL params
-GLdouble width, height;
+static GLdouble width, height;
 int wd;
 
 // Game params
@@ -100,18 +100,22 @@ void displayGameOver() {
 }
 
 void displayTextField() {
+    unsigned char inputc[query.length()];
+    strcpy((char*) inputc, query.c_str());
+    
     glColor3f(1, 1, 1);
-    glRasterPos2i(300, 250);
+    int x = (width - glutBitmapLength(font, inputc)) / 2;
+    glRasterPos2i(x, height / 2 - 10);
     for (int i = 0; i < query.length(); ++i) {
         glutBitmapCharacter(font, query[i]);
     }
     
     if(input != "") {
-        unsigned char inputc[input.length()];
-        strcpy((char*) inputc, input.c_str());
+        unsigned char inputci[input.length()];
+        strcpy((char*) inputci, input.c_str());
         
-        int x = width - glutBitmapLength(font, inputc) / 2;
-        glRasterPos2i(x, height / 2);
+        x = (width - glutBitmapLength(font, inputci)) / 2;
+        glRasterPos2i(x, height / 2 + 10);
         
         for (int i = 0; i < input.length(); ++i) {
             glutBitmapCharacter(font, input[i]);
@@ -201,6 +205,7 @@ void kbd(unsigned char key, int x, int y) {
             case 'a':
                 switch(gstate) {
                     case menu:
+                        gameMenu->nextMapSelection();
                         break;
                     case lvlEditor:
                         editor->nextSelection();
@@ -215,6 +220,7 @@ void kbd(unsigned char key, int x, int y) {
             case 'd':
                 switch(gstate) {
                     case menu:
+                        gameMenu->nextMapSelection();
                         break;
                     case lvlEditor:
                         editor->nextSelection();
@@ -308,7 +314,7 @@ void kbd(unsigned char key, int x, int y) {
             case ';':
                 switch(gstate) {
                     case menu:
-                        break;;;
+                        break;
                     case lvlEditor:
                         break;
                     case gameplay:
@@ -506,37 +512,38 @@ void cursor(int x, int y) {
 // state will be GLUT_UP or GLUT_DOWN
 void mouse(int button, int state, int x, int y) {
     // do something
-    cout << "clicked in window" << endl;
-    switch(gstate) {
-        case menu:
-            break;
-        case lvlEditor:
-            cout << "clicked in lvleditor" << endl;
-            if(button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {
-                int objX = x / 10, objY = y / 10;
-                Color color = {1, 1, 1};
-                MapObject* obj = editor->getCurrentSelection();
-                
-                if(Obstacle* oObj = dynamic_cast<Obstacle*>(obj)) {
-                    editor->addObstacle(oObj->getName(), objX, objY, 10, 10, oObj->getColor());
-                } else if (Terrain* tObj = dynamic_cast<Terrain*>(obj)){
-                    editor->addTerrain(tObj->getName(), objX, objY, 10, 10, tObj->getColor(), tObj->getIsPassable());
+    if(overlay == none) {
+        switch(gstate) {
+            case menu:
+                break;
+            case lvlEditor:
+                cout << "clicked in lvleditor" << endl;
+                if(button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {
+                    int objX = x / 10, objY = y / 10;
+                    Color color = {1, 1, 1};
+                    MapObject* obj = editor->getCurrentSelection();
+                    
+                    if(Obstacle* oObj = dynamic_cast<Obstacle*>(obj)) {
+                        editor->addObstacle(oObj->getName(), objX, objY, 10, 10, oObj->getColor());
+                    } else if (Terrain* tObj = dynamic_cast<Terrain*>(obj)){
+                        editor->addTerrain(tObj->getName(), objX, objY, 10, 10, tObj->getColor(), tObj->getIsPassable());
+                    }
+                    
+                    cout << "Added object at: " << objX << ", " << objY << endl;
                 }
                 
-                cout << "Added object at: " << objX << ", " << objY << endl;
-            }
-            
-            if(button == GLUT_RIGHT_BUTTON && state == GLUT_DOWN) {
-                int px = x / 10, py = x / 10;
-                editor->addPreferredStart(px, py);
-            }
-            
-            break;
-        case gameplay:
-            cout << "clicked in gameplay" << endl;
-            break;
-        case gameOver:
-            break;
+                if(button == GLUT_RIGHT_BUTTON && state == GLUT_DOWN) {
+                    int px = x / 10, py = x / 10;
+                    editor->addPreferredStart(px, py);
+                }
+                
+                break;
+            case gameplay:
+                cout << "clicked in gameplay" << endl;
+                break;
+            case gameOver:
+                break;
+        }
     }
     
     glutPostRedisplay();

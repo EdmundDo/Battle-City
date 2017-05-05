@@ -9,7 +9,9 @@
 #include "GameMenu.hpp"
 #include "graphics.hpp"
 
-GameMenu::GameMenu() : currentSelection(startGame), map(new Map("map.txt")) {}
+const string GameMenu::maps[] = {"map.txt", "Custom Map"};
+
+GameMenu::GameMenu() : currentSelection(startGame), mapSelection(0), map(new Map("map.txt")) {}
 
 GameMenu::~GameMenu() {}
 
@@ -23,8 +25,21 @@ void GameMenu::nextSelection() {
     }
 }
 
+void GameMenu::nextMapSelection() {
+    if(mapSelection < 1) {
+        mapSelection++;
+    } else {
+        mapSelection = 0;
+    }
+}
+
 Selection GameMenu::getCurrentSelection() {
     return currentSelection;
+}
+
+string GameMenu::getCurrentMapSelection() {
+    //return maps[currentSelection];
+    return "";
 }
 
 void GameMenu::setCurrentSelection(Selection s) {
@@ -46,31 +61,42 @@ void GameMenu::draw() {
     }
     
     
-    int mStartX = 300, mStartY = 200;
+    int miStartX = 300, miStartY = 200;
     string menuItem[] = {"Start Game", "Map Editor", "Instructions"};
     
     glColor3f(1, 1, 1);
     for(int i = 0; i < sizeof(menuItem) / sizeof(menuItem[0]); i++) {
-        glRasterPos2i(mStartX, mStartY);
+        glRasterPos2i(miStartX, miStartY);
         for (int j = 0; j < menuItem[i].length(); j++) {
             if(selectionToString(currentSelection) == menuItem[i]) {
-                int prevMStartY = mStartY;
-                mStartY -= 13;
-                mStartX = 275;
+                int prevMStartY = miStartY;
+                miStartY -= 13;
+                miStartX = 275;
                 
                 glBegin(GL_TRIANGLES);
                 glColor3f(1, 1, 1);
-                glVertex2i(mStartX, mStartY + 15);
-                glVertex2i(mStartX, mStartY - 5);
-                glVertex2i(mStartX + 10, mStartY + 5);
+                glVertex2i(miStartX, miStartY + 15);
+                glVertex2i(miStartX, miStartY - 5);
+                glVertex2i(miStartX + 10, miStartY + 5);
                 glEnd();
                 
-                mStartX = 300;
-                mStartY = prevMStartY;
+                miStartX = 300;
+                miStartY = prevMStartY;
             }
             glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, menuItem[i][j]);
         }
-        mStartY += 50;
+        miStartY += 50;
+    }
+    
+    int mStartX = 0, mStartY = 450;
+    
+    unsigned char mapStr[maps[mapSelection].length()];
+    strcpy((char*) mapStr, maps[mapSelection].c_str());
+    mStartX = (700 - glutBitmapLength(GLUT_BITMAP_HELVETICA_18, mapStr)) / 2;
+    
+    glRasterPos2i(mStartX, mStartY);
+    for(int i = 0; i < maps[mapSelection].length(); i++) {
+        glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, maps[mapSelection][i]);
     }
 }
 
