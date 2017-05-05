@@ -178,7 +178,7 @@ void displayInstruction(){
         for(int j = 0; j < messages[i].length(); j++) {
             glutBitmapCharacter(font, messages[i][j]);
         }
-        startY += 50;
+        startY += 25;
     }
     
     int startX2 = 400; int startY2= 100;
@@ -190,7 +190,18 @@ void displayInstruction(){
         for(int j = 0; j < messages2[i].length(); j++) {
             glutBitmapCharacter(font, messages2[i][j]);
         }
-        startY2 += 50;
+        startY2 += 25;
+    }
+    
+    int startX3 = 100; int startY3= 300;
+    string messages3[] = {"Map Editor", "Left Click: Add  ", "Right Click:  Terrain", "T: place start point ","W/S: switch map object", "UP: change the RGB value"};
+    glColor3ub(244, 66, 66);
+    for(int i = 0; i < sizeof(messages3) / sizeof(messages3[0]); i++) {
+        glRasterPos2i(startX3, startY3);
+        for(int j = 0; j < messages3[i].length(); j++) {
+            glutBitmapCharacter(font, messages3[i][j]);
+        }
+        startY3 += 25;
     }
 }
 
