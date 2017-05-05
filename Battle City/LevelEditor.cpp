@@ -217,7 +217,7 @@ void LevelEditor::changeBlueVal(LSign sign) {
 }
 
 void LevelEditor::draw() {
-    currentMap.drawMap();
+    currentMap.drawMap(true);
     
     MapObject* mobj = getCurrentSelection();
     int startX = 100, startY = 10;

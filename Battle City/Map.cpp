@@ -45,7 +45,8 @@ bool Map::doesPreferredStartCoordExist(int x, int y) {
 
 void Map::addMapObj(MapObject *mobj) {
     int x = mobj->getGridX(), y = mobj->getGridY();
-    if(getMapObjectAt(x, y) == nullptr && !doesPreferredStartCoordExist(x, y)) {
+    Terrain *t = dynamic_cast<Terrain*>(mobj);
+    if(getMapObjectAt(x, y) == nullptr && (!doesPreferredStartCoordExist(x, y) || t)) {
         unique_ptr<MapObject> mobjPtr(mobj);
         mapObjs.push_back(move(mobjPtr));
     }
@@ -119,20 +120,22 @@ Map& Map::operator = (Map &map) {
     return *this;
 }
 
-void Map::drawMap() {
+void Map::drawMap(bool showPreferredStartCoords) {
     for(int i = 0; i < mapObjs.size(); i++) {
         mapObjs[i]->draw();
     }
     
-    for(int i = 0; i < preferredStartCoords.size(); i++) {
-        int x = preferredStartCoords[i].getX(), y = preferredStartCoords[i].getY();
-        glColor3ub(0, 150, 150);
-        glBegin(GL_QUADS);
-        glVertex2i(x * 10, y * 10);
-        glVertex2i(x * 10 + 10, y * 10);
-        glVertex2i(x * 10 + 10, y * 10 + 10);
-        glVertex2i(x * 10, y * 10 + 10);
-        glEnd();
+    if(showPreferredStartCoords) {
+        for(int i = 0; i < preferredStartCoords.size(); i++) {
+            int x = preferredStartCoords[i].getX(), y = preferredStartCoords[i].getY();
+            glColor3ub(0, 150, 150);
+            glBegin(GL_QUADS);
+            glVertex2i(x * 10, y * 10);
+            glVertex2i(x * 10 + 10, y * 10);
+            glVertex2i(x * 10 + 10, y * 10 + 10);
+            glVertex2i(x * 10, y * 10 + 10);
+            glEnd();
+        }
     }
 }
 

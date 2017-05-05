@@ -17,29 +17,27 @@ Game::Game(Map &map) : map(map) {}
 Game::~Game() {}
 
 
-bool Game::checkGameStatus() {
+int Game::checkGameStatus() {
     for(int i = 0; i < controllers.size(); i++) {
         if(controllers[i].get()->getTank().getHealth() == 0) {
-            controllers.erase(controllers.begin() + i);
+            controllers[i].reset(nullptr);
         }
     }
-
-    if (controllers.size() == 0) {
-        // draw change to game over screen
-        isPlaying = false;
-        return false;
-    } else if (controllers.size() == 1) {
-        // This tank won do change to game over screen
-        isPlaying = false;
-        return false;
+    
+    for(int i = 0; i < controllers.size(); i++) {
+        if (controllers[i] == nullptr) {
+            // draw change to game over screen
+            isPlaying = false;
+            return i;
+        }
     }
     
-    return true;
+    return -1;
 }
 
 void Game::createPlayerTank(TankKeyBindings bindings, Color color) {
     Point2D startCoords = map.getRandomStartCoords();
-    createPlayerTank(bindings, startCoords.getX(), startCoords.getY(), 90, color);
+    createPlayerTank(bindings, startCoords.getX() * 10, startCoords.getY() * 10, 90, color);
 }
 
 void Game::createPlayerTank(TankKeyBindings bindings, int x, int y, int direction, Color color) {
@@ -77,7 +75,7 @@ void Game::checkCollisions() {
         for(int x = ex + ewidth; x > ex - ewidth; x--) {
             for (int y = ey + eheight; y > ey - eheight; y--) {
                 MapObject* obj = map.getMapObjectAt(x/10, y/10);
-                cout << x/10 << " " << y/10 << endl;
+                //cout << x/10 << " " << y/10 << endl;
                 if(obj != nullptr) {
                     Terrain* tObj = dynamic_cast<Terrain*>(obj);
                     
@@ -109,8 +107,14 @@ void Game::checkCollisions() {
                 if(Tank *t1 = dynamic_cast<Tank*>(entities[i].get())) {
                     if(Projectile *p = dynamic_cast<Projectile*>(entities[j].get())) {
                         if(checkCollision(*t1, *p)) {
-                            controllers[i].reset(nullptr);
-                            entities.erase(entities.begin() + i);
+                            cout << p->getDamage() << " " << t1->getHealth() << endl;
+                            
+                            // Erase bullet
+                            entities.erase(entities.begin() + j);
+
+                            if(t1->getHealth() <= 0) {
+                                entities.erase(entities.begin() + i);
+                            }
                             
                             skipIteration = true;
                             break;
@@ -139,8 +143,7 @@ void Game::updateMap() {
 }
 
 void Game::updateEntities() {
-    // Update bullets
-    
+    // Bullet destoryed when leaving  map
     for(int i = 0; i < entities.size(); i++) {
         if(Projectile* p = dynamic_cast<Projectile*>(entities[i].get())) {
             if(p->getX() < 0 || p->getX() + p->getWidth() > map.getWidth() * 10

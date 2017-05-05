@@ -89,7 +89,7 @@ public:
     // Overloaded operators
     Map& operator= (Map &map);
     
-    void drawMap();
+    void drawMap(bool showPreferredStartCoords = false);
     
 private:
     vector<Point2D> preferredStartCoords;

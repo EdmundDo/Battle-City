@@ -30,12 +30,14 @@ enum Overlay {none, textField};
 GameState gstate;
 Overlay overlay = none;
 
+unique_ptr<Map> map;
 unique_ptr<Game> game;
 unique_ptr<LevelEditor> editor;
 unique_ptr<GameMenu> gameMenu(new GameMenu());
 
 string query = "";
 string input = "";
+string winner = "";
 
 void* font = GLUT_BITMAP_HELVETICA_18;
 
@@ -59,15 +61,30 @@ void displayMenu() {
 }
 
 /**
- * Draws the map with its objects and their respective colors
+ * Sets up the game
  */
 
-void displayMap() {
+void startGame() {
+    if(input == "") {
+        map.reset(new Map(gameMenu->getCurrentMapSelection()));
+    } else {
+        map.reset(new Map(input));
+    }
+    game.reset(new Game(*map));
     
+    TankKeyBindings kb1 = {'a','d','w','s',' '};
+    Color color1 = {1,0,0};
+    game->createPlayerTank(kb1,color1);
+    
+    TankKeyBindings kb2 = {'j','l','i','k',';'};
+    Color color2 = {0,0,1};
+    game->createPlayerTank(kb2,color2);
+    
+    glutIgnoreKeyRepeat(true);
 }
 
 /**
- * Displays a n x m grid representing the game map. Currently selected 
+ * Displays a n x m grid representing the game map. Currently selected
  * tile is shown on the bottom right.
  */
 
@@ -100,16 +117,26 @@ void displayGameOver() {
     for (int i = 0; i < message.length(); ++i) {
         glutBitmapCharacter(font, message[i]);
     }
+    
+    glRasterPos2i(300, 300);
+    for (int i = 0; i < winner.length(); ++i) {
+        glutBitmapCharacter(font, winner[i]);
+    }
+    
+    
 }
-
-
-
-
-
 
 void displayTextField() {
     unsigned char inputc[query.length()];
     strcpy((char*) inputc, query.c_str());
+    
+    glColor3f(0,0,0);
+    glBegin(GL_QUADS);
+    glVertex2i(150, 200);
+    glVertex2i(650, 200);
+    glVertex2i(650, 400);
+    glVertex2i(150, 400);
+    glEnd();
     
     glColor3f(1, 1, 1);
     int x = (width - glutBitmapLength(font, inputc)) / 2;
@@ -133,8 +160,6 @@ void displayTextField() {
 
 
 void displayInstruction(){
-    //set color to
-    
     // Draw strings
     string message = "Game Instructions";
     // set color to lime green
@@ -219,7 +244,6 @@ void display() {
             displayTextField();
             break;
         default:
-
             break;
     }
     
@@ -244,10 +268,10 @@ void kbd(unsigned char key, int x, int y) {
                         gameMenu->nextSelection();
                         break;
                     case 'a':
-                        gameMenu->nextSelection();
+                        gameMenu->nextMapSelection();
                         break;
                     case 'd':
-                        gameMenu->nextSelection();
+                        gameMenu->nextMapSelection();
                         break;
                     case 's':
                         gameMenu->nextSelection();
@@ -258,19 +282,14 @@ void kbd(unsigned char key, int x, int y) {
                         switch(gameMenu->getCurrentSelection()) {
                             case GMStartGame:
                             {
-                                game.reset(new Game(*gameMenu->getMap()));
-                                gstate = gameplay;
-                                
-                                TankKeyBindings kb1 = {'a','d','w','s',' '};
-                                Color color1 = {1,0,0};
-                                game->createPlayerTank(kb1,color1);
-                                
-                                TankKeyBindings kb2 = {'j','l','i','k',';'};
-                                Color color2 = {0,0,1};
-                                game->createPlayerTank(kb2,color2);
-                                
-                                glutIgnoreKeyRepeat(true);
-                                
+                                cout << gameMenu->getCurrentMapSelection() << endl;
+                                if(gameMenu->getCurrentMapSelection() == "Custom Map") {
+                                    query = "Enter the name of map:";
+                                    overlay = textField;
+                                } else {
+                                    gstate = gameplay;
+                                    startGame();
+                                }
                                 break;
                             }
                             case GMMapEditor:
@@ -281,7 +300,8 @@ void kbd(unsigned char key, int x, int y) {
                                 gstate = instruction;
                                 break;
                             case GMExit:
-                                gstate = gameExit;
+                                glutDestroyWindow(wd);
+                                exit(0);
                                 break;
                         }
                         break;
@@ -351,10 +371,20 @@ void kbd(unsigned char key, int x, int y) {
                         break;
                 }
                 break;
+                
             case instruction:
                 switch (key) {
                     case 'q':
-                        // do something
+                        gstate = menu;
+                        break;
+                    default:
+                        break;
+                }
+                break;
+                
+            case gameOver:
+                switch (key) {
+                    case 'q':
                         gstate = menu;
                         break;
                     default:
@@ -372,6 +402,12 @@ void kbd(unsigned char key, int x, int y) {
                 switch(key) {
                     case 13:
                         switch(gstate) {
+                            case menu:
+                            {
+                                startGame();
+                                gstate = gameplay;
+                                break;
+                            }
                             case lvlEditor:
                                 editor->save(input);
                                 gstate = menu;
@@ -382,6 +418,12 @@ void kbd(unsigned char key, int x, int y) {
                         input = "";
                         query = "";
                         overlay = none;
+                        break;
+                    case 127:
+                        if(input.length() > 0) {
+                            input.erase(input.begin() + input.length() - 1);
+                        }
+                        break;
                     default:
                         input += key;
                         break;
@@ -510,6 +552,15 @@ void timer(int extra) {
     // do something
     if(gstate == gameplay) {
         game->update();
+        int playerWon = game->checkGameStatus();
+        if(playerWon != -1) {
+            gstate = gameOver;
+            winner = "Player " + to_string(playerWon + 1) + " Won!";
+        }
+    }
+    
+    if(gstate != gameplay) {
+        glutIgnoreKeyRepeat(false);
     }
     
     glutPostRedisplay();

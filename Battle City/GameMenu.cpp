@@ -11,7 +11,7 @@
 
 const string GameMenu::maps[] = {"map.txt", "Custom Map"};
 
-GameMenu::GameMenu() : currentSelection(GMStartGame), mapSelection(0), map(new Map("map.txt")) {}
+GameMenu::GameMenu() : currentSelection(GMStartGame), mapSelection(0) {}
 
 GameMenu::~GameMenu() {}
 
@@ -40,16 +40,11 @@ Selection GameMenu::getCurrentSelection() {
 }
 
 string GameMenu::getCurrentMapSelection() {
-    //return maps[currentSelection];
-    return "";
+    return maps[mapSelection];
 }
 
 void GameMenu::setCurrentSelection(Selection s) {
     this->currentSelection = s;
-}
-
-Map* GameMenu::getMap() {
-    return map.get();
 }
 
 void GameMenu::draw() {

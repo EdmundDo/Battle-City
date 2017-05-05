@@ -26,10 +26,10 @@ public:
     /**
      * Requires: nothing
      * Modifies: isPlaying
-     * Effects: true if game over conditions have been met, false otherwise
+     * Effects: i > 0 if game over conditions have been met, -1 otherwise
      */
     
-    bool checkGameStatus();
+    int checkGameStatus();
     
     /**
      * Requires: nothing

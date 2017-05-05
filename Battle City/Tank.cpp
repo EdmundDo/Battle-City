@@ -69,10 +69,10 @@ double Tank::getHealth(){
 }
 
 void Tank::setHealth(double h){
-    if(h > 0) {
+    if(h >= 0) {
         health = h;
     }
-}
+};
 
 int Tank::getControllerId() {
     return controllerId;

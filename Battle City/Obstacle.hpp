@@ -29,6 +29,7 @@ public:
     Terrain getunderlyingTerrain();
     void setUnderlyingTerrain(Terrain a);
     
+    virtual void draw() override;
        
 private:
     Terrain underlyingTerrain;

@@ -54,7 +54,6 @@ public:
 private:
     Selection currentSelection;
     int mapSelection;
-    unique_ptr<Map> map;
     
     static const string maps[];
 };
