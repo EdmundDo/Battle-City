@@ -208,19 +208,7 @@ void kbd(unsigned char key, int x, int y) {
                         gameMenu->nextSelection();
                         break;
                     case lvlEditor:
-                        switch (editor->getSelectedColorIndex()) {
-                            case 0:
-                                editor->changeRedVal(POS);
-                                break;
-                            case 1:
-                                editor->changeGreenVal(POS);
-                                break;
-                            case 2:
-                                editor->changeBlueVal(POS);
-                                break;
-                            default:
-                                break;
-                        }
+                        editor->nextSelection();
                         break;
                     case gameplay:
                         game->handleKey('w');
@@ -265,19 +253,6 @@ void kbd(unsigned char key, int x, int y) {
                         gameMenu->nextSelection();
                         break;
                     case lvlEditor:
-                        switch (editor->getSelectedColorIndex()) {
-                            case 0:
-                                editor->changeRedVal(NEG);
-                                break;
-                            case 1:
-                                editor->changeGreenVal(NEG);
-                                break;
-                            case 2:
-                                editor->changeBlueVal(NEG);
-                                break;
-                            default:
-                                break;
-                        }
                         break;
                     case gameplay:
                         game->handleKey('s');
@@ -405,14 +380,17 @@ void kbd(unsigned char key, int x, int y) {
                                 Color color2 = {0,0,1};
                                 game->createPlayerTank(kb2,color2);
                                 
+                                glutIgnoreKeyRepeat(true);
                                 break;
                             }
                             case GMMapEditor:
                                 editor.reset(new LevelEditor(20, 20));
                                 gstate = lvlEditor;
+                                glutIgnoreKeyRepeat(false);
                                 break;
                             case GMInstructions:
                                 gstate = instruction;
+                                glutIgnoreKeyRepeat(false);
                                 break;
                         }
                         break;
@@ -466,53 +444,19 @@ void kbd(unsigned char key, int x, int y) {
 
 void kbdup(unsigned char key, int x, int y) {
     
-    switch(key) {
-        case 'w':
-            switch(gstate) {
-                case menu:
-                    break;
-                case lvlEditor:
-                    break;
-                case gameplay:
+    switch(gstate) {
+        case gameplay:
+            switch(key) {
+                case 'w':
                     game->handleKey('w');
                     break;
-                default:
-                    break;
-            }
-            break;
-        case 's':
-            switch(gstate) {
-                case menu:
-                    break;
-                case lvlEditor:
-                    break;
-                case gameplay:
+                case 's':
                     game->handleKey('s');
                     break;
-                default:
-                    break;
-            }
-            break;
-        case 'i':
-            switch(gstate) {
-                case menu:
-                    break;
-                case lvlEditor:
-                    break;
-                case gameplay:
+                case 'i':
                     game->handleKey('i');
                     break;
-                default:
-                    break;
-            }
-            break;
-        case 'k':
-            switch(gstate) {
-                case menu:
-                    break;
-                case lvlEditor:
-                    break;
-                case gameplay:
+                case 'k':
                     game->handleKey('k');
                     break;
                 default:
@@ -529,6 +473,26 @@ void kbdup(unsigned char key, int x, int y) {
 void kbdS(int key, int x, int y) {
     // do something
     
+    switch(gstate) {
+        case lvlEditor:
+            switch (key) {
+                case GLUT_KEY_UP:
+                    editor->incrementSelectedColor();
+                    break;
+                case GLUT_KEY_DOWN:
+                    editor->decrementSelectedColor();
+                    break;
+                case GLUT_KEY_RIGHT:
+                    editor->nextColorSelection();
+                    break;
+                case GLUT_KEY_LEFT:
+                    editor->nextColorSelection();
+                    break;
+                default:
+                    break;
+            }
+            break;
+    }
     glutPostRedisplay();
 }
 
@@ -550,21 +514,22 @@ void mouse(int button, int state, int x, int y) {
                 cout << "clicked in lvleditor" << endl;
                 if(button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {
                     int objX = x / 10, objY = y / 10;
-                    Color color = {1, 1, 1};
+                    Color color = editor->getColor();
                     MapObject* obj = editor->getCurrentSelection();
                     
                     if(Obstacle* oObj = dynamic_cast<Obstacle*>(obj)) {
-                        editor->addObstacle(oObj->getName(), objX, objY, 10, 10, oObj->getColor());
+                        editor->addObstacle(oObj->getName(), objX, objY, 10, 10);
                     } else if (Terrain* tObj = dynamic_cast<Terrain*>(obj)){
-                        editor->addTerrain(tObj->getName(), objX, objY, 10, 10, tObj->getColor(), tObj->getIsPassable());
+                        editor->addTerrain(tObj->getName(), objX, objY, 10, 10, tObj->getIsPassable());
                     }
                     
                     cout << "Added object at: " << objX << ", " << objY << endl;
                 }
                 
                 if(button == GLUT_RIGHT_BUTTON && state == GLUT_DOWN) {
-                    int px = x / 10, py = x / 10;
-                    editor->addPreferredStart(px, py);
+                    int objX = x / 10, objY = y / 10;
+                    editor->removeMapObjAt(objX, objY);
+                    cout << "Removed object at: " << objX << ", " << objY << endl;
                 }
                 
                 break;
@@ -607,7 +572,6 @@ int main(int argc, char** argv) {
     // register keyboard press event processing function
     glutKeyboardFunc(kbd);
     glutKeyboardUpFunc(kbdup);
-    glutIgnoreKeyRepeat(true);
     
     // register special event: function keys, arrows, etc.
     glutSpecialFunc(kbdS);

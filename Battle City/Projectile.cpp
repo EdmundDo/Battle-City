@@ -16,7 +16,7 @@ Projectile::Projectile(double damage, double x, double y, double direction, Colo
 
 Projectile::~Projectile() {}
 
-void Projectile::move(Sign sign) {
+void Projectile::move(ESign sign) {
     Entity::move(sign, 5);
 }
 

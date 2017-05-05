@@ -23,7 +23,7 @@ public:
      * @See Entity#move(Sign)
      */
     
-    virtual void move(Sign sign) override;
+    virtual void move(ESign sign) override;
     
     /**
      * Requires: nothing

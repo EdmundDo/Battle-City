@@ -29,8 +29,10 @@ public:
     
     virtual string getName() const;
     virtual int getX() const;
+    virtual int getGridX() const;
     virtual void setX(int x);
     virtual int getY() const;
+    virtual int getGridY() const;
     virtual void setY(int y);
     virtual int getWidth() const;
     virtual int getHeight() const;

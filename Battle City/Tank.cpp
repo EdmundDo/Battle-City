@@ -18,7 +18,7 @@ Tank::Tank(double health, double x, double y, double direction, Color color, boo
 
 Tank::~Tank() {}
 
-void Tank::move(Sign sign) {
+void Tank::move(ESign sign) {
     Entity::move(sign, 1);
 }
 
@@ -50,7 +50,7 @@ void Tank::shoot() {
     entities.push_back(std::move(p));
 }
 
-void Tank::rotate(Sign sign) {
+void Tank::rotate(ESign sign) {
     if(sign == ENEG) {
         direction -= 90;
     } else {

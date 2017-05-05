@@ -32,12 +32,20 @@ int MapObject::getX() const{
     return topLeft.getX() * 10;
 }
 
+int MapObject::getGridX() const {
+    return topLeft.getX();
+}
+
 void MapObject::setX(int x){
     topLeft.setX(x);
 }
 
 int MapObject::getY() const{
     return topLeft.getY() * 10;
+}
+
+int MapObject::getGridY() const {
+    return topLeft.getY();
 }
 
 void MapObject::setY(int y){
