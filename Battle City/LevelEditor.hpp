@@ -97,6 +97,9 @@ public:
     void nextSelection();
     void nextColorSelection();
     
+    void toggleMode();
+    bool getMode();
+    
     MapObject* getCurrentSelection();
     Color getColor();
     
@@ -115,6 +118,7 @@ private:
     vector<unique_ptr<MapObject>> mapObjs;
     
     int selectedIndex, selectedColorIndex;
+    bool mode;
     
 };
 

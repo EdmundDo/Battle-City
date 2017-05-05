@@ -9,16 +9,25 @@
 #include "Obstacle.hpp"
 #include "LevelEditor.hpp"
 
-LevelEditor::LevelEditor(int width, int height) : currentMap(width, height), selectedIndex(0), selectedColorIndex(0) {
+LevelEditor::LevelEditor(int width, int height) : currentMap(width, height), selectedIndex(0), selectedColorIndex(0), mode(false) {
     
     readObjects();
     
     color.red = mapObjs[0]->getColor().red;
     color.green = mapObjs[0]->getColor().green;
     color.blue = mapObjs[0]->getColor().blue;
+    
+    Color borderWallColor = {255, 255, 255};
+    for(int y = -1; y <= currentMap.getHeight(); y++) {
+        for(int x = -1; x <= currentMap.getWidth(); x++) {
+            if(y == -1 || y == currentMap.getHeight() || x == -1 || x == currentMap.getWidth()) {
+                currentMap.addMapObj(new Obstacle("Indestructible Wall", x, y, 10, 10, borderWallColor));
+            }
+        }
+    }
 }
 
-LevelEditor::LevelEditor(string filepath) : currentMap(filepath), selectedIndex(0) {
+LevelEditor::LevelEditor(string filepath) : currentMap(filepath), selectedIndex(0), selectedColorIndex(0), mode(false) {
     readObjects();
     
     color.red = mapObjs[0]->getColor().red;
@@ -53,12 +62,10 @@ void LevelEditor::removePreferredStart(int x, int y){
 }
 
 void LevelEditor::fillTerrain(Terrain *t){
-    for(int x=0;x<currentMap.getWidth();x++){
-        for(int y=0;y<currentMap.getHeight();y++){
-            if(currentMap.getMapObjectAt(x,y)==nullptr){
-                t->setX(x);
-                t->setY(y);
-                currentMap.addMapObj(t);
+    for(int x = 0; x < currentMap.getWidth(); x++){
+        for(int y = 0; y < currentMap.getHeight(); y++){
+            if(currentMap.getMapObjectAt(x,y) == nullptr){
+                currentMap.addMapObj(new Terrain(t->getName(), x, y, t->getWidth(), t->getHeight(), color, t->getIsPassable()));
             }
         }
     }
@@ -128,11 +135,23 @@ void LevelEditor::readObjects() {
     }
 }
 
-void LevelEditor::nextSelection() {
-    if(selectedIndex == mapObjs.size() - 1) {
-        selectedIndex = 0;
+void LevelEditor::toggleMode() {
+    if(!mode) {
+        mode = true;
     } else {
+        mode = false;
+    }
+}
+
+bool LevelEditor::getMode() {
+    return mode;
+}
+
+void LevelEditor::nextSelection() {
+    if(selectedIndex < mapObjs.size() - 1) {
         selectedIndex++;
+    } else {
+        selectedIndex = 0;
     }
     color = getCurrentSelection()->getColor();
 }
@@ -198,50 +217,56 @@ void LevelEditor::changeBlueVal(LSign sign) {
 }
 
 void LevelEditor::draw() {
-    MapObject* mobj = getCurrentSelection();
-    
-    int mobjStartX = 100, mobjStartY = 10;
-    
-    // Prints name
-    glColor3f(1, 1, 1);
-    glRasterPos2i(mobjStartX, mobjStartY);
-    for(int i = 0; i < mobj->getName().length(); i++) {
-        glutBitmapCharacter(GLUT_BITMAP_HELVETICA_10, mobj->getName()[i]);
-    }
-    
-    // Prints red val
-    glRasterPos2i(mobjStartX + 100, mobjStartY);
-    for(int i = 0; i < 5; i++) {
-        glutBitmapCharacter(GLUT_BITMAP_HELVETICA_10, "Red: "[i]);
-    }
-    
-    string red = to_string(color.red);
-    for(int i = 0; i < red.length(); i++) {
-        glutBitmapCharacter(GLUT_BITMAP_HELVETICA_10, red[i]);
-    }
-    
-    // Prints green val
-    glRasterPos2i(mobjStartX + 200, mobjStartY);
-    for(int i = 0; i < 5; i++) {
-        glutBitmapCharacter(GLUT_BITMAP_HELVETICA_10, "Green: "[i]);
-    }
-    
-    string green = to_string(color.green);
-    for(int i = 0; i < green.length(); i++) {
-        glutBitmapCharacter(GLUT_BITMAP_HELVETICA_10, green[i]);
-    }
-    
-    // Prints blue val
-    glRasterPos2i(mobjStartX + 300, mobjStartY);
-    for(int i = 0; i < 5; i++) {
-        glutBitmapCharacter(GLUT_BITMAP_HELVETICA_10, "Blue: "[i]);
-    }
-    
-    string blue = to_string(color.blue);
-    for(int i = 0; i < blue.length(); i++) {
-        glutBitmapCharacter(GLUT_BITMAP_HELVETICA_10, blue[i]);
-    }
-    
-    
     currentMap.drawMap();
+    
+    MapObject* mobj = getCurrentSelection();
+    int startX = 100, startY = 10;
+    
+    if(!mode) {
+        // Prints name
+        glColor3f(1, 1, 1);
+        glRasterPos2i(startX, startY);
+        for(int i = 0; i < mobj->getName().length(); i++) {
+            glutBitmapCharacter(GLUT_BITMAP_HELVETICA_10, mobj->getName()[i]);
+        }
+        
+        // Prints red val
+        glRasterPos2i(startX + 100, startY);
+        for(int i = 0; i < 5; i++) {
+            glutBitmapCharacter(GLUT_BITMAP_HELVETICA_10, "Red: "[i]);
+        }
+        
+        string red = to_string(color.red);
+        for(int i = 0; i < red.length(); i++) {
+            glutBitmapCharacter(GLUT_BITMAP_HELVETICA_10, red[i]);
+        }
+        
+        // Prints green val
+        glRasterPos2i(startX + 200, startY);
+        for(int i = 0; i < 5; i++) {
+            glutBitmapCharacter(GLUT_BITMAP_HELVETICA_10, "Green: "[i]);
+        }
+        
+        string green = to_string(color.green);
+        for(int i = 0; i < green.length(); i++) {
+            glutBitmapCharacter(GLUT_BITMAP_HELVETICA_10, green[i]);
+        }
+        
+        // Prints blue val
+        glRasterPos2i(startX + 300, startY);
+        for(int i = 0; i < 5; i++) {
+            glutBitmapCharacter(GLUT_BITMAP_HELVETICA_10, "Blue: "[i]);
+        }
+        
+        string blue = to_string(color.blue);
+        for(int i = 0; i < blue.length(); i++) {
+            glutBitmapCharacter(GLUT_BITMAP_HELVETICA_10, blue[i]);
+        }
+    } else {
+        glColor3f(1, 1, 1);
+        glRasterPos2i(startX, startY);
+        for(int i = 0; i < 32; i++) {
+            glutBitmapCharacter(GLUT_BITMAP_HELVETICA_10, "Preferred Start Coordinate Mode"[i]);
+        }
+    }
 }

@@ -30,7 +30,6 @@ enum Overlay {none, textField};
 GameState gstate;
 Overlay overlay = none;
 
-
 unique_ptr<Game> game;
 unique_ptr<LevelEditor> editor;
 unique_ptr<GameMenu> gameMenu(new GameMenu());
@@ -277,16 +276,17 @@ void kbd(unsigned char key, int x, int y) {
                                 Color color2 = {0,0,1};
                                 game->createPlayerTank(kb2,color2);
                                 
+                                glutIgnoreKeyRepeat(true);
+                                
                                 break;
                             }
                             case GMMapEditor:
-                                editor.reset(new LevelEditor(20, 20));
+                                editor.reset(new LevelEditor(70, 50));
                                 gstate = lvlEditor;
                                 break;
                             case GMInstructions:
                                 gstate = instruction;
                                 break;
-                                
                             case GMExit:
                                 gstate = gameExit;
                                 break;
@@ -295,11 +295,20 @@ void kbd(unsigned char key, int x, int y) {
                     default:
                         break;
                 }
-                        
+                break;
+                
             case lvlEditor:
                 switch (key) {
                     case 'w':
                         editor->nextSelection();
+                        break;
+                    case 't':
+                        editor->toggleMode();
+                        break;
+                    case 'f':
+                        if(Terrain *t = dynamic_cast<Terrain*>(editor->getCurrentSelection())) {
+                            editor->fillTerrain(t);
+                        }
                         break;
                     case 'q':
                         overlay = textField;
@@ -338,6 +347,9 @@ void kbd(unsigned char key, int x, int y) {
                         break;
                     case ' ':
                         game->handleKey(' ');
+                        break;
+                    case ';':
+                        game->handleKey(';');
                         break;
                     case 'q':
                         break;
@@ -456,30 +468,39 @@ void mouse(int button, int state, int x, int y) {
             case menu:
                 break;
             case lvlEditor:
-                cout << "clicked in lvleditor" << endl;
                 if(button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {
-                    int objX = x / 10, objY = y / 10;
-                    Color color = editor->getColor();
-                    MapObject* obj = editor->getCurrentSelection();
-                    
-                    if(Obstacle* oObj = dynamic_cast<Obstacle*>(obj)) {
-                        editor->addObstacle(oObj->getName(), objX, objY, 10, 10);
-                    } else if (Terrain* tObj = dynamic_cast<Terrain*>(obj)){
-                        editor->addTerrain(tObj->getName(), objX, objY, 10, 10, tObj->getIsPassable());
+                    if(!editor->getMode()) {
+                        int objX = x / 10, objY = y / 10;
+                        Color color = editor->getColor();
+                        MapObject* obj = editor->getCurrentSelection();
+                        
+                        if(Obstacle* oObj = dynamic_cast<Obstacle*>(obj)) {
+                            editor->addObstacle(oObj->getName(), objX, objY, 10, 10);
+                        } else if (Terrain* tObj = dynamic_cast<Terrain*>(obj)){
+                            editor->addTerrain(tObj->getName(), objX, objY, 10, 10, tObj->getIsPassable());
+                        }
+                        
+                        cout << "Added object at: " << objX << ", " << objY << endl;
+                    } else {
+                        int px = x/10, py = y/10;
+                        editor->addPreferredStart(px, py);
+                        cout << "Added start at: " << px << ", " << py << endl;
                     }
-                    
-                    cout << "Added object at: " << objX << ", " << objY << endl;
                 }
                 
                 if(button == GLUT_RIGHT_BUTTON && state == GLUT_DOWN) {
-                    int objX = x / 10, objY = y / 10;
-                    editor->removeMapObjAt(objX, objY);
-                    cout << "Removed object at: " << objX << ", " << objY << endl;
+                    if(!editor->getMode()) {
+                        int objX = x / 10, objY = y / 10;
+                        editor->removeMapObjAt(objX, objY);
+                        cout << "Removed object at: " << objX << ", " << objY << endl;
+                    } else {
+                        int px = x/10, py = y/10;
+                        editor->removePreferredStart(px, py);
+                    }
                 }
                 
                 break;
             case gameplay:
-                cout << "clicked in gameplay" << endl;
                 break;
             case gameOver:
                 break;
