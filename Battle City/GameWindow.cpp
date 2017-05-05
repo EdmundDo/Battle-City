@@ -124,26 +124,22 @@ void displayTextField() {
 
 
 void displayInstruction(){
-    //Draw stings
-    string message = "Game Instruction";
     //set color to
-    glColor3f(255.0,255.0 ,255.0 );
-    glRasterPos2i(300,250);
-    for(int i=0; i <message.length(); ++i){
-        glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_10, message[i]);
-    }
-    
-    
-    for (int i = 0; ; i< ++i){
-        
-        
-        
-    }
-    
-    
-        
+    glColor3f(1, 1, 1);
 
+    int startX = 300; int startY= 100;
+
+    vector<string> messages = {"Game Instruction", "W - Move forward" };
+    for(int i = 0; i < messages.size(); ++i){
+        glRasterPos2i(startX, startY);
+        for(int j = 0; j < messages[j].size(); j++) {
+            glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, messages[i][j]);
+        }
+        startY += 20;
+    }
 }
+
+
 
 
 void display() {
@@ -174,6 +170,7 @@ void display() {
 
         case instruction:
             displayInstruction();
+            break;
 
         default:
             break;
@@ -391,7 +388,7 @@ void kbd(unsigned char key, int x, int y) {
                 switch(gstate) {
                     case menu:
                         switch(gameMenu->getCurrentSelection()) {
-                            case startGame:
+                            case GMStartGame:
                             {
                                 game.reset(new Game(*gameMenu->getMap()));
                                 gstate = gameplay;
@@ -406,9 +403,12 @@ void kbd(unsigned char key, int x, int y) {
                                 
                                 break;
                             }
-                            case mapEditor:
+                            case GMMapEditor:
                                 editor.reset(new LevelEditor(20, 20));
                                 gstate = lvlEditor;
+                                break;
+                            case GMInstructions:
+                                gstate = instruction;
                                 break;
                         }
                         break;

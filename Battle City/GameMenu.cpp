@@ -9,17 +9,17 @@
 #include "GameMenu.hpp"
 #include "graphics.hpp"
 
-GameMenu::GameMenu() : currentSelection(startGame), map(new Map("map.txt")) {}
+GameMenu::GameMenu() : currentSelection(GMStartGame), map(new Map("map.txt")) {}
 
 GameMenu::~GameMenu() {}
 
 void GameMenu::nextSelection() {
-    if(currentSelection == startGame) {
-        currentSelection = mapEditor;
-    } else if(currentSelection == mapEditor) {
-        currentSelection = instructions;
-    } else if (currentSelection == instructions){
-        currentSelection = startGame;
+    if(currentSelection == GMStartGame) {
+        currentSelection = GMMapEditor;
+    } else if(currentSelection == GMMapEditor) {
+        currentSelection = GMInstructions;
+    } else if (currentSelection == GMInstructions){
+        currentSelection = GMStartGame;
     }
 }
 
@@ -76,11 +76,11 @@ void GameMenu::draw() {
 
 string GameMenu::selectionToString(Selection s) {
     switch(s) {
-        case startGame:
+        case GMStartGame:
             return "Start Game";
-        case mapEditor:
+        case GMMapEditor:
             return "Map Editor";
-        case instructions:
+        case GMInstructions:
             return "Instructions";
         default:
             return "";
