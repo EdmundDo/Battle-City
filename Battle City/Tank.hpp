@@ -24,7 +24,7 @@ public:
      * @See Entity#move(Sign)
      */
     
-    virtual void move(Sign sign) override;
+    virtual void move(ESign sign) override;
     
     /**
      * Requires: nothing
@@ -40,7 +40,7 @@ public:
      * Effects: rotates the tank
      */
     
-    void rotate(Sign r);
+    void rotate(ESign r);
     
     /**
      * Requires: h > 0

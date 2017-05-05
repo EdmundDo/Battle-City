@@ -16,11 +16,11 @@ Entity::Entity(double x, double y, double direction, Color color, bool canPassAl
 
 Entity::~Entity() {}
 
-void Entity::move(Sign sign) {
+void Entity::move(ESign sign) {
     move(sign, 1);
 }
 
-void Entity::move(Sign sign, double rate) {
+void Entity::move(ESign sign, double rate) {
     double dirRads = direction * M_PI / 180.0;
     double dx, dy;
     

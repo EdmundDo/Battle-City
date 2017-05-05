@@ -77,14 +77,16 @@ void Game::checkCollisions() {
         for(int x = ex + entities[i]->getWidth(); x > ex - 3 * ewidth; x--) {
             for (int y = ey + entities[i]->getHeight(); y > ey - 3 * eheight; y--) {
                 MapObject* obj;
-                if((obj = map.getMapObjectAt(x, y)) != nullptr) {
-                    if(Tank *t = dynamic_cast<Tank*>(entities[i].get())) {
-                        checkCollision(*t, *obj);
-                    } else if(Projectile *p = dynamic_cast<Projectile*>(entities[i].get())) {
-                        if(checkCollision(*p, *obj)) {
-                            entities.erase(entities.begin() + i);
-                            skipIteration = true;
-                            break;
+                if((obj = map.getMapObjectAt(x/10, y/10)) != nullptr) {
+                    if(Obstacle* obstObj = dynamic_cast<Obstacle*>(obj)) {
+                        if(Tank *t = dynamic_cast<Tank*>(entities[i].get())) {
+                            checkCollision(*t, *obstObj);
+                        } else if(Projectile *p = dynamic_cast<Projectile*>(entities[i].get())) {
+                            if(checkCollision(*p, *obstObj)) {
+                                entities.erase(entities.begin() + i);
+                                skipIteration = true;
+                                break;
+                            }
                         }
                     }
                 }

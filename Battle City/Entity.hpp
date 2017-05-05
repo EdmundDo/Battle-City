@@ -13,7 +13,7 @@
 
 #include "Point2D.hpp"
 
-enum Sign {ENEG = -1, EPOS = 1};
+enum ESign {ENEG = -1, EPOS = 1};
 
 class Entity{
 
@@ -30,7 +30,7 @@ public:
      * Effects: moves the entity in the direction the entity is facing
      */
     
-    virtual void move (Sign sign);
+    virtual void move (ESign sign);
 
     /**
      * Requires: nothing
@@ -38,7 +38,7 @@ public:
      * Effects: moves the entity in the direction the entity is facing at a specified rate
      */
     
-    virtual void move (Sign sign, double rate);
+    virtual void move (ESign sign, double rate);
     
     /**
      * Requires: r, g, b must be between 0 and 255

@@ -43,7 +43,7 @@ bool Map::doesPreferredStartCoordExist(int x, int y) {
 }
 
 void Map::addMapObj(MapObject *mobj) {
-    int x = mobj->getX(), y = mobj->getY();
+    int x = mobj->getGridX(), y = mobj->getGridY();
     if(getMapObjectAt(x, y) == nullptr && !doesPreferredStartCoordExist(x, y)) {
         unique_ptr<MapObject> mobjp(mobj);
         mapObjs.push_back(move(mobjp));
@@ -52,7 +52,7 @@ void Map::addMapObj(MapObject *mobj) {
 
 void Map::removeMapObjAt(int x, int y) {
     for(int i = 0; i < mapObjs.size(); i++) {
-        if(mapObjs[i]->getX() == x && mapObjs[i]->getY() == y) {
+        if(mapObjs[i]->getGridX() == x && mapObjs[i]->getGridY() == y) {
             mapObjs.erase(mapObjs.begin() + i);
         }
     }
@@ -66,7 +66,7 @@ Point2D Map::getRandomStartCoords() const {
 
 MapObject* Map::getMapObjectAt(int x, int y) const {
     for(int i = 0; i < mapObjs.size(); i++) {
-        if(x == mapObjs[i]->getX() && y == mapObjs[i]->getY()) {
+        if(x == mapObjs[i]->getGridX() && y == mapObjs[i]->getGridY()) {
             return mapObjs[i].get();
         }
     }
@@ -76,7 +76,7 @@ MapObject* Map::getMapObjectAt(int x, int y) const {
 
 Obstacle* Map::getObstacleAt(int x, int y) const {
     for(int i = 0; i < mapObjs.size(); i++) {
-        if(x == mapObjs[i]->getX() && y == mapObjs[i]->getY()) {
+        if(x == mapObjs[i]->getGridX() && y == mapObjs[i]->getGridY()) {
             if(Obstacle* o = dynamic_cast<Obstacle*>(mapObjs[i].get())) {
                 return o;
             }
@@ -88,7 +88,7 @@ Obstacle* Map::getObstacleAt(int x, int y) const {
 
 Terrain* Map::getTerrainAt(int x, int y) const {
     for(int i = 0; i < mapObjs.size(); i++) {
-        if(x == mapObjs[i]->getX() && y == mapObjs[i]->getY()) {
+        if(x == mapObjs[i]->getGridX() && y == mapObjs[i]->getGridY()) {
             if(Terrain* t = dynamic_cast<Terrain*>(mapObjs[i].get())) {
                 return t;
             }

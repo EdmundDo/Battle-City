@@ -27,8 +27,8 @@ public:
      * Effects: Adds an obstacle to currentMap
      */
     
-    void addObstacle(string name,int x, int y, int height, int width, Color color);
-    void addObstacle(string name,int x,int y,int height, int width, Color color, Terrain terrain);
+    void addObstacle(string name,int x, int y, int height, int width);
+    void addObstacle(string name,int x,int y,int height, int width, Terrain terrain);
     
     /**
      * Requires: x < currentMap.width, y < currentMap.height
@@ -36,7 +36,7 @@ public:
      * Effects: Adds an terrain to currentMap
      */
     
-    void addTerrain(string name, int x,int y, int height, int width, Color color, bool isPassible);
+    void addTerrain(string name, int x,int y, int height, int width, bool isPassible);
     
     /**
      * Requires: x < currentMap.width, y < currentMap.height
@@ -98,10 +98,10 @@ public:
     void nextColorSelection();
     
     MapObject* getCurrentSelection();
-    int getCurrentSelectionIndex();
-    void setCurrentSelection(int i);
-    int getSelectedColorIndex();
-    void setSelectedColorIndex(int i);
+    Color getColor();
+    
+    void incrementSelectedColor();
+    void decrementSelectedColor();
     
     void changeRedVal(LSign sign);
     void changeGreenVal(LSign sign);
@@ -110,10 +110,11 @@ public:
     void draw();
     
 private:
+    Color color;
     Map currentMap;
     vector<unique_ptr<MapObject>> mapObjs;
     
-    int selectedIndex, selectedColorIndex, red, green, blue;
+    int selectedIndex, selectedColorIndex;
     
 };
 
