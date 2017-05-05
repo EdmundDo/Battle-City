@@ -10,6 +10,7 @@
 #include "Color.hpp"
 #include "Terrain.hpp"
 #include "Obstacle.hpp"
+#include <iomanip>
 
 MapIO::MapIO() {}
 
@@ -18,6 +19,7 @@ MapIO::~MapIO() {}
 void MapIO::write(Map &map, string filepath) {
     
     ofstream out(filepath);
+    out << std::boolalpha;
     
     out << map.getWidth() << endl;
     out << map.getHeight() << endl;
@@ -32,8 +34,8 @@ void MapIO::write(Map &map, string filepath) {
         out << "}=end" << endl;
     }
     
-    for(int x = 0; x < map.getWidth(); x++) {
-        for(int y = 0; y < map.getHeight(); y++) {
+    for(int x = -1; x <= map.getWidth(); x++) {
+        for(int y = -1; y <= map.getHeight(); y++) {
             
             if(Obstacle *o = map.getObstacleAt(x,y)) {
                 out << "obstacle"<<endl;

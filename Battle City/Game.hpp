@@ -111,14 +111,6 @@ private:
     
     bool checkCollision(Tank &t, Projectile &p);
     
-    /**
-     * Requires: nothing
-     * Modifies: t1 controller and t2 controller
-     * Effects: stops the tanks from moving through one another
-     */
-    
-    void checkCollision(Tank &t1, Tank &t2);
-    
     bool isOverlapping(int xIn, int yIn, MapObject &mobj) const;
     bool isOverlapping(int xIn, int yIn, Entity &entity) const;
 };
