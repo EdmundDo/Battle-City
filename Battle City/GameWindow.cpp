@@ -129,15 +129,15 @@ void displayTextField() {
 
 void displayInstruction(){
     //set color to
-    glColor3f(1, 1, 1);
 
     int startX = 300; int startY= 100;
-
-    vector<string> messages = {"Game Instruction", "W - Move forward" };
-    for(int i = 0; i < messages.size(); ++i){
+    string messages[] = {"Game Instruction", "W - Move forward"};
+    
+    glColor3f(1, 1, 1);
+    for(int i = 0; i < sizeof(messages) / sizeof(messages[0]); i++) {
         glRasterPos2i(startX, startY);
-        for(int j = 0; j < messages[j].size(); j++) {
-            glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, messages[i][j]);
+        for(int j = 0; j < messages[i].length(); j++) {
+            glutBitmapCharacter(font, messages[i][j]);
         }
         startY += 20;
     }
@@ -171,11 +171,9 @@ void display() {
         case gameOver:
             displayGameOver();
             break;
-
         case instruction:
             displayInstruction();
             break;
-
         default:
             break;
     }
