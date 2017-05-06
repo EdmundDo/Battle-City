@@ -224,6 +224,17 @@ void displayInstruction(){
         }
         startY3 += 25;
     }
+    
+    int startX4 = 400; int startY4= 300;
+    string messages4[] = {"Menu", "W/S or Hover: Navigate", "A/D: Switch maps", "Enter: Select"};
+    glColor3ub(244, 66, 66);
+    for(int i = 0; i < sizeof(messages4) / sizeof(messages4[0]); i++) {
+        glRasterPos2i(startX4, startY4);
+        for(int j = 0; j < messages4[i].length(); j++) {
+            glutBitmapCharacter(font, messages4[i][j]);
+        }
+        startY4 += 25;
+    }
 }
 
 void displayExit(){
@@ -524,8 +535,19 @@ void kbdS(int key, int x, int y) {
 }
 
 void cursor(int x, int y) {
-    // do something
-    
+    switch(gstate) {
+        case menu:
+            if(x > 200 && x < 500 && y > 200 && y < 250) {
+                gameMenu->setCurrentSelection(GMStartGame);
+            } else if(x > 200 && x < 500 && y > 225 && y < 275) {
+                gameMenu->setCurrentSelection(GMMapEditor);
+            } else if(x > 200 && x < 500 && y > 275 && y < 325) {
+                gameMenu->setCurrentSelection(GMInstructions);
+            } else if(x > 200 && x < 500 && y > 325 && y < 375) {
+                gameMenu->setCurrentSelection(GMExit);
+            }
+            break;
+    }
     glutPostRedisplay();
 }
 
@@ -536,6 +558,13 @@ void mouse(int button, int state, int x, int y) {
     if(overlay == none) {
         switch(gstate) {
             case menu:
+                if((x > 200 && x < 500 && y > 200 && y < 250)
+                   || (x > 200 && x < 500 && y > 225 && y < 275)
+                   || (x > 200 && x < 500 && y > 275 && y < 325)
+                   || (x > 200 && x < 500 && y > 325 && y < 375))
+                {
+                    kbd(13, 0, 0);
+                }
                 break;
             case lvlEditor:
                 if(button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {

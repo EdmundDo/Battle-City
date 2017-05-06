@@ -3,7 +3,7 @@ obstacle
 name=Wall
 width=10
 height=10
-color=0 0 0
+color=190 140 220
 }=end
 terrain
 {
@@ -18,6 +18,6 @@ terrain
 name=Water
 width=10
 height=10
-color=0 255 0
-isPassable=true
+color=0 0 255
+isPassable=false
 }=end
