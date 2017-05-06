@@ -130,15 +130,36 @@ void displayTextField() {
     unsigned char inputc[query.length()];
     strcpy((char*) inputc, query.c_str());
     
-    glColor3f(0,0,0);
+    glColor3ub(0, 0, 0);
     glBegin(GL_QUADS);
     glVertex2i(150, 200);
-    glVertex2i(650, 200);
-    glVertex2i(650, 400);
-    glVertex2i(150, 400);
+    glVertex2i(550, 200);
+    glVertex2i(550, 300);
+    glVertex2i(150, 300);
     glEnd();
     
-    glColor3f(1, 1, 1);
+    glColor3ub(255, 255, 255);
+    glBegin(GL_LINES);
+    glVertex2i(150, 200);
+    glVertex2i(550, 200);
+    glEnd();
+    
+    glBegin(GL_LINES);
+    glVertex2i(550, 200);
+    glVertex2i(550, 300);
+    glEnd();
+    
+    glBegin(GL_LINES);
+    glVertex2i(550, 300);
+    glVertex2i(150, 300);
+    glEnd();
+    
+    glBegin(GL_LINES);
+    glVertex2i(150, 200);
+    glVertex2i(150, 300);
+    glEnd();
+    
+    glColor3ub(255, 255, 255);
     int x = (width - glutBitmapLength(font, inputc)) / 2;
     glRasterPos2i(x, height / 2 - 10);
     for (int i = 0; i < query.length(); ++i) {
@@ -194,7 +215,7 @@ void displayInstruction(){
     }
     
     int startX3 = 100; int startY3= 300;
-    string messages3[] = {"Map Editor", "Left Click: Add  ", "Right Click:  Terrain", "T: place start point ","W/S: switch map object", "UP: change the RGB value"};
+    string messages3[] = {"Map Editor", "Left Click: Add  ", "Right Click: Remove", "T: Toggle start coord placement","W/S: Switch map object", "UP/DOWN: Change the RGB value", "Q: Quit and Save"};
     glColor3ub(244, 66, 66);
     for(int i = 0; i < sizeof(messages3) / sizeof(messages3[0]); i++) {
         glRasterPos2i(startX3, startY3);

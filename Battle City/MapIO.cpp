@@ -67,6 +67,7 @@ void MapIO::write(Map &map, string filepath) {
 
 MapData MapIO::read(string filepath) {
     
+    MapData mapData;
     ifstream in(filepath);
     
     // Creates the map
@@ -74,7 +75,6 @@ MapData MapIO::read(string filepath) {
     getline(in, width);
     getline(in, height);
     
-    MapData mapData;
     mapData.width = stoi(width);
     mapData.height = stoi(height);
     
