@@ -39,11 +39,13 @@ string query = "";
 string input = "";
 string winner = "";
 
+bool toggleAddDrag = false, toggleRemoveDrag = false;
+
 void* font = GLUT_BITMAP_HELVETICA_18;
 
 void init() {
     width = 700;
-    height = 500;
+    height = 520;
     mouseX = mouseY = -1;
     gstate = menu;
 }
@@ -65,22 +67,28 @@ void displayMenu() {
  */
 
 void startGame() {
-    if(input == "") {
-        map.reset(new Map(gameMenu->getCurrentMapSelection()));
-    } else {
-        map.reset(new Map(input));
+    
+    try {
+        if(input == "") {
+            map.reset(new Map(gameMenu->getCurrentMapSelection()));
+        } else {
+            map.reset(new Map(input));
+        }
+        
+        game.reset(new Game(*map));
+        
+        TankKeyBindings kb1 = {'a','d','w','s',' '};
+        Color color1 = {1,0,0};
+        game->createPlayerTank(kb1,color1);
+        
+        TankKeyBindings kb2 = {'j','l','i','k',';'};
+        Color color2 = {0,0,1};
+        game->createPlayerTank(kb2,color2);
+        
+        glutIgnoreKeyRepeat(true);
+    } catch(exception e) {
+        gstate = menu;
     }
-    game.reset(new Game(*map));
-    
-    TankKeyBindings kb1 = {'a','d','w','s',' '};
-    Color color1 = {1,0,0};
-    game->createPlayerTank(kb1,color1);
-    
-    TankKeyBindings kb2 = {'j','l','i','k',';'};
-    Color color2 = {0,0,1};
-    game->createPlayerTank(kb2,color2);
-    
-    glutIgnoreKeyRepeat(true);
 }
 
 /**
@@ -109,18 +117,23 @@ void displayGameplay() {
 
 
 void displayGameOver() {
-    // Draw strings
-    string message = "Game Over";
-    // set color to lime green
-    glColor3f(50/255.0, 205/255.0, 50/255.0);
-    glRasterPos2i(300, 250);
-    for (int i = 0; i < message.length(); ++i) {
-        glutBitmapCharacter(font, message[i]);
+    string message = "Game Over!";
+    unsigned char messageStr[message.length()];
+    strcpy((char*) messageStr, message.c_str());
+    
+    int length = glutBitmapLength(GLUT_BITMAP_HELVETICA_12, messageStr);
+    glRasterPos2i((700 - length) / 2, 240);
+    for(int i = 0; i < message.length(); i++) {
+        glutBitmapCharacter(GLUT_BITMAP_HELVETICA_12, message[i]);
     }
     
-    glRasterPos2i(300, 300);
-    for (int i = 0; i < winner.length(); ++i) {
-        glutBitmapCharacter(font, winner[i]);
+    unsigned char winnerStr[winner.length()];
+    strcpy((char*) winnerStr, winner.c_str());
+    
+    int lengthWinner = glutBitmapLength(GLUT_BITMAP_HELVETICA_18, winnerStr);
+    glRasterPos2i((700 - lengthWinner) / 2, 270);
+    for(int i = 0; i < winner.length(); i++) {
+        glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, winner[i]);
     }
     
     
@@ -447,8 +460,8 @@ void kbd(unsigned char key, int x, int y) {
                         switch(gstate) {
                             case menu:
                             {
-                                startGame();
                                 gstate = gameplay;
+                                startGame();
                                 break;
                             }
                             case lvlEditor:
@@ -547,8 +560,33 @@ void cursor(int x, int y) {
                 gameMenu->setCurrentSelection(GMExit);
             }
             break;
+        default:
+            break;
     }
     glutPostRedisplay();
+}
+
+void drag(int x, int y) {
+    switch(gstate) {
+        case lvlEditor:
+        {
+            int adjustedX = (x / 10) * 10, adjustedY = (y / 10) * 10;
+            if(toggleAddDrag) {
+                MapObject* obj = editor->getCurrentSelection();
+                
+                if(Obstacle* oObj = dynamic_cast<Obstacle*>(obj)) {
+                    editor->addObstacle(oObj->getName(), adjustedX, adjustedY, 10, 10);
+                } else if (Terrain* tObj = dynamic_cast<Terrain*>(obj)){
+                    editor->addTerrain(tObj->getName(), adjustedX, adjustedY, 10, 10, tObj->getIsPassable());
+                }
+            } else if (toggleRemoveDrag) {
+                editor->removeMapObjAt(adjustedX, adjustedY);
+            }
+            break;
+        }
+        default:
+            break;
+    }
 }
 
 // button will be GLUT_LEFT_BUTTON or GLUT_RIGHT_BUTTON
@@ -567,38 +605,45 @@ void mouse(int button, int state, int x, int y) {
                 }
                 break;
             case lvlEditor:
+            {
+                int adjustedX = (x / 10) * 10, adjustedY = (y / 10) * 10;
                 if(button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {
                     if(!editor->getMode()) {
-                        int objX = x / 10, objY = y / 10;
-                        Color color = editor->getColor();
                         MapObject* obj = editor->getCurrentSelection();
                         
                         if(Obstacle* oObj = dynamic_cast<Obstacle*>(obj)) {
-                            editor->addObstacle(oObj->getName(), objX, objY, 10, 10);
+                            editor->addObstacle(oObj->getName(), adjustedX, adjustedY, 10, 10);
                         } else if (Terrain* tObj = dynamic_cast<Terrain*>(obj)){
-                            editor->addTerrain(tObj->getName(), objX, objY, 10, 10, tObj->getIsPassable());
+                            editor->addTerrain(tObj->getName(), adjustedX, adjustedY, 10, 10, tObj->getIsPassable());
                         }
-                        
-                        cout << "Added object at: " << objX << ", " << objY << endl;
+                        toggleAddDrag = true;
                     } else {
-                        int px = x/10, py = y/10;
-                        editor->addPreferredStart(px, py);
-                        cout << "Added start at: " << px << ", " << py << endl;
+                        editor->addPreferredStart(adjustedX, adjustedY);
+                    }
+                }
+                
+                if(button == GLUT_LEFT_BUTTON && state == GLUT_UP) {
+                    if(toggleAddDrag) {
+                        toggleAddDrag = false;
                     }
                 }
                 
                 if(button == GLUT_RIGHT_BUTTON && state == GLUT_DOWN) {
                     if(!editor->getMode()) {
-                        int objX = x / 10, objY = y / 10;
-                        editor->removeMapObjAt(objX, objY);
-                        cout << "Removed object at: " << objX << ", " << objY << endl;
+                        editor->removeMapObjAt(adjustedX, adjustedY);
+                        toggleRemoveDrag = true;
                     } else {
-                        int px = x/10, py = y/10;
-                        editor->removePreferredStart(px, py);
+                        editor->removePreferredStart(adjustedX, adjustedY);
                     }
                 }
                 
+                if(button == GLUT_RIGHT_BUTTON && state == GLUT_UP) {
+                    if(toggleRemoveDrag) {
+                        toggleRemoveDrag = false;
+                    }
+                }
                 break;
+            }
             case gameplay:
                 break;
             case gameOver:
@@ -651,6 +696,7 @@ int main(int argc, char** argv) {
     glutSpecialFunc(kbdS);
     
     // handles mouse movement
+    glutMotionFunc(drag);
     glutPassiveMotionFunc(cursor);
     
     // handles mouse click

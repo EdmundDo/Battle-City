@@ -7,11 +7,13 @@
 //
 
 #include "Obstacle.hpp"
+#include "Constants.hpp"
 
+#include <iostream>
 
-Obstacle::Obstacle(string name, int x, int y, int width, int height, Color color) : MapObject(name, x, y, width, height, color), underlyingTerrain(Terrain("nothing", x, y, width, height, color, true)) {}
+Obstacle::Obstacle(string name, int x, int y, int width, int height, Color color) : MapObject(name, x, y, width, height, color, false), underlyingTerrain(Terrain("nothing", x, y, width, height, color, true)) {}
 
-Obstacle::Obstacle(string name, int x, int y, int width, int height, Color color, Terrain a) : MapObject(name, x, y, width, height, color), underlyingTerrain(a) {}
+Obstacle::Obstacle(string name, int x, int y, int width, int height, Color color, Terrain a) : MapObject(name, x, y, width, height, color, false), underlyingTerrain(a) {}
 
 Terrain Obstacle::getunderlyingTerrain(){
     return underlyingTerrain;
@@ -22,33 +24,27 @@ void Obstacle::setUnderlyingTerrain(Terrain a){
 }
 
 void Obstacle::draw() {
-    glColor3ub(color.red, color.green, color.blue);
-    glBegin(GL_QUADS);
-    glVertex2i(topLeft.getX() * 10 + 1, topLeft.getY() * 10 - 1);
-    glVertex2i(topLeft.getX() * 10 + width + 1, topLeft.getY() * 10 - 1);
-    glVertex2i(topLeft.getX() * 10 + width + 1, topLeft.getY() * 10 + height + 1);
-    glVertex2i(topLeft.getX() * 10 + 1, topLeft.getY() * 10 + height + 1);
-    glEnd();
+    MapObject::draw();
     
     glColor3ub(0, 0, 0);
     glBegin(GL_LINES);
-    glVertex2d(topLeft.getX() * 10, topLeft.getY() * 10);
-    glVertex2d(topLeft.getX() * 10 + width, topLeft.getY() * 10);
+    glVertex2d(topLeft.getX(), topLeft.getY());
+    glVertex2d(topLeft.getX() + width, topLeft.getY());
     glEnd();
     
     glBegin(GL_LINES);
-    glVertex2d(topLeft.getX() * 10 + width, topLeft.getY() * 10);
-    glVertex2d(topLeft.getX() * 10 + width, topLeft.getY() * 10 + height);
+    glVertex2d(topLeft.getX() + width, topLeft.getY());
+    glVertex2d(topLeft.getX() + width, topLeft.getY() + height);
     glEnd();
     
     glBegin(GL_LINES);
-    glVertex2d(topLeft.getX() * 10, topLeft.getY() * 10);
-    glVertex2d(topLeft.getX() * 10, topLeft.getY() * 10 + height);
+    glVertex2d(topLeft.getX(), topLeft.getY());
+    glVertex2d(topLeft.getX(), topLeft.getY() + height);
     glEnd();
     
     glBegin(GL_LINES);
-    glVertex2d(topLeft.getX() * 10 , topLeft.getY() * 10 + height);
-    glVertex2d(topLeft.getX() * 10 + width, topLeft.getY() * 10 + height);
+    glVertex2d(topLeft.getX(), topLeft.getY() + height);
+    glVertex2d(topLeft.getX() + width, topLeft.getY() + height);
     glEnd();
 }
 

@@ -20,6 +20,7 @@ struct MapData {
     vector<unique_ptr<MapObject>> mapObjs;
     
     int width, height;
+    bool success;
 };
 
 class MapIO {

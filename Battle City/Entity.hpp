@@ -10,7 +10,6 @@
 #define Entity_hpp
 
 #include "Color.hpp"
-
 #include "Point2D.hpp"
 
 enum ESign {ENEG = -1, EPOS = 1};
@@ -20,7 +19,7 @@ class Entity{
 public:
     
     //default constructor
-    Entity(double x, double y, double direction, Color color, bool canPass);
+    Entity(int x, int y, double direction, Color color, bool canPass);
     // desstructor
     ~Entity();
     
@@ -46,11 +45,13 @@ public:
      * Effects: getters and setters
      */
     
-    virtual double getX() const;
-    virtual double getY() const;
-    virtual double getHeight() const;
+    virtual int getX() const;
+    virtual int getGridX() const;
+    virtual int getY() const;
+    virtual int getGridY() const;
+    virtual int getHeight() const;
     virtual void setHeight(double height);
-    virtual double getWidth() const;
+    virtual int getWidth() const;
     virtual void setWidth(double width);
     virtual double getDirection() const;
     virtual void setDirection(double s);
@@ -66,8 +67,8 @@ public:
 protected:
     
     bool canPassAllTerrain;
-    double direction,
-        height, width;
+    double direction;
+    int height, width;
     Point2D topLeft;
     Color color;
 };

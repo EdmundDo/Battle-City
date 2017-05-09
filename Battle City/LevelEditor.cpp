@@ -16,15 +16,6 @@ LevelEditor::LevelEditor(int width, int height) : currentMap(width, height), sel
     color.red = mapObjs[0]->getColor().red;
     color.green = mapObjs[0]->getColor().green;
     color.blue = mapObjs[0]->getColor().blue;
-    
-    Color borderWallColor = {255, 255, 255};
-    for(int y = -1; y <= currentMap.getHeight(); y++) {
-        for(int x = -1; x <= currentMap.getWidth(); x++) {
-            if(y == -1 || y == currentMap.getHeight() || x == -1 || x == currentMap.getWidth()) {
-                currentMap.addMapObj(new Obstacle("Indestructible Wall", x, y, 10, 10, borderWallColor));
-            }
-        }
-    }
 }
 
 LevelEditor::LevelEditor(string filepath) : currentMap(filepath), selectedIndex(0), selectedColorIndex(0), mode(false) {
@@ -36,15 +27,21 @@ LevelEditor::LevelEditor(string filepath) : currentMap(filepath), selectedIndex(
 }
 
 void LevelEditor::addObstacle(string name, int x, int y, int height, int width) {
-    currentMap.addMapObj(new Obstacle(name, x, y, height, width, color));
-}
-
-void LevelEditor::addObstacle(string name, int x, int y, int height, int width, Terrain terrain) {
-    currentMap.addMapObj(new Obstacle(name, x, y, height, width, color, terrain));
+    MapObject *mobj = currentMap.getMapObjectAt(x, y);
+    if(mobj == nullptr) {
+        currentMap.addMapObj(new Obstacle(name, x, y, height, width, color));
+    } else {
+        if(Terrain* tobj = dynamic_cast<Terrain*>(mobj)) {
+            currentMap.removeMapObjAt(x, y);
+            currentMap.addMapObj(new Obstacle(name, x, y, height, width, color, *tobj));
+        }
+    }
 }
 
 void LevelEditor::addTerrain(string name,int x, int y, int height, int width, bool isPassable) {
-    currentMap.addMapObj(new Terrain(name, x, y, height, width, color, isPassable));
+    if(currentMap.getMapObjectAt(x, y) == nullptr) {
+        currentMap.addMapObj(new Terrain(name, x, y, height, width, color, isPassable));
+    }
 }
 
 void LevelEditor::removeMapObjAt(int x, int y){
@@ -52,7 +49,8 @@ void LevelEditor::removeMapObjAt(int x, int y){
 }
 
 void LevelEditor::addPreferredStart(int x, int y){
-    if(currentMap.getMapObjectAt(x, y) == nullptr) {
+    MapObject *mobj = currentMap.getMapObjectAt(x, y);
+    if(mobj == nullptr || mobj->getIsPassable()) {
         currentMap.addPreferredStartCoord(x,y);
     }
 }
@@ -62,8 +60,8 @@ void LevelEditor::removePreferredStart(int x, int y){
 }
 
 void LevelEditor::fillTerrain(Terrain *t){
-    for(int x = 0; x < currentMap.getWidth(); x++){
-        for(int y = 0; y < currentMap.getHeight(); y++){
+    for(int x = 0; x < currentMap.getWidth() * 10; x += 10){
+        for(int y = 0; y < currentMap.getHeight() * 10; y += 10){
             if(currentMap.getMapObjectAt(x,y) == nullptr){
                 currentMap.addMapObj(new Terrain(t->getName(), x, y, t->getWidth(), t->getHeight(), color, t->getIsPassable()));
             }
@@ -148,6 +146,7 @@ bool LevelEditor::getMode() {
 }
 
 void LevelEditor::nextSelection() {
+    mapObjs[selectedIndex]->setColor(color);
     if(selectedIndex < mapObjs.size() - 1) {
         selectedIndex++;
     } else {
@@ -220,7 +219,7 @@ void LevelEditor::draw() {
     currentMap.drawMap(true);
     
     MapObject* mobj = getCurrentSelection();
-    int startX = 100, startY = 10;
+    int startX = 100, startY = 510;
     
     if(!mode) {
         // Prints name
@@ -243,7 +242,7 @@ void LevelEditor::draw() {
         
         // Prints green val
         glRasterPos2i(startX + 200, startY);
-        for(int i = 0; i < 5; i++) {
+        for(int i = 0; i < 7; i++) {
             glutBitmapCharacter(GLUT_BITMAP_HELVETICA_10, "Green: "[i]);
         }
         
@@ -254,7 +253,7 @@ void LevelEditor::draw() {
         
         // Prints blue val
         glRasterPos2i(startX + 300, startY);
-        for(int i = 0; i < 5; i++) {
+        for(int i = 0; i < 6; i++) {
             glutBitmapCharacter(GLUT_BITMAP_HELVETICA_10, "Blue: "[i]);
         }
         

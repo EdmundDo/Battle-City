@@ -75,6 +75,7 @@
 		38B6C7AC1EAE9350007FFCDB /* GameMenu.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameMenu.cpp; sourceTree = "<group>"; };
 		38B6C7AD1EAE9350007FFCDB /* GameMenu.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GameMenu.hpp; sourceTree = "<group>"; };
 		38B6C7AF1EAFDC45007FFCDB /* graphics.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = graphics.hpp; sourceTree = "<group>"; };
+		38CD269B1EBF873600A01C63 /* Constants.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Constants.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -184,6 +185,7 @@
 				382ECB301EA79E1900C84379 /* MapIO.cpp */,
 				382ECB311EA79E1900C84379 /* MapIO.hpp */,
 				38B6C7AF1EAFDC45007FFCDB /* graphics.hpp */,
+				38CD269B1EBF873600A01C63 /* Constants.hpp */,
 			);
 			name = utils;
 			sourceTree = "<group>";

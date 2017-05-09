@@ -11,12 +11,12 @@
 #include "graphics.hpp"
 
 Map::Map(string filepath) {
-    loadMapFromFile(filepath);
+    if(!loadMapFromFile(filepath)) {
+        throw std::runtime_error("Error loading file.");
+    }
 }
 
-Map::Map(int width, int height) : width(width), height(height) {
-    preferredStartCoords.push_back(Point2D(2, 2));
-}
+Map::Map(int width, int height) : width(width), height(height) {}
 
 Map::~Map() {}
 
@@ -44,17 +44,13 @@ bool Map::doesPreferredStartCoordExist(int x, int y) {
 }
 
 void Map::addMapObj(MapObject *mobj) {
-    int x = mobj->getGridX(), y = mobj->getGridY();
-    Terrain *t = dynamic_cast<Terrain*>(mobj);
-    if(getMapObjectAt(x, y) == nullptr && (!doesPreferredStartCoordExist(x, y) || t)) {
-        unique_ptr<MapObject> mobjPtr(mobj);
-        mapObjs.push_back(move(mobjPtr));
-    }
+    unique_ptr<MapObject> mobjPtr(mobj);
+    mapObjs.push_back(move(mobjPtr));
 }
 
 void Map::removeMapObjAt(int x, int y) {
     for(int i = 0; i < mapObjs.size(); i++) {
-        if(mapObjs[i]->getGridX() == x && mapObjs[i]->getGridY() == y) {
+        if(mapObjs[i]->getX() == x && mapObjs[i]->getY() == y) {
             mapObjs.erase(mapObjs.begin() + i);
         }
     }
@@ -62,11 +58,27 @@ void Map::removeMapObjAt(int x, int y) {
 
 Point2D Map::getRandomStartCoords() const {
     random_device rnd;
-    int rand_index = rnd() % preferredStartCoords.size();
-    return preferredStartCoords[rand_index];
+    if(!preferredStartCoords.empty()) {
+        int rand_index = rnd() % preferredStartCoords.size();
+        return preferredStartCoords[rand_index];
+    } else {
+        int randX = rnd() % width * 10;
+        int randY = rnd() % height * 10;
+        return Point2D(randX, randY);
+    }
 }
 
 MapObject* Map::getMapObjectAt(int x, int y) const {
+    for(int i = 0; i < mapObjs.size(); i++) {
+        if(x == mapObjs[i]->getX() && y == mapObjs[i]->getY()) {
+            return mapObjs[i].get();
+        }
+    }
+    
+    return nullptr;
+}
+
+MapObject* Map::getMapObjectGridAt(int x, int y) const {
     for(int i = 0; i < mapObjs.size(); i++) {
         if(x == mapObjs[i]->getGridX() && y == mapObjs[i]->getGridY()) {
             return mapObjs[i].get();
@@ -78,6 +90,19 @@ MapObject* Map::getMapObjectAt(int x, int y) const {
 
 Obstacle* Map::getObstacleAt(int x, int y) const {
     for(int i = 0; i < mapObjs.size(); i++) {
+        if(x == mapObjs[i]->getX() && y == mapObjs[i]->getY()) {
+            if(Obstacle* o = dynamic_cast<Obstacle*>(mapObjs[i].get())) {
+                return o;
+            }
+        }
+    }
+    
+    return nullptr;
+}
+
+Obstacle* Map::getObstacleGridAt(int x, int y) const {
+    for(int i = 0; i < mapObjs.size(); i++) {
+        MapObject *mobj = mapObjs[i].get();
         if(x == mapObjs[i]->getGridX() && y == mapObjs[i]->getGridY()) {
             if(Obstacle* o = dynamic_cast<Obstacle*>(mapObjs[i].get())) {
                 return o;
@@ -89,6 +114,18 @@ Obstacle* Map::getObstacleAt(int x, int y) const {
 }
 
 Terrain* Map::getTerrainAt(int x, int y) const {
+    for(int i = 0; i < mapObjs.size(); i++) {
+        if(x == mapObjs[i]->getX() && y == mapObjs[i]->getY()) {
+            if(Terrain* t = dynamic_cast<Terrain*>(mapObjs[i].get())) {
+                return t;
+            }
+        }
+    }
+    
+    return nullptr;
+}
+
+Terrain* Map::getTerrainGridAt(int x, int y) const {
     for(int i = 0; i < mapObjs.size(); i++) {
         if(x == mapObjs[i]->getGridX() && y == mapObjs[i]->getGridY()) {
             if(Terrain* t = dynamic_cast<Terrain*>(mapObjs[i].get())) {
@@ -130,24 +167,30 @@ void Map::drawMap(bool showPreferredStartCoords) {
             int x = preferredStartCoords[i].getX(), y = preferredStartCoords[i].getY();
             glColor3ub(0, 150, 150);
             glBegin(GL_QUADS);
-            glVertex2i(x * 10, y * 10);
-            glVertex2i(x * 10 + 10, y * 10);
-            glVertex2i(x * 10 + 10, y * 10 + 10);
-            glVertex2i(x * 10, y * 10 + 10);
+            glVertex2i(x, y);
+            glVertex2i(x + 10, y);
+            glVertex2i(x + 10, y + 10);
+            glVertex2i(x, y + 10);
             glEnd();
         }
     }
 }
 
-void Map::loadMapFromFile(string filepath) {
+bool Map::loadMapFromFile(string filepath) {
     MapData mapData = MapIO::read(filepath);
     
-    this->width = mapData.width;
-    this->height = mapData.height;
-    
-    this->preferredStartCoords = mapData.preferredStartCoords;
-    
-    for(int i = 0; i < mapData.mapObjs.size(); i++) {
-        mapObjs.push_back(move(mapData.mapObjs[i]));
+    if(mapData.success) {
+        this->width = mapData.width;
+        this->height = mapData.height;
+        
+        this->preferredStartCoords = mapData.preferredStartCoords;
+        
+        for(int i = 0; i < mapData.mapObjs.size(); i++) {
+            mapObjs.push_back(move(mapData.mapObjs[i]));
+        }
+    } else {
+        return false;
     }
+    
+    return true;
 }

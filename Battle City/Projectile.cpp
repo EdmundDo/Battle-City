@@ -31,7 +31,7 @@ double Projectile::getDamage() const{
 
 void Projectile::draw() {
 
-    glColor3f(color.red, color.green, color.blue);
+    glColor3ub(color.red, color.green, color.blue);
     glBegin(GL_QUADS);
     glVertex2i(topLeft.getX(), topLeft.getY());
     glVertex2i(topLeft.getX() + width, topLeft.getY());

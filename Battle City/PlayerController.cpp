@@ -26,7 +26,6 @@ void PlayerController::act(char c) {
     } else if(c == rotateRightKey) {
         rotateRight();
     } else if(c == moveForwardKey) {
-        //moveForward();
         if(!forwardFlag) {
             forwardFlag = true;
             backwardFlag = false;
@@ -34,7 +33,6 @@ void PlayerController::act(char c) {
             forwardFlag = false;
         }
     } else if(c == moveBackwardKey) {
-        //moveBackward();
         if(!backwardFlag) {
             backwardFlag = true;
             forwardFlag = false;

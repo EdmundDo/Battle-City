@@ -19,7 +19,7 @@ Game::~Game() {}
 
 int Game::checkGameStatus() {
     for(int i = 0; i < controllers.size(); i++) {
-        if(controllers[i].get()->getTank().getHealth() == 0) {
+        if(controllers[i].get()->getTank().getHealth() <= 0) {
             controllers[i].reset(nullptr);
         }
     }
@@ -37,7 +37,8 @@ int Game::checkGameStatus() {
 
 void Game::createPlayerTank(TankKeyBindings bindings, Color color) {
     Point2D startCoords = map.getRandomStartCoords();
-    createPlayerTank(bindings, startCoords.getX() * 10, startCoords.getY() * 10, 90, color);
+    map.removePreferredStartCoord(startCoords.getX(), startCoords.getY());
+    createPlayerTank(bindings, startCoords.getX(), startCoords.getY(), 90, color);
 }
 
 void Game::createPlayerTank(TankKeyBindings bindings, int x, int y, int direction, Color color) {
@@ -61,71 +62,98 @@ void Game::update() {
     updateEntities();
 }
 
+// Uses grid checks for simplicity
 void Game::checkCollisions() {
-    for(int i = 0; i < entities.size(); i++) {
-        bool skipIteration = false;
+    for(vector<unique_ptr<Entity>>::iterator eit = entities.begin(); eit < entities.end(); eit++) {
         
-        // Check for overlapping coordinates
-        double ex = entities[i]->getX();
-        double ey = entities[i]->getY();
-        double ewidth = entities[i]->getWidth();
-        double eheight = entities[i]->getHeight();
+        Entity *entity = eit->get();
         
-        // Check for overlapping obstacles around entities[i]
-        for(int x = ex + ewidth; x > ex - ewidth; x--) {
-            for (int y = ey + eheight; y > ey - eheight; y--) {
-                MapObject* obj = map.getMapObjectAt(x/10, y/10);
-                //cout << x/10 << " " << y/10 << endl;
-                if(obj != nullptr) {
-                    Terrain* tObj = dynamic_cast<Terrain*>(obj);
-                    
-                    if(tObj && tObj->getIsPassable()) {
-                        continue;
-                    }
-                    
-                    if(Tank *t = dynamic_cast<Tank*>(entities[i].get())) {
-                        checkCollision(*t, *obj);
-                    } else if(Projectile *p = dynamic_cast<Projectile*>(entities[i].get())) {
-                        if(checkCollision(*p, *obj)) {
-                            entities.erase(entities.begin() + i);
-                            skipIteration = true;
-                            break;
-                        }
-                    }
-                }
-            }
-            
-            if(skipIteration) {
-                skipIteration = false;
-                break;
-            }
-        }
+        int ex = entity->getGridX();
+        int ey = entity->getGridY();
+        int ewidth = entity->getWidth() / 10;
+        int eheight = entity->getHeight() / 10;
         
-        for(int j = 0; j < entities.size(); j++) {
-            if(j != i) {
-                // Check if entities[i] and entities[j] overlap
-                if(Tank *t1 = dynamic_cast<Tank*>(entities[i].get())) {
-                    if(Projectile *p = dynamic_cast<Projectile*>(entities[j].get())) {
-                        if(checkCollision(*t1, *p)) {
-                            cout << p->getDamage() << " " << t1->getHealth() << endl;
-                            
-                            // Erase bullet
-                            entities.erase(entities.begin() + j);
+        if(Tank *t = dynamic_cast<Tank*>(entity)) {
 
-                            if(t1->getHealth() <= 0) {
-                                entities.erase(entities.begin() + i);
-                            }
+            // Check surroundings only if moved
+            if(controllers[t->getControllerId()]->getRecentlyMoved()) {
+                for(int x = ex + ewidth + 1; x >= ex - 1; x--) {
+                    for (int y = ey + eheight + 1; y >= ey - 1; y--) {
+                        MapObject* obj = map.getMapObjectGridAt(x, y);
+
+                        if(obj != nullptr && !obj->getIsPassable()) {
+                            checkCollision(*t, *obj);
+                        }
+                    }
+                }
+                controllers[t->getControllerId()]->setRecentlyMoved(false);
+            }
+
+            // Check if a bullet hit
+            for(vector<unique_ptr<Entity>>::iterator pit = entities.begin(); pit < entities.end(); pit++) {
+                if(pit->get() != entity) {
+                    if(Projectile *p = dynamic_cast<Projectile*>(pit->get())) {
+                        if(checkCollision(*t, *p)) {
                             
-                            skipIteration = true;
-                            break;
+                            t->setHealth(t->getHealth() - p->getDamage());
+                            // Erase bullet
+                            pit = entities.erase(pit);
+                            
+                            // Erase tank
+                            if(t->getHealth() <= 0) {
+                                entities.erase(eit);
+                                break;
+                            }
                         }
                     }
                 }
             }
+        } else if(Projectile *p = dynamic_cast<Projectile*>(entity)) {
+
+            int px = 0, py = 0, xcond = 0, ycond = 0;
+            if(p->getDirection() == 0) {
+                px = ex + ewidth;
+                py = ey + eheight + 1;
+                xcond = ex;
+                ycond = ey - eheight - 1;
+            } else if(p->getDirection() == 90) {
+                px = ex + ewidth + 1;
+                py = ey;
+                xcond = ex - ewidth - 1;
+                ycond = ey - eheight - 1;
+            } else if(p->getDirection() == 180) {
+                px = ex;
+                py = ey + eheight + 1;
+                xcond = ex - ewidth - 1;
+                ycond = ey - eheight - 1;
+            } else if(p->getDirection() == 270) {
+                px = ex + ewidth + 1;
+                py = ey + eheight + 1;
+                xcond = ex - ewidth - 1;
+                ycond = ey;
+            }
             
-            if(skipIteration) {
-                skipIteration = false;
-                break;
+            bool skipIteration = false;
+            for(int x = px; x >= xcond; x--) {
+                for (int y = py; y >= ycond; y--) {
+                    MapObject* obj = map.getMapObjectGridAt(x, y);
+
+                    if(obj != nullptr) {
+                        Terrain* tObj = dynamic_cast<Terrain*>(obj);
+
+                        if(!tObj) {
+                            if(checkCollision(*p, *obj)) {
+                                eit = entities.erase(eit);
+                                skipIteration = true;
+                                break;
+                            }
+                        }
+                    }
+                }
+                
+                if(skipIteration) {
+                    break;
+                }
             }
         }
     }
@@ -135,6 +163,28 @@ void Game::draw() {
     map.drawMap();
     for(int i = 0; i < entities.size(); i++) {
         entities[i]->draw();
+        if(Tank *t = dynamic_cast<Tank*>(entities[i].get())) {
+            int controllerId = t->getControllerId();
+            int health = t->getHealth();
+            string message = "Player " + to_string(controllerId + 1) + " " + to_string(health);
+            
+            glColor3ub(255, 255, 255);
+            if(controllerId == 0) {
+                glRasterPos2i(10, 515);
+                for(int i = 0; i < message.length(); i++) {
+                    glutBitmapCharacter(GLUT_BITMAP_HELVETICA_12, message[i]);
+                }
+            } else if(controllerId == 1) {
+                unsigned char messageStr[message.length()];
+                strcpy((char*) messageStr, message.c_str());
+                
+                int length = glutBitmapLength(GLUT_BITMAP_HELVETICA_12, messageStr);
+                glRasterPos2i(700 - length - 10, 515);
+                for(int i = 0; i < message.length(); i++) {
+                    glutBitmapCharacter(GLUT_BITMAP_HELVETICA_12, message[i]);
+                }
+            }
+        }
     }
 }
 
@@ -180,72 +230,65 @@ bool Game::checkCollision(Projectile &p, MapObject &mobj) {
 
 void Game::checkCollision(Tank &t, MapObject &mobj) {
     int controllerId = t.getControllerId();
-    
-    // Point overlaps, (for side overlaps while allowing movement along walls)
-    bool topLeftOverlap = isOverlapping(t.getX(), t.getY(), mobj),
-        topRightOverlap = isOverlapping(t.getX() + t.getWidth(), t.getY(), mobj),
-        bottomLeftOverlap = isOverlapping(t.getX(), t.getY() + t.getHeight(), mobj),
-        bottomRightOverlap = isOverlapping(t.getX() + t.getWidth(), t.getY() + t.getHeight(), mobj);
-    
-    // Map Object Overlap (for corner overlaps)
-    bool mTopLeftOverlap = isOverlapping(mobj.getX(), mobj.getY(), t),
-        mTopRightOverlap = isOverlapping(mobj.getX() + mobj.getWidth(), mobj.getY(), t),
-        mBottomLeftOverlap = isOverlapping(mobj.getX(), mobj.getY() + mobj.getHeight(), t),
-        mBottomRightOverlap = isOverlapping(mobj.getX() + mobj.getWidth(), mobj.getY() + mobj.getHeight(), t);
-    
-    if(t.getDirection() == 90) {
-        if(topLeftOverlap && topRightOverlap) {
-            controllers[controllerId]->setCanMoveForward(false);
-        } else if(bottomLeftOverlap && bottomRightOverlap) {
-            controllers[controllerId]->setCanMoveBack(false);
-        }
-        
-        if((mTopLeftOverlap || mTopRightOverlap)) {
-            controllers[controllerId]->setCanMoveBack(false);
-        } else if(mBottomLeftOverlap || mBottomRightOverlap) {
-            controllers[controllerId]->setCanMoveForward(false);
-        }
-    }
-    
-    if(t.getDirection() == 270) {
-        if(topLeftOverlap && topRightOverlap) {
-            controllers[controllerId]->setCanMoveBack(false);
-        } else if (bottomLeftOverlap && bottomRightOverlap) {
-            controllers[controllerId]->setCanMoveForward(false);
-        }
-        
-        if(mTopLeftOverlap || mTopRightOverlap) {
-            controllers[controllerId]->setCanMoveForward(false);
-        } else if(mBottomLeftOverlap || mBottomRightOverlap) {
-            controllers[controllerId]->setCanMoveBack(false);
-        }
-    }
+    cout << mobj.getGridY() << " " << t.getGridY() << endl;
     
     if(t.getDirection() == 0) {
-        if(topRightOverlap && bottomRightOverlap) {
-            controllers[controllerId]->setCanMoveForward(false);
-        } else if (topLeftOverlap && bottomLeftOverlap) {
-            controllers[controllerId]->setCanMoveBack(false);
+        // if topLeft just touching wall
+        if(mobj.getY() + mobj.getHeight() - 1 != t.getY() && mobj.getY() != t.getY() + t.getHeight()) {
+            if((mobj.getGridX() == t.getGridX() + 1 && mobj.getGridY() == t.getGridY())
+                       || (mobj.getGridX() == t.getGridX() + 1 && mobj.getGridY() == t.getGridY() + 1)
+                       || t.getX() == map.getWidth() * 10) {
+                controllers[controllerId]->setCanMoveForward(false);
+            } else if ((mobj.getGridX() == t.getGridX() && mobj.getGridY() == t.getGridY())
+                       || (mobj.getGridX() == t.getGridX() && mobj.getGridY() == t.getGridY() + 1)
+                       || t.getX() == 0) {
+                controllers[controllerId]->setCanMoveBack(false);
+            }
         }
-        
-        if(mTopLeftOverlap || mBottomLeftOverlap) {
-            controllers[controllerId]->setCanMoveForward(false);
-        } else if(mTopRightOverlap || mBottomRightOverlap) {
-            controllers[controllerId]->setCanMoveBack(false);
+    }
+    
+    if(t.getDirection() == 90) {
+        // if topLeft just touching wall (Allows mobility along walls)
+        if(mobj.getX() + mobj.getWidth() - 1 != t.getX() && mobj.getX() != t.getX() + t.getWidth()) {
+            if((mobj.getGridY() == t.getGridY() && mobj.getGridX() == t.getGridX())
+                       || (mobj.getGridY() == t.getGridY() && mobj.getGridX() == t.getGridX() + 1)
+                       || t.getY() == 0) {
+                controllers[controllerId]->setCanMoveForward(false);
+            } else if ((mobj.getGridY() == t.getGridY() + 1 && mobj.getGridX() == t.getGridX())
+                       || (mobj.getGridY() == t.getGridY() + 1 && mobj.getGridX() == t.getGridX() + 1)
+                       || t.getY() == map.getHeight() * 10) {
+                controllers[controllerId]->setCanMoveBack(false);
+            }
         }
     }
     
     if(t.getDirection() == 180) {
-        if(topRightOverlap && bottomRightOverlap) {
-            controllers[controllerId]->setCanMoveBack(false);
-        } else if (topLeftOverlap && bottomLeftOverlap) {
-            controllers[controllerId]->setCanMoveForward(false);
+        // if topLeft just touching wall
+        if(mobj.getY() + mobj.getHeight() - 1 != t.getY() && mobj.getY() != t.getY() + t.getHeight()) {
+            if((mobj.getGridX() == t.getGridX() && mobj.getGridY() == t.getGridY())
+                       || (mobj.getGridX() == t.getGridX() && mobj.getGridY() == t.getGridY() + 1)
+                       || t.getX() == 0) {
+                controllers[controllerId]->setCanMoveForward(false);
+            } else if ((mobj.getGridX() == t.getGridX() + 1 && mobj.getGridY() == t.getGridY())
+                       || (mobj.getGridX() == t.getGridX() + 1 && mobj.getGridY() == t.getGridY() + 1)
+                       || t.getX() == map.getWidth() * 10) {
+                controllers[controllerId]->setCanMoveBack(false);
+            }
         }
-        
-        if(mTopLeftOverlap || mBottomLeftOverlap) {
-            controllers[controllerId]->setCanMoveBack(false);
-        } else if(mTopRightOverlap || mBottomRightOverlap) {
-            controllers[controllerId]->setCanMoveForward(false);
+    }
+    
+    if(t.getDirection() == 270) {
+        // if topLeft just touching wall
+        if(mobj.getX() + mobj.getWidth() - 1 != t.getX() && mobj.getX() != t.getX() + t.getWidth()) {
+            if((mobj.getGridY() == t.getGridY() + 1 && mobj.getGridX() == t.getGridX())
+                       || (mobj.getGridY() == t.getGridY() + 1 && mobj.getGridX() == t.getGridX() + 1)
+                       || t.getY() == map.getHeight() * 10) {
+                controllers[controllerId]->setCanMoveForward(false);
+            } else if ((mobj.getGridY() == t.getGridY() && mobj.getGridX() == t.getGridX())
+                       || (mobj.getGridY() == t.getGridY() && mobj.getGridX() == t.getGridX() + 1)
+                       || t.getY() == 0) {
+                controllers[controllerId]->setCanMoveBack(false);
+            }
         }
     }
     
@@ -260,7 +303,6 @@ bool Game::checkCollision(Tank &t, Projectile &p) {
         bottomRightOverlap = isOverlapping(t.getX() + t.getWidth(), t.getY() + t.getHeight(), p);
     
     if(topLeftOverlap || topRightOverlap || bottomLeftOverlap || bottomRightOverlap) {
-        t.setHealth(t.getHealth() - p.getDamage());
         return true;
     }
     

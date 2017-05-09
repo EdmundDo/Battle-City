@@ -10,6 +10,7 @@
 #include "GameWindow.hpp"
 
 #include <cmath>
+#include <random>
 
 Tank::Tank(double health, double x, double y, double direction, Color color, bool canPass, int controllerId, vector<unique_ptr<Entity>> &entities) : Entity(x, y, direction, color, canPass), health(health), controllerId(controllerId), entities(entities) {
     width = 10;
@@ -44,9 +45,10 @@ void Tank::shoot() {
         dy = topLeft.getY() + height + dy;
     }
     
-    Color color = {4, 2, 3};
+    Color color = {255, 255, 255};
+    random_device rnd;
     
-    unique_ptr<Projectile> p (new Projectile(5, dx, dy, direction, color, true));
+    unique_ptr<Projectile> p (new Projectile(rnd() % 10, dx, dy, direction, color, true));
     entities.push_back(std::move(p));
 }
 
@@ -69,9 +71,7 @@ double Tank::getHealth(){
 }
 
 void Tank::setHealth(double h){
-    if(h >= 0) {
-        health = h;
-    }
+    health = h;
 };
 
 int Tank::getControllerId() {

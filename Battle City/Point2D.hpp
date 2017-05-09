@@ -12,7 +12,7 @@
 class Point2D {
 public:
     Point2D();
-    Point2D(double x, double y);
+    Point2D(int x, int y);
     
     /**
      * Requires: nothing
@@ -20,10 +20,10 @@ public:
      * Effects: getters and setters
      */
     
-    double getX() const;
-    void setX(double x);
-    double getY() const;
-    void setY(double y);
+    int getX() const;
+    void setX(int x);
+    int getY() const;
+    void setY(int y);
     
     /**
      * Requires: nothing

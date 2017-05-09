@@ -7,9 +7,11 @@
 //
 
 #include "Entity.hpp"
+#include "Constants.hpp"
+
 #include <cmath>
 
-Entity::Entity(double x, double y, double direction, Color color, bool canPassAllTerrain) : direction(direction), color(color), canPassAllTerrain(canPassAllTerrain) {
+Entity::Entity(int x, int y, double direction, Color color, bool canPassAllTerrain) : direction(direction), color(color), canPassAllTerrain(canPassAllTerrain) {
     topLeft.setX(x);
     topLeft.setY(y);
 }
@@ -31,16 +33,23 @@ void Entity::move(ESign sign, double rate) {
     topLeft.setY(topLeft.getY() + sign * dy * rate);
 }
 
-double Entity::getX() const{
+int Entity::getX() const{
     return topLeft.getX();
 }
 
+int Entity::getGridX() const {
+    return topLeft.getX() / GRID_SIZE;
+}
 
-double Entity::getY() const{
+int Entity::getY() const{
     return topLeft.getY();
 }
 
-double Entity::getHeight() const {
+int Entity::getGridY() const {
+    return topLeft.getY() / GRID_SIZE;
+}
+
+int Entity::getHeight() const {
     return height;
 }
 
@@ -48,7 +57,7 @@ void Entity::setHeight(double height) {
     this->height = height;
 }
 
-double Entity::getWidth() const {
+int Entity::getWidth() const {
     return width;
 }
 

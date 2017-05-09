@@ -14,21 +14,7 @@
 class Terrain : public MapObject{
     
 public:
-    
     Terrain(string name, int x, int y, int width, int height, Color color, bool isPassable);
-    
-    /**
-     * Requires: nothing
-     * Modifies: nothing
-     * Effects: getters and setters
-     */
-    
-    bool getIsPassable() const;
-    void setIsPassable(bool a);
-    
-      
-private:
-    bool isPassable;
 };
 
 #endif /* Terrain_hpp */

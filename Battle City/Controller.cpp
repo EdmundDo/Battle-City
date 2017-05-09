@@ -8,7 +8,7 @@
 
 #include "Controller.hpp"
 
-Controller::Controller (Tank &tank) : tank(tank), canMoveForward(true), canMoveBack(true), canRotateRight(true), canRotateLeft(true) {}
+Controller::Controller (Tank &tank) : tank(tank), canMoveForward(true), canMoveBack(true), canRotateRight(true), canRotateLeft(true), recentlyMoved(false) {}
 
 Controller::~Controller() {}
 
@@ -27,6 +27,7 @@ void Controller::rotateLeft() {
     
     canMoveBack = true;
     canMoveForward = true;
+    recentlyMoved = true;
 }
 
 void Controller::rotateRight() {
@@ -40,6 +41,7 @@ void Controller::rotateRight() {
     
     canMoveBack = true;
     canMoveForward = true;
+    recentlyMoved = true;
 }
 
 void Controller::moveForward() {
@@ -50,6 +52,8 @@ void Controller::moveForward() {
     if(!canMoveBack) {
         canMoveBack = true;
     }
+    
+    recentlyMoved = true;
 }
 
 void Controller::moveBackward() {
@@ -60,6 +64,8 @@ void Controller::moveBackward() {
     if(!canMoveForward) {
         canMoveForward = true;
     }
+    
+    recentlyMoved = true;
 }
 
 void Controller::setCanMoveForward(bool tf) {
@@ -92,6 +98,13 @@ void Controller::setCanRotateLeft(bool tf) {
 
 bool Controller::getCanRotateLeft() const {
     return canRotateLeft;
+}
+
+void Controller::setRecentlyMoved(bool tf) {
+    recentlyMoved = tf;
+}
+bool Controller::getRecentlyMoved() const {
+    return recentlyMoved;
 }
 
 Tank Controller::getTank() const {

@@ -49,7 +49,7 @@ public:
     bool doesPreferredStartCoordExist(int x, int y);
     
     /**
-     * Requires: mobj.getX() < width and mobj.getY() < height
+     * Requires: mobj.getX() and mobj.getY()
      * Modifies: mapObjs
      * Effects: Adds an object to the map
      */
@@ -57,7 +57,7 @@ public:
     void addMapObj(MapObject *mobj);
     
     /**
-     * Requires: x < \width and y < height
+     * Requires: x < width and y < height
      * Modifies: mapObjs
      * Effects: Removes an object to the map
      */
@@ -79,8 +79,11 @@ public:
      */
     
     MapObject* getMapObjectAt(int x, int y) const;
+    MapObject* getMapObjectGridAt(int x, int y) const;
     Obstacle* getObstacleAt(int x, int y) const;
+    Obstacle* getObstacleGridAt(int x, int y) const;
     Terrain* getTerrainAt(int x, int y) const;
+    Terrain* getTerrainGridAt(int x, int y) const;
     vector<Point2D> getPreferredStartCoords() const;
     
     int getWidth() const;
@@ -96,7 +99,7 @@ private:
     vector<unique_ptr<MapObject>> mapObjs;
     int width, height;
     
-    void loadMapFromFile(string filepath);
+    bool loadMapFromFile(string filepath);
     
 };
 

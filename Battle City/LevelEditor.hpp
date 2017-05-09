@@ -28,7 +28,6 @@ public:
      */
     
     void addObstacle(string name,int x, int y, int height, int width);
-    void addObstacle(string name,int x,int y,int height, int width, Terrain terrain);
     
     /**
      * Requires: x < currentMap.width, y < currentMap.height

@@ -66,10 +66,12 @@ public:
     virtual bool getCanRotateRight() const;
     virtual void setCanRotateLeft(bool tf);
     virtual bool getCanRotateLeft() const;
+    virtual void setRecentlyMoved(bool tf);
+    virtual bool getRecentlyMoved() const;
     
 protected:
     Tank &tank;                  // Tank associated with this object
-    bool canMoveForward, canMoveBack, canRotateRight, canRotateLeft;
+    bool canMoveForward, canMoveBack, canRotateRight, canRotateLeft, recentlyMoved;
 };
 
 #endif /* Controller_hpp */

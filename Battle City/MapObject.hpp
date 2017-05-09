@@ -19,7 +19,7 @@ using namespace std;
 class MapObject{
     
 public:
-    MapObject(string name, int x, int y, int width, int height, Color color);
+    MapObject(string name, int x, int y, int width, int height, Color color, bool isPassable);
     
     /**
      * Requires: r, g, b must be between 0 and 255
@@ -36,17 +36,22 @@ public:
     virtual void setY(int y);
     virtual int getWidth() const;
     virtual int getHeight() const;
+    bool getIsPassable() const;
+    void setIsPassable(bool a);
     virtual Color getColor() const;
     virtual void setColor(Color &color);
     virtual void setColor(int r, int g, int b);
     
     virtual void draw();
     
+    static const int DEFAULT_OBJ_WIDTH = 10, DEFAULT_OBJ_HEIGHT = 10;
+    
 protected:
     
     string name;
     Point2D topLeft;
     int width, height;
+    bool isPassable;
     Color color;
     
 };
